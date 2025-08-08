@@ -1,4 +1,5 @@
 using API.Features.BoatTypes;
+using API.Features.BoatUsages;
 using API.Infrastructure.Account;
 using API.Infrastructure.Auth;
 using API.Infrastructure.EmailServices;
@@ -15,6 +16,9 @@ namespace API.Infrastructure.Extensions {
 
             services.AddTransient<IBoatTypeRepository, BoatTypeRepository>();
             services.AddTransient<IBoatTypeValidation, BoatTypeValidation>();
+
+            services.AddTransient<IBoatUsageRepository, BoatUsageRepository>();
+            services.AddTransient<IBoatUsageValidation, BoatUsageValidation>();
 
             services.AddTransient<IEmailAccountSender, EmailAccountSender>();
             services.AddTransient<IEmailQueueRepository, EmailQueueRepository>();
