@@ -6,6 +6,7 @@ using API.Infrastructure.EmailServices;
 using API.Infrastructure.Users;
 using API.Features.BoatTypes;
 using API.Features.BoatUsages;
+using API.Features.Boats;
 
 namespace API.Infrastructure.Classes {
 
@@ -13,6 +14,7 @@ namespace API.Infrastructure.Classes {
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
+        public DbSet<Boat> Boats { get; set; }
         public DbSet<BoatType> BoatTypes { get; set; }
         public DbSet<BoatUsage> BoatUsages { get; set; }
         public DbSet<Token> Tokens { get; set; }
@@ -26,6 +28,7 @@ namespace API.Infrastructure.Classes {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
 
         private static void ApplyConfigurations(ModelBuilder modelBuilder) {
+            modelBuilder.ApplyConfiguration(new BoatConfig());
             modelBuilder.ApplyConfiguration(new UserConfig());
         }
 

@@ -86,6 +86,7 @@ namespace API {
                         options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
                     });
             services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+            ModelValidations.AddModelValidation(services);
             services.Configure<CookiePolicyOptions>(options => { options.CheckConsentNeeded = _ => true; options.MinimumSameSitePolicy = SameSiteMode.None; });
             services.Configure<EnvironmentSettings>(options => Configuration.GetSection("EnvironmentSettings").Bind(options));
             services.Configure<EmailUserSettings>(options => Configuration.GetSection("EmailUserSettings").Bind(options));

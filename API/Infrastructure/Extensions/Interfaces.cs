@@ -1,3 +1,4 @@
+using API.Features.Boats;
 using API.Features.BoatTypes;
 using API.Features.BoatUsages;
 using API.Infrastructure.Account;
@@ -13,6 +14,9 @@ namespace API.Infrastructure.Extensions {
         public static void AddInterfaces(IServiceCollection services) {
 
             services.AddScoped<Token>();
+
+            services.AddTransient<IBoatRepository, BoatRepository>();
+            services.AddTransient<IBoatValidation, BoatValidation>();
 
             services.AddTransient<IBoatTypeRepository, BoatTypeRepository>();
             services.AddTransient<IBoatTypeValidation, BoatTypeValidation>();
