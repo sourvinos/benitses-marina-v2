@@ -9,7 +9,7 @@ namespace API.Infrastructure.Helpers {
 
     public static class ApiMessages {
 
-        #region Generic Messages
+        #region Generic messages
 
         public static string OK() { return "OK"; }
         public static string RecordInUse() { return "Record is used and can't be deleted"; }
@@ -18,9 +18,15 @@ namespace API.Infrastructure.Helpers {
         public static string InvalidAccountFields() { return "One or more fields are invalid"; }
         public static string RecordNotFound() { return "Record not found"; }
         public static string UnknownError() { return "Something bad has happened"; }
-        public static string EmailNotSent() { return "Email not sent"; }
         public static string NotUniqueUsernameOrEmail() { return "The username or the email are not unique"; }
         public static string ConcurrencyError() { return "Another user has already updated this record"; }
+
+        #endregion
+
+        #region Specific messages
+
+        public static string InvalidBoatType() { return "The boat type does not exists or is inactive"; }
+        public static string InvalidBoatUsage() { return "The boat usage does not exists or is inactive"; }
 
         #endregion
 

@@ -57,7 +57,7 @@ namespace API.Features.Boats {
         [Authorize(Roles = "admin")]
         [ServiceFilter(typeof(ModelValidationAttribute))]
         public ResponseWithBody Post([FromBody] BoatWriteDto boat) {
-            var x = boatValidation.IsValidAsync(null, boat);
+            var x = boatValidation.IsValidAsync(null, boat).Result;
             if (x == 200) {
                 var z = boatRepo.Create((Boat)boatRepo.AttachMetadataToPostDto(BoatMappings.DtoToDomain(boat)));
                 return new ResponseWithBody {
@@ -79,7 +79,7 @@ namespace API.Features.Boats {
         public async Task<ResponseWithBody> Put([FromBody] BoatWriteDto boat) {
             var x = await boatRepo.GetByIdAsync(boat.Id, false);
             if (x != null) {
-                var z = boatValidation.IsValidAsync(x, boat);
+                var z = boatValidation.IsValidAsync(x, boat).Result;
                 if (z == 200) {
                     boatRepo.Update((Boat)boatRepo.AttachMetadataToPostDto(BoatMappings.DtoToDomain(boat)));
                     return new ResponseWithBody {

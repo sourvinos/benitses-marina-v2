@@ -77,6 +77,8 @@ namespace API.Infrastructure.Middleware {
                 404 => ApiMessages.RecordNotFound(),
                 412 => ApiMessages.InvalidAccountFields(),
                 415 => ApiMessages.ConcurrencyError(),
+                450 => ApiMessages.InvalidBoatType(),
+                451 => ApiMessages.InvalidBoatUsage(),
                 491 => ApiMessages.RecordInUse(),
                 490 => ApiMessages.NotOwnRecord(),
                 492 => ApiMessages.NotUniqueUsernameOrEmail(),

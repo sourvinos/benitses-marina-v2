@@ -46,6 +46,9 @@ namespace API.Features.Boats {
             return new BoatBrowserVM {
                 Id = boat.Id,
                 Description = boat.Description,
+                Loa = boat.Loa,
+                Beam = boat.Beam,
+                Draft = boat.Draft,
                 IsActive = boat.IsActive
             };
         }
