@@ -24,34 +24,15 @@ namespace API.Features.Boats {
         }
 
         private async Task<bool> IsValidBoatTypeId(BoatWriteDto boat) {
-            return await (boat.Id == 0 ? GetActiveBoatTypeRecordsAsync(boat) : GetAllBoatTypeRecordsAsync(boat));
+            return boat.Id == 0
+                ? await context.BoatTypes.AsNoTracking().FirstOrDefaultAsync(x => x.Id == boat.BoatTypeId && x.IsActive) != null
+                : await context.BoatTypes.AsNoTracking().FirstOrDefaultAsync(x => x.Id == boat.BoatTypeId) != null;
         }
 
         private async Task<bool> IsValidBoatUsageId(BoatWriteDto boat) {
-            return await (boat.Id == 0 ? GetActiveBoatUsageRecordsAsync(boat) : GetAllBoatUsageRecordsAsync(boat));
-        }
-
-        private async Task<bool> GetActiveBoatTypeRecordsAsync(BoatWriteDto boat) {
-            return await context.BoatTypes
-               .AsNoTracking()
-               .FirstOrDefaultAsync(x => x.Id == boat.BoatTypeId && x.IsActive) != null;
-        }
-
-        private async Task<bool> GetActiveBoatUsageRecordsAsync(BoatWriteDto boat) {
-            return await context.BoatUsages
-               .AsNoTracking()
-               .FirstOrDefaultAsync(x => x.Id == boat.BoatUsageId && x.IsActive) != null;
-        }
-
-        private async Task<bool> GetAllBoatTypeRecordsAsync(BoatWriteDto boat) {
-            return await context.BoatTypes
-                .AsNoTracking()
-                .FirstOrDefaultAsync(x => x.Id == boat.BoatTypeId) != null;
-        }
-        private async Task<bool> GetAllBoatUsageRecordsAsync(BoatWriteDto boat) {
-            return await context.BoatTypes
-                .AsNoTracking()
-                .FirstOrDefaultAsync(x => x.Id == boat.BoatUsageId) != null;
+            return boat.Id == 0
+                ? await context.BoatUsages.AsNoTracking().FirstOrDefaultAsync(x => x.Id == boat.BoatUsageId && x.IsActive) != null
+                : await context.BoatUsages.AsNoTracking().FirstOrDefaultAsync(x => x.Id == boat.BoatUsageId) != null;
         }
 
         private static bool IsAlreadyUpdated(Boat z, BoatWriteDto Boat) {
