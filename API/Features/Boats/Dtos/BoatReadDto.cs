@@ -6,8 +6,9 @@ namespace API.Features.Boats {
     public class BoatReadDto : IBaseEntity, IMetadata {
 
         public int Id { get; set; }
-        public SimpleEntity BoatType { get; set; }
-        public SimpleEntity BoatUsage { get; set; }
+        public SimpleEntity Type { get; set; }
+        public SimpleEntity Usage { get; set; }
+        public BoatInsuranceReadDto Insurance { get; set; }
         public string Description { get; set; }
         public string Flag { get; set; }
         public decimal Loa { get; set; }

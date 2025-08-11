@@ -77,11 +77,13 @@ namespace API.Features.Boats {
         [Authorize(Roles = "admin")]
         [ServiceFilter(typeof(ModelValidationAttribute))]
         public async Task<ResponseWithBody> Put([FromBody] BoatWriteDto boat) {
-            var x = await boatRepo.GetByIdAsync(boat.Id, false);
+            var x = await boatRepo.GetByIdAsync(boat.Id, true);
             if (x != null) {
                 var z = boatValidation.IsValidAsync(x, boat).Result;
                 if (z == 200) {
-                    boatRepo.Update((Boat)boatRepo.AttachMetadataToPostDto(BoatMappings.DtoToDomain(boat)));
+                    boat.Insurance.Id = x.Insurance.Id;
+                    boat.Insurance.BoatId = x.Insurance.BoatId;
+                    boatRepo.Update((Boat)boatRepo.AttachMetadataToPutDto(x, BoatMappings.DtoToDomain(boat)));
                     return new ResponseWithBody {
                         Code = 200,
                         Icon = Icons.Success.ToString(),
@@ -103,7 +105,7 @@ namespace API.Features.Boats {
         [HttpDelete("{id}")]
         [Authorize(Roles = "admin")]
         public async Task<Response> Delete([FromRoute] int id) {
-            var x = await boatRepo.GetByIdAsync(id, false);
+            var x = await boatRepo.GetByIdAsync(id, true);
             if (x != null) {
                 boatRepo.Delete(x);
                 return new Response {

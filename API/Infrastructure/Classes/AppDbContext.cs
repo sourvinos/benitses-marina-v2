@@ -15,6 +15,7 @@ namespace API.Infrastructure.Classes {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Boat> Boats { get; set; }
+        public DbSet<BoatInsurance> BoatInsurances { get; set; }
         public DbSet<BoatType> BoatTypes { get; set; }
         public DbSet<BoatUsage> BoatUsages { get; set; }
         public DbSet<Token> Tokens { get; set; }

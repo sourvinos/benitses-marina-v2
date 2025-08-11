@@ -7,6 +7,7 @@ namespace API.Features.Boats {
         public int Id { get; set; }
         public int BoatTypeId { get; set; }
         public int BoatUsageId { get; set; }
+        public BoatInsuranceWriteDto Insurance { get; set; }
         public string Description { get; set; }
         public string Flag { get; set; }
         public decimal Loa { get; set; }

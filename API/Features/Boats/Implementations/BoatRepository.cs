@@ -42,6 +42,7 @@ namespace API.Features.Boats {
             return includeTables
                 ? await context.Boats
                     .AsNoTracking()
+                    .Include(x => x.Insurance)
                     .SingleOrDefaultAsync(x => x.Id == id)
                 : await context.Boats
                     .AsNoTracking()

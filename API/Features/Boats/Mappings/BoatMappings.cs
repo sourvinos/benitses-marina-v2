@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using API.Infrastructure.Classes;
+using API.Infrastructure.Helpers;
 
 namespace API.Features.Boats {
 
@@ -11,12 +12,12 @@ namespace API.Features.Boats {
                 Id = x.Id,
                 Description = x.Description,
                 Type = new SimpleEntity {
-                    Id = x.BoatType.Id,
-                    Description = x.BoatType.Description
+                    Id = x.Type.Id,
+                    Description = x.Type.Description
                 },
                 Usage = new SimpleEntity {
-                    Id = x.BoatUsage.Id,
-                    Description = x.BoatUsage.Description
+                    Id = x.Usage.Id,
+                    Description = x.Usage.Description
                 },
                 Loa = x.Loa,
                 Beam = x.Beam,
@@ -56,13 +57,20 @@ namespace API.Features.Boats {
         public static BoatReadDto DomainToDto(Boat boat) {
             return new BoatReadDto {
                 Id = boat.Id,
-                BoatType = new SimpleEntity {
-                    Id = boat.BoatType.Id,
-                    Description = boat.BoatType.Description,
+                Type = new SimpleEntity {
+                    Id = boat.Type.Id,
+                    Description = boat.Type.Description,
                 },
-                BoatUsage = new SimpleEntity {
-                    Id = boat.BoatUsage.Id,
-                    Description = boat.BoatUsage.Description,
+                Usage = new SimpleEntity {
+                    Id = boat.Usage.Id,
+                    Description = boat.Usage.Description,
+                },
+                Insurance = new BoatInsuranceReadDto {
+                    Id = boat.Insurance.Id,
+                    BoatId = boat.Insurance.BoatId,
+                    Company = boat.Insurance.Company,
+                    ContractNo = boat.Insurance.ContractNo,
+                    ExpireDate = boat.Insurance.ExpireDate
                 },
                 Description = boat.Description,
                 Flag = boat.Flag,
@@ -87,6 +95,13 @@ namespace API.Features.Boats {
                 BoatTypeId = boat.BoatTypeId,
                 BoatUsageId = boat.BoatUsageId,
                 Description = boat.Description,
+                Insurance = new BoatInsurance {
+                    Id = boat.Insurance.Id,
+                    BoatId = boat.Insurance.BoatId,
+                    Company = boat.Insurance.Company,
+                    ContractNo = boat.Insurance.ContractNo,
+                    ExpireDate = DateHelpers.StringToDate(boat.Insurance.ExpireDate)
+                },
                 Flag = boat.Flag,
                 Loa = boat.Loa,
                 Beam = boat.Beam,

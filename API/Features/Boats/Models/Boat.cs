@@ -19,8 +19,9 @@ namespace API.Features.Boats {
         public bool IsAthenian { get; set; }
         public bool IsFishingBoat { get; set; }
         public bool IsActive { get; set; }
-        public BoatType BoatType { get; set; }
-        public BoatUsage BoatUsage { get; set; }
+        public BoatType Type { get; set; }
+        public BoatUsage Usage { get; set; }
+        public BoatInsurance Insurance { get; set; }
         public string PostAt { get; set; }
         public string PostUser { get; set; }
         public string PutAt { get; set; }
