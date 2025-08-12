@@ -44,7 +44,7 @@ namespace API.Features.Boats {
                     Code = 200,
                     Icon = Icons.Info.ToString(),
                     Message = ApiMessages.OK(),
-                    Body = BoatMappings.DomainToDto(x)
+                    Body = BoatMappingDomainToDto.DomainToDto(x)
                 };
             } else {
                 throw new CustomException() {
@@ -59,7 +59,7 @@ namespace API.Features.Boats {
         public ResponseWithBody Post([FromBody] BoatWriteDto boat) {
             var x = boatValidation.IsValidAsync(null, boat).Result;
             if (x == 200) {
-                var z = boatRepo.Create((Boat)boatRepo.AttachMetadataToPostDto(BoatMappings.DtoToDomain(boat)));
+                var z = boatRepo.Create((Boat)boatRepo.AttachMetadataToPostDto(BoatMappingDtoToDomain.DtoToDomain(boat)));
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),
@@ -81,9 +81,7 @@ namespace API.Features.Boats {
             if (x != null) {
                 var z = boatValidation.IsValidAsync(x, boat).Result;
                 if (z == 200) {
-                    boat.Insurance.Id = x.Insurance.Id;
-                    boat.Insurance.BoatId = x.Insurance.BoatId;
-                    boatRepo.Update((Boat)boatRepo.AttachMetadataToPutDto(x, BoatMappings.DtoToDomain(boat)));
+                    boatRepo.Update((Boat)boatRepo.AttachMetadataToPutDto(x, BoatMappingDtoToDomain.DtoToDomain(boatRepo.UpdateInsurancePutDto(x, boat))));
                     return new ResponseWithBody {
                         Code = 200,
                         Icon = Icons.Success.ToString(),

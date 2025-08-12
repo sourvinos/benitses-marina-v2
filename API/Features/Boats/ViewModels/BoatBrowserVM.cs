@@ -9,6 +9,8 @@ namespace API.Features.Boats {
         public decimal Draft { get; set; }
         public string RegistryPort { get; set; }
         public string RegistryNo { get; set; }
+        public bool IsAthenian { get; set; }
+        public bool IsFishingBoat { get; set; }
         public bool IsActive { get; set; }
 
     }

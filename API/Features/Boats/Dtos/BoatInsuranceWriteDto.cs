@@ -1,5 +1,3 @@
-using System;
-
 namespace API.Features.Boats {
 
     public class BoatInsuranceWriteDto {

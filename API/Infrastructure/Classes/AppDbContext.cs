@@ -29,7 +29,6 @@ namespace API.Infrastructure.Classes {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
 
         private static void ApplyConfigurations(ModelBuilder modelBuilder) {
-            modelBuilder.ApplyConfiguration(new BoatConfig());
             modelBuilder.ApplyConfiguration(new UserConfig());
         }
 

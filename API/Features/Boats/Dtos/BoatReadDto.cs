@@ -8,7 +8,6 @@ namespace API.Features.Boats {
         public int Id { get; set; }
         public SimpleEntity Type { get; set; }
         public SimpleEntity Usage { get; set; }
-        public BoatInsuranceReadDto Insurance { get; set; }
         public string Description { get; set; }
         public string Flag { get; set; }
         public decimal Loa { get; set; }
@@ -16,6 +15,7 @@ namespace API.Features.Boats {
         public decimal Draft { get; set; }
         public string RegistryPort { get; set; }
         public string RegistryNo { get; set; }
+        public BoatInsuranceReadDto Insurance { get; set; }
         public bool IsAthenian { get; set; }
         public bool IsFishingBoat { get; set; }
         public bool IsActive { get; set; }
