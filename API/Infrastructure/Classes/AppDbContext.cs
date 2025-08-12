@@ -7,6 +7,7 @@ using API.Infrastructure.Users;
 using API.Features.BoatTypes;
 using API.Features.BoatUsages;
 using API.Features.Boats;
+using API.Features.Reservations;
 
 namespace API.Infrastructure.Classes {
 
@@ -18,6 +19,7 @@ namespace API.Infrastructure.Classes {
         public DbSet<BoatInsurance> BoatInsurances { get; set; }
         public DbSet<BoatType> BoatTypes { get; set; }
         public DbSet<BoatUsage> BoatUsages { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Token> Tokens { get; set; }
         public DbSet<EmailQueue> EmailQueues { get; set; }
 
