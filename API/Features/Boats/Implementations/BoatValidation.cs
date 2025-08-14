@@ -16,23 +16,23 @@ namespace API.Features.Boats {
 
         public async Task<int> IsValidAsync(Boat z, BoatWriteDto boat) {
             return true switch {
-                var x when x == !await IsValidBoatTypeId(boat) => 450,
                 var x when x == !await IsValidBoatUsageId(boat) => 451,
+                var x when x == !await IsValidHullTypeId(boat) => 450,
                 var x when x == IsAlreadyUpdated(z, boat) => 415,
                 _ => 200,
             };
-        }
-
-        private async Task<bool> IsValidBoatTypeId(BoatWriteDto boat) {
-            return boat.Id == 0
-                ? await context.BoatTypes.AsNoTracking().FirstOrDefaultAsync(x => x.Id == boat.BoatTypeId && x.IsActive) != null
-                : await context.BoatTypes.AsNoTracking().FirstOrDefaultAsync(x => x.Id == boat.BoatTypeId) != null;
         }
 
         private async Task<bool> IsValidBoatUsageId(BoatWriteDto boat) {
             return boat.Id == 0
                 ? await context.BoatUsages.AsNoTracking().FirstOrDefaultAsync(x => x.Id == boat.BoatUsageId && x.IsActive) != null
                 : await context.BoatUsages.AsNoTracking().FirstOrDefaultAsync(x => x.Id == boat.BoatUsageId) != null;
+        }
+
+        private async Task<bool> IsValidHullTypeId(BoatWriteDto boat) {
+            return boat.Id == 0
+                ? await context.HullTypes.AsNoTracking().FirstOrDefaultAsync(x => x.Id == boat.HullTypeId && x.IsActive) != null
+                : await context.HullTypes.AsNoTracking().FirstOrDefaultAsync(x => x.Id == boat.HullTypeId) != null;
         }
 
         private static bool IsAlreadyUpdated(Boat z, BoatWriteDto Boat) {

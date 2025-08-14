@@ -25,8 +25,8 @@ namespace API.Infrastructure.Helpers {
 
         #region Specific messages
 
-        public static string InvalidBoatType() { return "The boat type does not exists or is inactive"; }
-        public static string InvalidBoatUsage() { return "The boat usage does not exists or is inactive"; }
+        public static string InvalidBoatUsage() { return "The boat usage does not exist or is inactive"; }
+        public static string InvalidHullType() { return "The hull type does not exist or is inactive"; }
 
         #endregion
 

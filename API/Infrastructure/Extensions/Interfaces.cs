@@ -1,5 +1,5 @@
 using API.Features.Boats;
-using API.Features.BoatTypes;
+using API.Features.HullTypes;
 using API.Features.BoatUsages;
 using API.Features.Reservations;
 using API.Infrastructure.Account;
@@ -19,19 +19,22 @@ namespace API.Infrastructure.Extensions {
             services.AddTransient<IBoatRepository, BoatRepository>();
             services.AddTransient<IBoatValidation, BoatValidation>();
 
-            services.AddTransient<IBoatTypeRepository, BoatTypeRepository>();
-            services.AddTransient<IBoatTypeValidation, BoatTypeValidation>();
-
             services.AddTransient<IBoatUsageRepository, BoatUsageRepository>();
             services.AddTransient<IBoatUsageValidation, BoatUsageValidation>();
 
+            services.AddTransient<IHullTypeRepository, HullTypeRepository>();
+            services.AddTransient<IHullTypeValidation, HullTypeValidation>();
+
             services.AddTransient<IReservationRepository, ReservationRepository>();
+            services.AddTransient<IReservationValidation, ReservationValidation>();
 
             services.AddTransient<IEmailAccountSender, EmailAccountSender>();
             services.AddTransient<IEmailQueueRepository, EmailQueueRepository>();
             services.AddTransient<IEmailUserDetailsSender, EmailUserDetailsSender>();
 
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IUserValidation<IUser>, UserValidation>();
+
         }
 
     }

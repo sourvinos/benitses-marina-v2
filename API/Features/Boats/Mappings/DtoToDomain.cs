@@ -7,8 +7,8 @@ namespace API.Features.Boats {
         public static Boat DtoToDomain(BoatWriteDto boat) {
             return new Boat {
                 Id = boat.Id,
-                BoatTypeId = boat.BoatTypeId,
                 BoatUsageId = boat.BoatUsageId,
+                HullTypeId = boat.HullTypeId,
                 Description = boat.Description,
                 Insurance = new BoatInsurance {
                     Id = boat.Insurance.Id,

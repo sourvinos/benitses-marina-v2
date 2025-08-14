@@ -1,11 +1,11 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using API.Infrastructure.Extensions;
 using API.Infrastructure.Helpers;
 using API.Infrastructure.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace API.Infrastructure.Users {
 
@@ -16,12 +16,14 @@ namespace API.Infrastructure.Users {
 
         private readonly IHttpContextAccessor httpContext;
         private readonly IUserRepository userRepo;
+        private readonly IUserValidation<IUser> userValidation;
 
         #endregion
 
-        public UsersController(IHttpContextAccessor httpContext, IUserRepository userRepo) {
+        public UsersController(IHttpContextAccessor httpContext, IUserRepository userRepo, IUserValidation<IUser> userValidation) {
             this.httpContext = httpContext;
             this.userRepo = userRepo;
+            this.userValidation = userValidation;
         }
 
         [HttpGet]
@@ -35,7 +37,7 @@ namespace API.Infrastructure.Users {
         public async Task<ResponseWithBody> GetByIdAsync(string id) {
             var x = await userRepo.GetByIdAsync(id);
             if (x != null) {
-                if (Identity.IsUserAdmin(httpContext)) {
+                if (Identity.IsUserAdmin(httpContext) || userValidation.IsUserOwner(x.Id)) {
                     return new ResponseWithBody {
                         Code = 200,
                         Icon = Icons.Info.ToString(),
@@ -86,8 +88,19 @@ namespace API.Infrastructure.Users {
         public async Task<Response> PutAsync([FromBody] UserUpdateDto userToUpdate) {
             var user = await userRepo.GetByIdAsync(userToUpdate.Id);
             if (user != null) {
-                if (Identity.IsUserAdmin(httpContext)) {
-                    return await UpdateAdmin(user, userToUpdate);
+                var z = userValidation.IsValid(userToUpdate);
+                if (z == 200) {
+                    if (Identity.IsUserAdmin(httpContext)) {
+                        return await UpdateAdmin(user, userToUpdate);
+                    } else {
+                        if (userValidation.IsUserOwner(user.Id)) {
+                            return await UpdateSimpleUser(user, userToUpdate);
+                        } else {
+                            throw new CustomException() {
+                                ResponseCode = 490
+                            };
+                        }
+                    }
                 } else {
                     throw new CustomException() {
                         ResponseCode = 490
@@ -113,6 +126,22 @@ namespace API.Infrastructure.Users {
                     ResponseCode = 492
                 };
             }
+        }
+
+        private async Task<Response> UpdateSimpleUser(UserExtended user, UserUpdateDto userToUpdate) {
+            if (await userRepo.UpdateSimpleUserAsync(user, userToUpdate)) {
+                return new Response {
+                    Code = 200,
+                    Icon = Icons.Success.ToString(),
+                    Id = null,
+                    Message = ApiMessages.OK()
+                };
+            } else {
+                throw new CustomException() {
+                    ResponseCode = 492
+                };
+            }
+
         }
 
     }

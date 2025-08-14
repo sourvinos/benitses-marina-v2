@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace API.Features.Reservations {
 
@@ -18,9 +19,22 @@ namespace API.Features.Reservations {
             var reservations = await context.Reservations
                 .AsNoTracking()
                 .Include(x => x.Boat).ThenInclude(x => x.Type)
+                .Include(x => x.BoatOwner)
                 .ToListAsync();
             return ReservationMappingDomainToListVM.DomainToListVM(reservations);
         }
+
+        public async Task<Reservation> GetByIdAsync(string reservationId) {
+            var x = await context.Reservations
+                .AsNoTracking()
+                .Include(x => x.Boat).ThenInclude(x => x.Type)
+                .Include(x => x.Boat).ThenInclude(x => x.Usage)
+                .Include(x => x.BoatOwner)
+                .Where(x => x.ReservationId.ToString() == reservationId)
+                .SingleOrDefaultAsync();
+            return x;
+        }
+
 
     }
 
