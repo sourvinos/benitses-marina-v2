@@ -56,14 +56,14 @@ namespace API.Features.BoatUsages {
         [HttpPost]
         [Authorize(Roles = "admin")]
         [ServiceFilter(typeof(ModelValidationAttribute))]
-        public ResponseWithBody Post([FromBody] BoatUsageWriteDto BoatUsage) {
-            var x = BoatUsageValidation.IsValid(null, BoatUsage);
+        public ResponseWithBody Post([FromBody] BoatUsageWriteDto boatUsage) {
+            var x = BoatUsageValidation.IsValid(null, boatUsage);
             if (x == 200) {
-                var z = BoatUsageRepo.Create((BoatUsage)BoatUsageRepo.AttachMetadataToPostDto(BoatUsageMappings.DtoToDomail(BoatUsage)));
+                var z = BoatUsageRepo.Create((BoatUsage)BoatUsageRepo.AttachMetadataToPostDto(BoatUsageMappings.DtoToDomail(boatUsage)));
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),
-                    Body = BoatUsageRepo.GetByIdForBrowserAsync(z.Id).Result,
+                    Body = z,
                     Message = ApiMessages.OK()
                 };
             } else {
@@ -76,16 +76,16 @@ namespace API.Features.BoatUsages {
         [HttpPut]
         [Authorize(Roles = "admin")]
         [ServiceFilter(typeof(ModelValidationAttribute))]
-        public async Task<ResponseWithBody> Put([FromBody] BoatUsageWriteDto BoatUsage) {
-            var x = await BoatUsageRepo.GetByIdAsync(BoatUsage.Id);
+        public async Task<ResponseWithBody> Put([FromBody] BoatUsageWriteDto boatUsage) {
+            var x = await BoatUsageRepo.GetByIdAsync(boatUsage.Id);
             if (x != null) {
-                var z = BoatUsageValidation.IsValid(x, BoatUsage);
+                var z = BoatUsageValidation.IsValid(x, boatUsage);
                 if (z == 200) {
-                    BoatUsageRepo.Update((BoatUsage)BoatUsageRepo.AttachMetadataToPostDto(BoatUsageMappings.DtoToDomail(BoatUsage)));
+                    BoatUsageRepo.Update((BoatUsage)BoatUsageRepo.AttachMetadataToPostDto(BoatUsageMappings.DtoToDomail(boatUsage)));
                     return new ResponseWithBody {
                         Code = 200,
                         Icon = Icons.Success.ToString(),
-                        Body = BoatUsageRepo.GetByIdForBrowserAsync(BoatUsage.Id).Result,
+                        Body = BoatUsageRepo.GetByIdForBrowserAsync(boatUsage.Id).Result,
                         Message = ApiMessages.OK(),
                     };
                 } else {

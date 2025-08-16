@@ -11,15 +11,15 @@ namespace API.Features.BoatUsages {
 
         public BoatUsageValidation(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> settings, UserManager<UserExtended> userManager) : base(appDbContext, httpContext, settings, userManager) { }
 
-        public int IsValid(BoatUsage z, BoatUsageWriteDto Boat) {
+        public int IsValid(BoatUsage z, BoatUsageWriteDto boat) {
             return true switch {
-                var x when x == IsAlreadyUpdated(z, Boat) => 415,
+                var x when x == IsAlreadyUpdated(z, boat) => 415,
                 _ => 200,
             };
         }
 
-        private static bool IsAlreadyUpdated(BoatUsage z, BoatUsageWriteDto Boat) {
-            return z != null && z.PutAt != Boat.PutAt;
+        private static bool IsAlreadyUpdated(BoatUsage z, BoatUsageWriteDto boat) {
+            return z != null && z.PutAt != boat.PutAt;
         }
 
     }

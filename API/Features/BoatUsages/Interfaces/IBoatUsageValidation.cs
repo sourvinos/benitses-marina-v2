@@ -4,7 +4,7 @@ namespace API.Features.BoatUsages {
 
     public interface IBoatUsageValidation : IRepository<BoatUsage> {
 
-        int IsValid(BoatUsage x, BoatUsageWriteDto BoatUsage);
+        int IsValid(BoatUsage x, BoatUsageWriteDto boatUsage);
 
     }
 
