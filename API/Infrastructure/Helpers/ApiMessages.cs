@@ -15,10 +15,9 @@ namespace API.Infrastructure.Helpers {
         public static string RecordInUse() { return "Record is used and can't be deleted"; }
         public static string AuthenticationFailed() { return "Authentication failed"; }
         public static string NotOwnRecord() { return "Only the owner of the account can make changes"; }
-        public static string InvalidAccountFields() { return "One or more fields are invalid"; }
         public static string RecordNotFound() { return "Record not found"; }
         public static string UnknownError() { return "Something bad has happened"; }
-        public static string NotUniqueUsernameOrEmail() { return "The username or the email are not unique"; }
+        public static string InvalidNewUser() { return "The new user has invalid fields"; }
         public static string ConcurrencyError() { return "Another user has already updated this record"; }
 
         #endregion

@@ -17,7 +17,7 @@ namespace Cases {
             return new object[] {
                 new Login {
                     Username = "simpleuser",
-                    Password = "A#ba439de-446e-4eef-8c4b-833f1b3e18aa"
+                    Password = Helpers.SimpleUserPassword()
                 }
             };
         }
@@ -26,7 +26,7 @@ namespace Cases {
             return new object[] {
                 new Login {
                     Username = "john",
-                    Password = "A#ba439de-446e-4eef-8c4b-833f1b3e18aa"
+                    Password = Helpers.AdminPassword()
                 }
             };
         }

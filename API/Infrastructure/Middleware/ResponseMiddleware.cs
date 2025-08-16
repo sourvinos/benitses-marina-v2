@@ -75,13 +75,12 @@ namespace API.Infrastructure.Middleware {
             return httpResponseCode switch {
                 401 => ApiMessages.AuthenticationFailed(),
                 404 => ApiMessages.RecordNotFound(),
-                412 => ApiMessages.InvalidAccountFields(),
                 415 => ApiMessages.ConcurrencyError(),
                 451 => ApiMessages.InvalidBoatUsage(),
                 450 => ApiMessages.InvalidHullType(),
                 491 => ApiMessages.RecordInUse(),
                 490 => ApiMessages.NotOwnRecord(),
-                492 => ApiMessages.NotUniqueUsernameOrEmail(),
+                492 => ApiMessages.InvalidNewUser(),
                 _ => ApiMessages.UnknownError(),
             };
         }

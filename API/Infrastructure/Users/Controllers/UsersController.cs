@@ -64,28 +64,28 @@ namespace API.Infrastructure.Users {
             return new ResponseWithBody {
                 Code = 200,
                 Icon = Icons.Info.ToString(),
+                Body = x,
                 Message = ApiMessages.OK(),
-                Body = x != null ? x.Id : ""
             };
         }
 
         [HttpPost]
         [Authorize(Roles = "admin")]
         [ServiceFilter(typeof(ModelValidationAttribute))]
-        public async Task<Response> PostAsync([FromBody] UserNewDto user) {
-            await userRepo.CreateAsync((UserExtended)userRepo.AttachMetadataToPostDto(UserMappings.DtoToDomail(user)), userRepo.CreateTemporaryPassword());
-            return new Response {
-                Code = 200,
-                Icon = Icons.Success.ToString(),
-                Id = null,
-                Message = ApiMessages.OK()
+        public async Task<ResponseWithBody> PostAsync([FromBody] UserNewDto user) {
+            var x = await userRepo.CreateAsync((UserExtended)userRepo.AttachMetadataToPostDto(UserMappings.DtoToDomail(user)), userRepo.CreateTemporaryPassword());
+            return new ResponseWithBody {
+                Code = x.Succeeded ? 200 : 492,
+                Icon = x.Succeeded ? Icons.Success.ToString() : Icons.Error.ToString(),
+                Body = x,
+                Message = x.Succeeded ? ApiMessages.OK() : ApiMessages.InvalidNewUser()
             };
         }
 
         [HttpPut]
         [Authorize(Roles = "user, admin")]
         [ServiceFilter(typeof(ModelValidationAttribute))]
-        public async Task<Response> PutAsync([FromBody] UserUpdateDto userToUpdate) {
+        public async Task<ResponseWithBody> PutAsync([FromBody] UserUpdateDto userToUpdate) {
             var user = await userRepo.GetByIdAsync(userToUpdate.Id);
             if (user != null) {
                 var z = userValidation.IsValid(userToUpdate);
@@ -113,12 +113,12 @@ namespace API.Infrastructure.Users {
             }
         }
 
-        private async Task<Response> UpdateAdmin(UserExtended user, UserUpdateDto userToUpdate) {
+        private async Task<ResponseWithBody> UpdateAdmin(UserExtended user, UserUpdateDto userToUpdate) {
             if (await userRepo.UpdateAdminAsync(user, userToUpdate)) {
-                return new Response {
+                return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),
-                    Id = null,
+                    Body = userToUpdate,
                     Message = ApiMessages.OK()
                 };
             } else {
@@ -128,12 +128,12 @@ namespace API.Infrastructure.Users {
             }
         }
 
-        private async Task<Response> UpdateSimpleUser(UserExtended user, UserUpdateDto userToUpdate) {
+        private async Task<ResponseWithBody> UpdateSimpleUser(UserExtended user, UserUpdateDto userToUpdate) {
             if (await userRepo.UpdateSimpleUserAsync(user, userToUpdate)) {
-                return new Response {
+                return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),
-                    Id = null,
+                    Body = userToUpdate,
                     Message = ApiMessages.OK()
                 };
             } else {

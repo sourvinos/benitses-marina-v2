@@ -5,10 +5,10 @@ using Infrastructure;
 using Responses;
 using Xunit;
 
-namespace Users {
+namespace HullTypes {
 
     [Collection("Sequence")]
-    public class Users03Post : IClassFixture<AppSettingsFixture> {
+    public class HullTypes04Post : IClassFixture<AppSettingsFixture> {
 
         #region variables
 
@@ -17,25 +17,25 @@ namespace Users {
         private readonly TestHostFixture _testHostFixture = new();
         private readonly string _actionVerb = "post";
         private readonly string _baseUrl;
-        private readonly string _url = "/users";
+        private readonly string _url = "/hullTypes";
 
         #endregion
 
-        public Users03Post(AppSettingsFixture appsettings) {
+        public HullTypes04Post(AppSettingsFixture appsettings) {
             _appSettingsFixture = appsettings;
             _baseUrl = _appSettingsFixture.Configuration.GetSection("TestingEnvironment").GetSection("BaseUrl").Value;
             _httpClient = _testHostFixture.Client;
         }
 
         [Theory]
-        [ClassData(typeof(CreateValidUser))]
-        public async Task Unauthorized_Not_Logged_In(TestNewUser record) {
+        [ClassData(typeof(CreateValidHullType))]
+        public async Task Unauthorized_Not_Logged_In(TestHullType record) {
             await InvalidCredentials.Action(_httpClient, _baseUrl, _url, _actionVerb, "", "", record);
         }
 
         [Theory]
-        [ClassData(typeof(CreateValidUser))]
-        public async Task Unauthorized_Invalid_Credentials(TestNewUser record) {
+        [ClassData(typeof(CreateValidHullType))]
+        public async Task Unauthorized_Invalid_Credentials(TestHullType record) {
             await InvalidCredentials.Action(_httpClient, _baseUrl, _url, _actionVerb, "user-does-not-exist", "not-a-valid-password", record);
         }
 
@@ -46,9 +46,15 @@ namespace Users {
         }
 
         [Theory]
-        [ClassData(typeof(CreateValidUser))]
-        public async Task Simple_Users_Can_Not_Create(TestNewUser record) {
+        [ClassData(typeof(CreateValidHullType))]
+        public async Task Simple_Users_Can_Not_Create(TestHullType record) {
             await Forbidden.Action(_httpClient, _baseUrl, _url, _actionVerb, "simpleuser", Helpers.SimpleUserPassword(), record);
+        }
+
+        [Theory]
+        [ClassData(typeof(CreateValidHullType))]
+        public async Task Admins_Can_Create_When_Valid(TestHullType record) {
+            await RecordSaved.Action(_httpClient, _baseUrl, _url, _actionVerb, "john", Helpers.AdminPassword(), record);
         }
 
     }

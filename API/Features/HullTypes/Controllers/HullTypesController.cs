@@ -63,7 +63,7 @@ namespace API.Features.HullTypes {
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),
-                    Body = hullTypeRepo.GetByIdForBrowserAsync(z.Id).Result,
+                    Body = z,
                     Message = ApiMessages.OK()
                 };
             } else {
@@ -81,11 +81,11 @@ namespace API.Features.HullTypes {
             if (x != null) {
                 var z = hullTypeValidation.IsValid(x, hullType);
                 if (z == 200) {
-                    hullTypeRepo.Update((HullType)hullTypeRepo.AttachMetadataToPostDto(HullTypeMappings.DtoToDomail(hullType)));
+                    var i = hullTypeRepo.Update((HullType)hullTypeRepo.AttachMetadataToPostDto(HullTypeMappings.DtoToDomail(hullType)));
                     return new ResponseWithBody {
                         Code = 200,
                         Icon = Icons.Success.ToString(),
-                        Body = hullTypeRepo.GetByIdForBrowserAsync(hullType.Id).Result,
+                        Body = i,
                         Message = ApiMessages.OK(),
                     };
                 } else {
@@ -102,15 +102,15 @@ namespace API.Features.HullTypes {
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "admin")]
-        public async Task<Response> Delete([FromRoute] int id) {
+        public async Task<ResponseWithBody> Delete([FromRoute] int id) {
             var x = await hullTypeRepo.GetByIdAsync(id);
             if (x != null) {
                 hullTypeRepo.Delete(x);
-                return new Response {
+                return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),
-                    Id = x.Id.ToString(),
-                    Message = ApiMessages.OK()
+                    Body = x,
+                    Message = ApiMessages.OK(),
                 };
             } else {
                 throw new CustomException() {

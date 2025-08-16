@@ -1,17 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using Responses;
+using Cases;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using API.Infrastructure.Users;
-using Cases;
 using Infrastructure;
-using Responses;
 using Xunit;
+using API.Features.HullTypes;
 
-namespace Users {
+namespace HullTypes {
 
     [Collection("Sequence")]
-    public class Users01Get : IClassFixture<AppSettingsFixture> {
+    public class HullTypes01Get : IClassFixture<AppSettingsFixture> {
 
         #region variables
 
@@ -20,11 +20,11 @@ namespace Users {
         private readonly TestHostFixture _testHostFixture = new();
         private readonly string _actionVerb = "get";
         private readonly string _baseUrl;
-        private readonly string _url = "/users";
+        private readonly string _url = "/hullTypes";
 
         #endregion
 
-        public Users01Get(AppSettingsFixture appsettings) {
+        public HullTypes01Get(AppSettingsFixture appsettings) {
             _appSettingsFixture = appsettings;
             _baseUrl = _appSettingsFixture.Configuration.GetSection("TestingEnvironment").GetSection("BaseUrl").Value;
             _httpClient = _testHostFixture.Client;
@@ -54,8 +54,8 @@ namespace Users {
         [Fact]
         public async Task Admins_Can_List() {
             var actionResponse = await List.Action(_httpClient, _baseUrl, _url, "john", Helpers.AdminPassword());
-            var records = JsonSerializer.Deserialize<List<UserReadDto>>(await actionResponse.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-            Assert.Equal(2, records.Count);
+            var records = JsonSerializer.Deserialize<List<HullTypeListVM>>(await actionResponse.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            Assert.Equal(3, records.Count);
         }
 
     }

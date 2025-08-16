@@ -17,7 +17,7 @@ namespace Users {
                 new TestNewUser {
                     Username = "username",
                     Displayname = "Display Name",
-                    Email = "new-email@server.com",
+                    Email = "johnsourvinos1@hotmail.com",
                     IsAdmin = true
                 }
             };

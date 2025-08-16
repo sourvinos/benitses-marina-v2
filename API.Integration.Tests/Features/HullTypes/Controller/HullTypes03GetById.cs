@@ -1,17 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Net.Http;
-using System.Text.Json;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
-using API.Infrastructure.Users;
 using Cases;
 using Infrastructure;
 using Responses;
 using Xunit;
 
-namespace Users {
+namespace HullTypes {
 
     [Collection("Sequence")]
-    public class Users01Get : IClassFixture<AppSettingsFixture> {
+    public class HullTypes03GetById : IClassFixture<AppSettingsFixture> {
 
         #region variables
 
@@ -20,11 +17,12 @@ namespace Users {
         private readonly TestHostFixture _testHostFixture = new();
         private readonly string _actionVerb = "get";
         private readonly string _baseUrl;
-        private readonly string _url = "/users";
+        private readonly string _url = "/hullTypes/1";
+        private readonly string _notFoundUrl = "/hullTypes/9999";
 
         #endregion
 
-        public Users01Get(AppSettingsFixture appsettings) {
+        public HullTypes03GetById(AppSettingsFixture appsettings) {
             _appSettingsFixture = appsettings;
             _baseUrl = _appSettingsFixture.Configuration.GetSection("TestingEnvironment").GetSection("BaseUrl").Value;
             _httpClient = _testHostFixture.Client;
@@ -47,15 +45,18 @@ namespace Users {
         }
 
         [Fact]
-        public async Task Simple_Users_Can_Not_List() {
+        public async Task Simple_Users_Can_Not_Get_By_Id() {
             await Forbidden.Action(_httpClient, _baseUrl, _url, _actionVerb, "simpleuser", Helpers.SimpleUserPassword(), null);
         }
 
         [Fact]
-        public async Task Admins_Can_List() {
-            var actionResponse = await List.Action(_httpClient, _baseUrl, _url, "john", Helpers.AdminPassword());
-            var records = JsonSerializer.Deserialize<List<UserReadDto>>(await actionResponse.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-            Assert.Equal(2, records.Count);
+        public async Task Admins_Not_Found_When_Not_Exists() {
+            await RecordNotFound.Action(_httpClient, _baseUrl, _notFoundUrl, "john", Helpers.AdminPassword());
+        }
+
+        [Fact]
+        public async Task Admins_Can_Get_By_Id() {
+            await RecordFound.Action(_httpClient, _baseUrl, _url, "john", Helpers.AdminPassword());
         }
 
     }

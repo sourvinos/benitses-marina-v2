@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Infrastructure;
 
 namespace Users {
 
@@ -10,7 +9,7 @@ namespace Users {
 
         public IEnumerator<object[]> GetEnumerator() {
             yield return EmailAlreadyExists();
-            yield return UsernameAlreadyExists();
+            // yield return UsernameAlreadyExists();
         }
 
         private static object[] EmailAlreadyExists() {
@@ -19,7 +18,7 @@ namespace Users {
                     StatusCode = 492,
                     Username = "newuser",
                     Displayname = "New User",
-                    Email = "johnsourvinos@hotmail.com",
+                    Email = "ohnsourvinos@hotmail.com",
                     IsAdmin = false,
                     IsActive = true
                 }

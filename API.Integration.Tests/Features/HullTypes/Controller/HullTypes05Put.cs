@@ -5,37 +5,38 @@ using Infrastructure;
 using Responses;
 using Xunit;
 
-namespace Users {
+namespace HullTypes {
 
     [Collection("Sequence")]
-    public class Users03Post : IClassFixture<AppSettingsFixture> {
+    public class HullTypes05Put : IClassFixture<AppSettingsFixture> {
 
         #region variables
 
         private readonly AppSettingsFixture _appSettingsFixture;
         private readonly HttpClient _httpClient;
         private readonly TestHostFixture _testHostFixture = new();
-        private readonly string _actionVerb = "post";
+        private readonly string _actionVerb = "put";
         private readonly string _baseUrl;
-        private readonly string _url = "/users";
+        private readonly string _url = "/hullTypes";
+        private readonly string _notFoundUrl = "/hullTypes/9999";
 
         #endregion
 
-        public Users03Post(AppSettingsFixture appsettings) {
+        public HullTypes05Put(AppSettingsFixture appsettings) {
             _appSettingsFixture = appsettings;
             _baseUrl = _appSettingsFixture.Configuration.GetSection("TestingEnvironment").GetSection("BaseUrl").Value;
             _httpClient = _testHostFixture.Client;
         }
 
         [Theory]
-        [ClassData(typeof(CreateValidUser))]
-        public async Task Unauthorized_Not_Logged_In(TestNewUser record) {
+        [ClassData(typeof(UpdateValidHullType))]
+        public async Task Unauthorized_Not_Logged_In(TestHullType record) {
             await InvalidCredentials.Action(_httpClient, _baseUrl, _url, _actionVerb, "", "", record);
         }
 
         [Theory]
-        [ClassData(typeof(CreateValidUser))]
-        public async Task Unauthorized_Invalid_Credentials(TestNewUser record) {
+        [ClassData(typeof(UpdateValidHullType))]
+        public async Task Unauthorized_Invalid_Credentials(TestHullType record) {
             await InvalidCredentials.Action(_httpClient, _baseUrl, _url, _actionVerb, "user-does-not-exist", "not-a-valid-password", record);
         }
 
@@ -46,9 +47,20 @@ namespace Users {
         }
 
         [Theory]
-        [ClassData(typeof(CreateValidUser))]
-        public async Task Simple_Users_Can_Not_Create(TestNewUser record) {
+        [ClassData(typeof(UpdateValidHullType))]
+        public async Task Simple_Users_Can_Not_Update(TestHullType record) {
             await Forbidden.Action(_httpClient, _baseUrl, _url, _actionVerb, "simpleuser", Helpers.SimpleUserPassword(), record);
+        }
+
+        [Fact]
+        public async Task Admins_Can_Not_Update_When_Not_Found() {
+            await RecordNotFound.Action(_httpClient, _baseUrl, _notFoundUrl, "john", Helpers.AdminPassword());
+        }
+
+        [Theory]
+        [ClassData(typeof(UpdateValidHullType))]
+        public async Task Admins_Can_Update_When_Valid(TestHullType record) {
+            await RecordSaved.Action(_httpClient, _baseUrl, _url, _actionVerb, "john", Helpers.AdminPassword(), record);
         }
 
     }

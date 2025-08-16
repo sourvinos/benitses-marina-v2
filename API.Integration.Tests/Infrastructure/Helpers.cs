@@ -27,10 +27,6 @@ namespace Infrastructure {
             return JsonConvert.DeserializeObject<TokenResponse>(loginResponseContent);
         }
 
-        public static async Task Logout(HttpClient httpClient, string userId) {
-            await httpClient.PostAsync("api/auth/logout", new StringContent(userId));
-        }
-
         public static string CreateRandomString(int length) {
             return new string(Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ", length).Select(s => s[_random.Next(s.Length)]).ToArray());
         }
@@ -41,6 +37,14 @@ namespace Infrastructure {
                 RequestUri = new Uri(baseUrl + url),
                 Content = new StringContent(userId)
             };
+        }
+
+        public static string AdminPassword() {
+            return "A#ba439de-446e-4eef-8c4b-833f1b3e18aa";
+        }
+
+        public static string SimpleUserPassword() {
+            return "A#ba439de-446e-4eef-8c4b-833f1b3e18aa";
         }
 
     }

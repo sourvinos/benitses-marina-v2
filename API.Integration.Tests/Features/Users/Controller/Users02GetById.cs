@@ -47,22 +47,22 @@ namespace Users {
 
         [Fact]
         public async Task Simple_Users_Can_Not_Get_By_Id_If_Not_Owned() {
-            await RecordNotOwned.Action(_httpClient, _baseUrl, _simpleUserUrl_not_owned, "simpleuser", "A#ba439de-446e-4eef-8c4b-833f1b3e18aa");
+            await RecordNotOwned.Action(_httpClient, _baseUrl, _simpleUserUrl_not_owned, "simpleuser", Helpers.SimpleUserPassword());
         }
 
         [Fact]
         public async Task Simple_Users_Can_Get_By_Id_If_Owned() {
-            await RecordFound.Action(_httpClient, _baseUrl, _url, "john", "A#ba439de-446e-4eef-8c4b-833f1b3e18aa");
+            await RecordFound.Action(_httpClient, _baseUrl, _url, "john", Helpers.SimpleUserPassword());
         }
 
         [Fact]
         public async Task Admins_Not_Found_When_Not_Exists() {
-            await RecordNotFound.Action(_httpClient, _baseUrl, _notFoundUrl, "john", "A#ba439de-446e-4eef-8c4b-833f1b3e18aa");
+            await RecordNotFound.Action(_httpClient, _baseUrl, _notFoundUrl, "john", Helpers.AdminPassword());
         }
 
         [Fact]
         public async Task Admins_Can_Get_By_Id() {
-            await RecordFound.Action(_httpClient, _baseUrl, _url, "john", "A#ba439de-446e-4eef-8c4b-833f1b3e18aa");
+            await RecordFound.Action(_httpClient, _baseUrl, _url, "john", Helpers.AdminPassword());
         }
 
     }

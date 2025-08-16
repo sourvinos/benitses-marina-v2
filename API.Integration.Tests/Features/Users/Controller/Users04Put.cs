@@ -49,39 +49,39 @@ namespace Users {
 
         [Fact]
         public async Task Simple_Users_Can_Not_Update_When_Not_Found() {
-            await RecordNotFound.Action(_httpClient, _baseUrl, _notFoundUrl, "simpleuser", "A#ba439de-446e-4eef-8c4b-833f1b3e18aa");
+            await RecordNotFound.Action(_httpClient, _baseUrl, _notFoundUrl, "simpleuser", Helpers.SimpleUserPassword());
         }
 
         [Theory]
         [ClassData(typeof(UpdateValidUserNotOwnRecord))]
         public async Task Simple_Users_Can_Not_Update_Not_Owned(TestUpdateUser record) {
-            var actionResponse = await RecordInvalidNotSaved.Action(_httpClient, _baseUrl, _url, _actionVerb, "simpleuser", "A#ba439de-446e-4eef-8c4b-833f1b3e18aa", record);
+            var actionResponse = await RecordInvalidNotSaved.Action(_httpClient, _baseUrl, _url, _actionVerb, "simpleuser", Helpers.SimpleUserPassword(), record);
             Assert.Equal((HttpStatusCode)record.StatusCode, actionResponse.StatusCode);
         }
 
         [Theory]
         [ClassData(typeof(UpdateValidUser))]
         public async Task Simple_Users_Can_Update_Own_Account_When_Valid(TestUpdateUser record) {
-            await RecordSaved.Action(_httpClient, _baseUrl, _url, _actionVerb, "simpleuser", "A#ba439de-446e-4eef-8c4b-833f1b3e18aa", record);
+            await RecordSaved.Action(_httpClient, _baseUrl, _url, _actionVerb, "simpleuser", Helpers.SimpleUserPassword(), record);
         }
 
         [Fact]
         public async Task Admins_Can_Not_Update_When_Not_Found() {
-            await RecordNotFound.Action(_httpClient, _baseUrl, _notFoundUrl, "john", "A#ba439de-446e-4eef-8c4b-833f1b3e18aa");
+            await RecordNotFound.Action(_httpClient, _baseUrl, _notFoundUrl, "john", Helpers.AdminPassword());
         }
 
 
         [Theory]
         [ClassData(typeof(UpdateInvalidUser))]
         public async Task Admins_Can_Not_Update_When_Invalid(TestUpdateUser record) {
-            var actionResponse = await RecordInvalidNotSaved.Action(_httpClient, _baseUrl, _url, _actionVerb, "john", "A#ba439de-446e-4eef-8c4b-833f1b3e18aa", record);
+            var actionResponse = await RecordInvalidNotSaved.Action(_httpClient, _baseUrl, _url, _actionVerb, "john", Helpers.AdminPassword(), record);
             Assert.Equal((HttpStatusCode)record.StatusCode, actionResponse.StatusCode);
         }
 
         [Theory]
         [ClassData(typeof(UpdateValidUser))]
         public async Task Admins_Can_Update_When_Valid(TestUpdateUser record) {
-            await RecordSaved.Action(_httpClient, _baseUrl, _url, _actionVerb, "john", "A#ba439de-446e-4eef-8c4b-833f1b3e18aa", record);
+            await RecordSaved.Action(_httpClient, _baseUrl, _url, _actionVerb, "john", Helpers.AdminPassword(), record);
         }
 
     }

@@ -51,17 +51,14 @@ namespace API.Infrastructure.Users {
                 .SingleOrDefaultAsync(x => x.Email == email);
         }
 
-        public async Task CreateAsync(UserExtended entity, string password) {
+        public async Task<IdentityResult> CreateAsync(UserExtended entity, string password) {
             using var transaction = context.Database.BeginTransaction();
             var result = await userManager.CreateAsync(entity, password);
             if (result.Succeeded) {
                 await userManager.AddToRoleAsync(entity, entity.IsAdmin ? "Admin" : "User");
                 DisposeOrCommit(transaction);
-            } else {
-                throw new CustomException() {
-                    ResponseCode = 492
-                };
             }
+            return result;
         }
 
         public async Task<bool> UpdateAdminAsync(UserExtended entity, UserUpdateDto entityToUpdate) {
