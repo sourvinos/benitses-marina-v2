@@ -1,8 +1,6 @@
-using Infrastructure;
-
 namespace Boats {
 
-    public class TestBoat : ITestEntity {
+    public class TestBoat {
 
         public int StatusCode { get; set; }
 
