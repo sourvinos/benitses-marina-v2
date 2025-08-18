@@ -13,38 +13,38 @@ namespace API.Features.HullTypes {
 
         #region variables
 
-        private readonly IHullTypeRepository hullTypeRepo;
-        private readonly IHullTypeValidation hullTypeValidation;
+        private readonly IHullTypeRepository repo;
+        private readonly IHullTypeValidation validation;
 
         #endregion
 
-        public HullTypesController(IHullTypeRepository hullTypeRepo, IHullTypeValidation HullTypeValidation) {
-            this.hullTypeRepo = hullTypeRepo;
-            this.hullTypeValidation = HullTypeValidation;
+        public HullTypesController(IHullTypeRepository repo, IHullTypeValidation validation) {
+            this.repo = repo;
+            this.validation = validation;
         }
 
         [HttpGet]
         [Authorize(Roles = "admin")]
         public async Task<IEnumerable<HullTypeListVM>> GetAsync() {
-            return await hullTypeRepo.GetAsync();
+            return await repo.GetAsync();
         }
 
         [HttpGet("[action]")]
         [Authorize(Roles = "user, admin")]
         public async Task<IEnumerable<HullTypeBrowserVM>> GetForBrowserAsync() {
-            return await hullTypeRepo.GetForBrowserAsync();
+            return await repo.GetForBrowserAsync();
         }
 
         [HttpGet("{id}")]
         [Authorize(Roles = "admin")]
         public async Task<ResponseWithBody> GetByIdAsync(int id) {
-            var x = await hullTypeRepo.GetByIdAsync(id);
+            var x = await repo.GetByIdAsync(id);
             if (x != null) {
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Info.ToString(),
-                    Message = ApiMessages.OK(),
-                    Body = HullTypeMappings.DomainToDto(x)
+                    Body = HullTypeMappings.DomainToDto(x),
+                    Message = ApiMessages.OK()
                 };
             } else {
                 throw new CustomException() {
@@ -57,9 +57,9 @@ namespace API.Features.HullTypes {
         [Authorize(Roles = "admin")]
         [ServiceFilter(typeof(ModelValidationAttribute))]
         public ResponseWithBody Post([FromBody] HullTypeWriteDto hullType) {
-            var x = hullTypeValidation.IsValid(null, hullType);
+            var x = validation.IsValid(null, hullType);
             if (x == 200) {
-                var z = hullTypeRepo.Create((HullType)hullTypeRepo.AttachMetadataToPostDto(HullTypeMappings.DtoToDomail(hullType)));
+                var z = repo.Create((HullType)repo.AttachMetadataToPostDto(HullTypeMappings.DtoToDomail(hullType)));
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),
@@ -77,16 +77,16 @@ namespace API.Features.HullTypes {
         [Authorize(Roles = "admin")]
         [ServiceFilter(typeof(ModelValidationAttribute))]
         public async Task<ResponseWithBody> Put([FromBody] HullTypeWriteDto hullType) {
-            var x = await hullTypeRepo.GetByIdAsync(hullType.Id);
+            var x = await repo.GetByIdAsync(hullType.Id);
             if (x != null) {
-                var z = hullTypeValidation.IsValid(x, hullType);
+                var z = validation.IsValid(x, hullType);
                 if (z == 200) {
-                    var i = hullTypeRepo.Update((HullType)hullTypeRepo.AttachMetadataToPostDto(HullTypeMappings.DtoToDomail(hullType)));
+                    var i = repo.Update((HullType)repo.AttachMetadataToPostDto(HullTypeMappings.DtoToDomail(hullType)));
                     return new ResponseWithBody {
                         Code = 200,
                         Icon = Icons.Success.ToString(),
                         Body = i,
-                        Message = ApiMessages.OK(),
+                        Message = ApiMessages.OK()
                     };
                 } else {
                     throw new CustomException() {
@@ -103,14 +103,14 @@ namespace API.Features.HullTypes {
         [HttpDelete("{id}")]
         [Authorize(Roles = "admin")]
         public async Task<ResponseWithBody> Delete([FromRoute] int id) {
-            var x = await hullTypeRepo.GetByIdAsync(id);
+            var x = await repo.GetByIdAsync(id);
             if (x != null) {
-                hullTypeRepo.Delete(x);
+                repo.Delete(x);
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),
                     Body = x,
-                    Message = ApiMessages.OK(),
+                    Message = ApiMessages.OK()
                 };
             } else {
                 throw new CustomException() {

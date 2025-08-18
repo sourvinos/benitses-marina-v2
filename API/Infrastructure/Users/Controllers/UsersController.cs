@@ -41,8 +41,8 @@ namespace API.Infrastructure.Users {
                     return new ResponseWithBody {
                         Code = 200,
                         Icon = Icons.Info.ToString(),
-                        Message = ApiMessages.OK(),
-                        Body = UserMappings.DomainToDto(x)
+                        Body = UserMappings.DomainToDto(x),
+                        Message = ApiMessages.OK()
                     };
                 } else {
                     throw new CustomException() {

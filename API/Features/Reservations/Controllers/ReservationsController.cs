@@ -13,32 +13,32 @@ namespace API.Features.Reservations {
 
         #region variables
 
-        private readonly IReservationRepository reservationRepo;
-        private readonly IReservationValidation reservationValidation;
+        private readonly IReservationRepository repo;
+        private readonly IReservationValidation validation;
 
         #endregion
 
-        public ReservationsController(IReservationRepository reservationRepo, IReservationValidation reservationValidation) {
-            this.reservationRepo = reservationRepo;
-            this.reservationValidation = reservationValidation;
+        public ReservationsController(IReservationRepository repo, IReservationValidation validation) {
+            this.repo = repo;
+            this.validation = validation;
         }
 
         [HttpGet()]
         [Authorize(Roles = "user, admin")]
         public async Task<IEnumerable<ReservationListVM>> GetAsync() {
-            return await reservationRepo.GetAsync();
+            return await repo.GetAsync();
         }
 
         [HttpGet("{reservationId}")]
         [Authorize(Roles = "user, admin")]
         public async Task<ResponseWithBody> GetByIdAsync(string reservationId) {
-            var x = await reservationRepo.GetByIdAsync(reservationId);
+            var x = await repo.GetByIdAsync(reservationId);
             if (x != null) {
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Info.ToString(),
-                    Message = ApiMessages.OK(),
-                    Body = ReservationMappingDomainToDto.DomainToDto(x)
+                    Body = ReservationMappingDomainToDto.DomainToDto(x),
+                    Message = ApiMessages.OK()
                 };
             } else {
                 throw new CustomException() {
@@ -50,14 +50,14 @@ namespace API.Features.Reservations {
         [HttpPost]
         [Authorize(Roles = "admin")]
         [ServiceFilter(typeof(ModelValidationAttribute))]
-        public async Task<Response> PostAsync([FromBody] ReservationWriteDto reservation) {
-            var z = reservationValidation.IsValidAsync(null, reservation);
+        public async Task<ResponseWithBody> PostAsync([FromBody] ReservationWriteDto reservation) {
+            var z = validation.IsValidAsync(null, reservation);
             if (await z == 200) {
-                var x = reservationRepo.Create((Reservation)reservationRepo.AttachMetadataToPostDto(ReservationMappingDtoToDomain.DtoToDomain(reservation)));
-                return new Response {
+                var x = repo.Create((Reservation)repo.AttachMetadataToPostDto(ReservationMappingDtoToDomain.DtoToDomain(reservation)));
+                return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),
-                    Id = x.ReservationId.ToString(),
+                    Body = ReservationMappingDomainToDto.DomainToDto(x),
                     Message = ApiMessages.OK()
                 };
             } else {

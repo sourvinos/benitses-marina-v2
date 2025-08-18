@@ -17,7 +17,7 @@ namespace BoatUsages {
         private readonly TestHostFixture _testHostFixture = new();
         private readonly string _actionVerb = "delete";
         private readonly string _baseUrl;
-        private readonly string _url = "/boatUsages/2";
+        private readonly string _url = "/boatUsages/3";
         private readonly string _inUseUrl = "/boatUsages/1";
         private readonly string _notFoundUrl = "/boatUsages/9999";
 

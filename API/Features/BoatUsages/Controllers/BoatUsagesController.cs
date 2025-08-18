@@ -13,38 +13,38 @@ namespace API.Features.BoatUsages {
 
         #region variables
 
-        private readonly IBoatUsageRepository BoatUsageRepo;
-        private readonly IBoatUsageValidation BoatUsageValidation;
+        private readonly IBoatUsageRepository repo;
+        private readonly IBoatUsageValidation validation;
 
         #endregion
 
-        public BoatUsagesController(IBoatUsageRepository BoatUsageRepo, IBoatUsageValidation BoatUsageValidation) {
-            this.BoatUsageRepo = BoatUsageRepo;
-            this.BoatUsageValidation = BoatUsageValidation;
+        public BoatUsagesController(IBoatUsageRepository repo, IBoatUsageValidation validation) {
+            this.repo = repo;
+            this.validation = validation;
         }
 
         [HttpGet]
         [Authorize(Roles = "admin")]
         public async Task<IEnumerable<BoatUsageListVM>> GetAsync() {
-            return await BoatUsageRepo.GetAsync();
+            return await repo.GetAsync();
         }
 
         [HttpGet("[action]")]
         [Authorize(Roles = "user, admin")]
         public async Task<IEnumerable<BoatUsageBrowserVM>> GetForBrowserAsync() {
-            return await BoatUsageRepo.GetForBrowserAsync();
+            return await repo.GetForBrowserAsync();
         }
 
         [HttpGet("{id}")]
         [Authorize(Roles = "admin")]
         public async Task<ResponseWithBody> GetByIdAsync(int id) {
-            var x = await BoatUsageRepo.GetByIdAsync(id);
+            var x = await repo.GetByIdAsync(id);
             if (x != null) {
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Info.ToString(),
-                    Message = ApiMessages.OK(),
-                    Body = BoatUsageMappings.DomainToDto(x)
+                    Body = BoatUsageMappings.DomainToDto(x),
+                    Message = ApiMessages.OK()
                 };
             } else {
                 throw new CustomException() {
@@ -57,9 +57,9 @@ namespace API.Features.BoatUsages {
         [Authorize(Roles = "admin")]
         [ServiceFilter(typeof(ModelValidationAttribute))]
         public ResponseWithBody Post([FromBody] BoatUsageWriteDto boatUsage) {
-            var x = BoatUsageValidation.IsValid(null, boatUsage);
+            var x = validation.IsValid(null, boatUsage);
             if (x == 200) {
-                var z = BoatUsageRepo.Create((BoatUsage)BoatUsageRepo.AttachMetadataToPostDto(BoatUsageMappings.DtoToDomail(boatUsage)));
+                var z = repo.Create((BoatUsage)repo.AttachMetadataToPostDto(BoatUsageMappings.DtoToDomail(boatUsage)));
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),
@@ -77,16 +77,16 @@ namespace API.Features.BoatUsages {
         [Authorize(Roles = "admin")]
         [ServiceFilter(typeof(ModelValidationAttribute))]
         public async Task<ResponseWithBody> Put([FromBody] BoatUsageWriteDto boatUsage) {
-            var x = await BoatUsageRepo.GetByIdAsync(boatUsage.Id);
+            var x = await repo.GetByIdAsync(boatUsage.Id);
             if (x != null) {
-                var z = BoatUsageValidation.IsValid(x, boatUsage);
+                var z = validation.IsValid(x, boatUsage);
                 if (z == 200) {
-                    BoatUsageRepo.Update((BoatUsage)BoatUsageRepo.AttachMetadataToPostDto(BoatUsageMappings.DtoToDomail(boatUsage)));
+                    var i = repo.Update((BoatUsage)repo.AttachMetadataToPostDto(BoatUsageMappings.DtoToDomail(boatUsage)));
                     return new ResponseWithBody {
                         Code = 200,
                         Icon = Icons.Success.ToString(),
-                        Body = BoatUsageRepo.GetByIdForBrowserAsync(boatUsage.Id).Result,
-                        Message = ApiMessages.OK(),
+                        Body = i,
+                        Message = ApiMessages.OK()
                     };
                 } else {
                     throw new CustomException() {
@@ -102,14 +102,14 @@ namespace API.Features.BoatUsages {
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "admin")]
-        public async Task<Response> Delete([FromRoute] int id) {
-            var x = await BoatUsageRepo.GetByIdAsync(id);
+        public async Task<ResponseWithBody> Delete([FromRoute] int id) {
+            var x = await repo.GetByIdAsync(id);
             if (x != null) {
-                BoatUsageRepo.Delete(x);
-                return new Response {
+                repo.Delete(x);
+                return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),
-                    Id = x.Id.ToString(),
+                    Body = x,
                     Message = ApiMessages.OK()
                 };
             } else {

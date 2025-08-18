@@ -16,8 +16,8 @@ namespace API.Features.Boats {
 
         public async Task<int> IsValidAsync(Boat z, BoatWriteDto boat) {
             return true switch {
-                var x when x == !await IsValidBoatUsageId(boat) => 451,
-                var x when x == !await IsValidHullTypeId(boat) => 450,
+                var x when x == !await IsValidBoatUsageId(boat) => 450,
+                var x when x == !await IsValidHullTypeId(boat) => 451,
                 var x when x == IsAlreadyUpdated(z, boat) => 415,
                 _ => 200,
             };

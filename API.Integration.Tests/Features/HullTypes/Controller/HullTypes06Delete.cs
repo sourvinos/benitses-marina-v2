@@ -17,7 +17,7 @@ namespace HullTypes {
         private readonly TestHostFixture _testHostFixture = new();
         private readonly string _actionVerb = "delete";
         private readonly string _baseUrl;
-        private readonly string _url = "/hullTypes/2";
+        private readonly string _url = "/hullTypes/3";
         private readonly string _inUseUrl = "/hullTypes/1";
         private readonly string _notFoundUrl = "/hullTypes/9999";
 

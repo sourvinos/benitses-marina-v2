@@ -1,30 +1,29 @@
-﻿using Responses;
-using Cases;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
+using Cases;
 using Infrastructure;
+using Responses;
 using Xunit;
-using API.Features.BoatUsages;
 
-namespace BoatUsages {
+namespace Boats {
 
     [Collection("Sequence")]
-    public class BoatUsages01Get : IClassFixture<AppSettingsFixture> {
+    public class Boats06Delete : IClassFixture<AppSettingsFixture> {
 
         #region variables
 
         private readonly AppSettingsFixture _appSettingsFixture;
         private readonly HttpClient _httpClient;
         private readonly TestHostFixture _testHostFixture = new();
-        private readonly string _actionVerb = "get";
+        private readonly string _actionVerb = "delete";
         private readonly string _baseUrl;
-        private readonly string _url = "/boatUsages";
+        private readonly string _url = "/boats/2";
+        private readonly string _inUseUrl = "/boats/1";
+        private readonly string _notFoundUrl = "/boats/9999";
 
         #endregion
 
-        public BoatUsages01Get(AppSettingsFixture appsettings) {
+        public Boats06Delete(AppSettingsFixture appsettings) {
             _appSettingsFixture = appsettings;
             _baseUrl = _appSettingsFixture.Configuration.GetSection("TestingEnvironment").GetSection("BaseUrl").Value;
             _httpClient = _testHostFixture.Client;
@@ -47,15 +46,23 @@ namespace BoatUsages {
         }
 
         [Fact]
-        public async Task Simple_Users_Can_Not_List() {
+        public async Task Simple_Users_Can_Not_Delete() {
             await Forbidden.Action(_httpClient, _baseUrl, _url, _actionVerb, "simpleuser", Helpers.SimpleUserPassword(), null);
         }
 
         [Fact]
-        public async Task Admins_Can_List() {
-            var actionResponse = await List.Action(_httpClient, _baseUrl, _url, "john", Helpers.AdminPassword());
-            var records = JsonSerializer.Deserialize<List<BoatUsageListVM>>(await actionResponse.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-            Assert.Equal(3, records.Count);
+        public async Task Admins_Not_Found_When_Not_Exists() {
+            await RecordNotFound.Action(_httpClient, _baseUrl, _notFoundUrl, "john", Helpers.AdminPassword());
+        }
+
+        [Fact]
+        public async Task Admins_Can_Not_Delete_In_Use() {
+            await RecordInUse.Action(_httpClient, _baseUrl, _inUseUrl, "john", Helpers.AdminPassword());
+        }
+
+        [Fact]
+        public async Task Admins_Can_Delete() {
+            await RecordDeleted.Action(_httpClient, _baseUrl, _url, "john", Helpers.AdminPassword());
         }
 
     }
