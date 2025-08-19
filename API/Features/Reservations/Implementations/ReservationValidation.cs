@@ -15,7 +15,7 @@ namespace API.Features.Reservations {
 
         public async Task<int> IsValidAsync(Reservation z, ReservationWriteDto reservation) {
             return true switch {
-                var x when x == !await IsValidBoatId(reservation) => 451,
+                var x when x == !await IsValidBoatId(reservation) => 452,
                 var x when x == IsAlreadyUpdated(z, reservation) => 415,
                 _ => 200,
             };

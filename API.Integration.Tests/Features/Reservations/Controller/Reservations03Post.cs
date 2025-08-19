@@ -6,10 +6,10 @@ using Infrastructure;
 using Responses;
 using Xunit;
 
-namespace BoatUsages {
+namespace Reservations {
 
     [Collection("Sequence")]
-    public class BoatUsages04Post : IClassFixture<AppSettingsFixture> {
+    public class Reservations03Post : IClassFixture<AppSettingsFixture> {
 
         #region variables
 
@@ -18,25 +18,25 @@ namespace BoatUsages {
         private readonly TestHostFixture _testHostFixture = new();
         private readonly string _actionVerb = "post";
         private readonly string _baseUrl;
-        private readonly string _url = "/boatUsages";
+        private readonly string _url = "/reservations";
 
         #endregion
 
-        public BoatUsages04Post(AppSettingsFixture appsettings) {
+        public Reservations03Post(AppSettingsFixture appsettings) {
             _appSettingsFixture = appsettings;
             _baseUrl = _appSettingsFixture.Configuration.GetSection("TestingEnvironment").GetSection("BaseUrl").Value;
             _httpClient = _testHostFixture.Client;
         }
 
         [Theory]
-        [ClassData(typeof(CreateValidBoatUsage))]
-        public async Task Unauthorized_Not_Logged_In(TestBoatUsage record) {
+        [ClassData(typeof(CreateValidReservation))]
+        public async Task Unauthorized_Not_Logged_In(TestReservation record) {
             await InvalidCredentials.Action(_httpClient, _baseUrl, _url, _actionVerb, "", "", record);
         }
 
         [Theory]
-        [ClassData(typeof(CreateValidBoatUsage))]
-        public async Task Unauthorized_Invalid_Credentials(TestBoatUsage record) {
+        [ClassData(typeof(CreateValidReservation))]
+        public async Task Unauthorized_Invalid_Credentials(TestReservation record) {
             await InvalidCredentials.Action(_httpClient, _baseUrl, _url, _actionVerb, "user-does-not-exist", "not-a-valid-password", record);
         }
 
@@ -47,14 +47,21 @@ namespace BoatUsages {
         }
 
         [Theory]
-        [ClassData(typeof(CreateValidBoatUsage))]
-        public async Task Simple_Users_Can_Not_Create(TestBoatUsage record) {
+        [ClassData(typeof(CreateValidReservation))]
+        public async Task Simple_Users_Can_Not_Create(TestReservation record) {
             await Forbidden.Action(_httpClient, _baseUrl, _url, _actionVerb, "simpleuser", Helpers.SimpleUserPassword(), record);
         }
 
         [Theory]
-        [ClassData(typeof(CreateValidBoatUsage))]
-        public async Task Admins_Can_Create_When_Valid(TestBoatUsage record) {
+        [ClassData(typeof(CreateInvalidReservation))]
+        public async Task Admins_Can_Not_Create_When_Invalid(TestReservation record) {
+            var actionResponse = await RecordInvalidNotSaved.Action(_httpClient, _baseUrl, _url, _actionVerb, "john", Helpers.AdminPassword(), record);
+            Assert.Equal((HttpStatusCode)record.StatusCode, actionResponse.StatusCode);
+        }
+
+        [Theory]
+        [ClassData(typeof(CreateValidReservation))]
+        public async Task Admins_Can_Create_When_Valid(TestReservation record) {
             await RecordSaved.Action(_httpClient, _baseUrl, _url, _actionVerb, "john", Helpers.AdminPassword(), record);
         }
 
