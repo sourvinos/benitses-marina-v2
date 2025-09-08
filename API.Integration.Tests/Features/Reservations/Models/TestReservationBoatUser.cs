@@ -1,8 +1,8 @@
 using System;
 
-namespace API.Features.Reservations {
+namespace Reservations {
 
-    public class ReservationBoatOwner {
+    public class TestReservationBoatUser {
 
         public int Id { get; set; }
         public Guid ReservationId { get; set; }

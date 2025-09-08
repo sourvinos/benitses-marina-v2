@@ -13,7 +13,7 @@ namespace Users {
         }
 
         private static object[] EmailAlreadyExists() {
-            return new object[] {
+            return [
                 new TestNewUser {
                     StatusCode = 492,
                     Username = "newuser",
@@ -22,11 +22,11 @@ namespace Users {
                     IsAdmin = false,
                     IsActive = true
                 }
-            };
+            ];
         }
 
         private static object[] UsernameAlreadyExists() {
-            return new object[] {
+            return [
                 new TestNewUser {
                     StatusCode = 492,
                     Username = "john",
@@ -35,7 +35,7 @@ namespace Users {
                     IsAdmin = false,
                     IsActive = true
                 }
-            };
+            ];
         }
 
     }

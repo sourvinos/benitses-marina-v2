@@ -8,14 +8,14 @@ namespace API.Features.Reservations {
             var x = new Reservation {
                 ReservationId = reservation.ReservationId,
                 BoatId = reservation.BoatId,
-                BoatOwner = new ReservationBoatOwner {
+                BoatUser = new ReservationBoatUser {
                     ReservationId = reservation.ReservationId,
-                    Name = reservation.BoatOwner.Name,
-                    Address = reservation.BoatOwner.Address,
-                    TaxNo = reservation.BoatOwner.TaxNo,
-                    TaxOffice = reservation.BoatOwner.TaxOffice,
-                    Phones = reservation.BoatOwner.Phones,
-                    Email = reservation.BoatOwner.Email
+                    Name = reservation.BoatUser.Name,
+                    Address = reservation.BoatUser.Address,
+                    TaxNo = reservation.BoatUser.TaxNo,
+                    TaxOffice = reservation.BoatUser.TaxOffice,
+                    Phones = reservation.BoatUser.Phones,
+                    Email = reservation.BoatUser.Email
                 },
                 FromDate = DateHelpers.StringToDate(reservation.FromDate),
                 ToDate = DateHelpers.StringToDate(reservation.ToDate),

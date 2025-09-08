@@ -8,7 +8,7 @@ namespace API.Features.Reservations {
 
         public Guid ReservationId { get; set; }
         public ReservationBoatReadDto Boat { get; set; }
-        public SimpleEntity Owner { get; set; }
+        public SimpleEntity User { get; set; }
         public string FromDate { get; set; }
         public string ToDate { get; set; }
         public bool IsDocked { get; set; }

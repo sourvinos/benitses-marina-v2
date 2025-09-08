@@ -13,14 +13,14 @@ namespace Reservations {
         }
 
         private static object[] Create_Valid_Reservation() {
-            return new object[] {
+            return [
                 new TestReservation {
                     BoatId = 1,
                     FromDate = DateHelpers.StringToDate("2025-01-01"),
                     ToDate = DateHelpers.StringToDate("2025-01-10"),
                     IsDocked = true,
                     IsDryDock = false,
-                    BoatOwner = new TestReservationBoatOwner {
+                    BoatUser = new TestReservationBoatUser {
                         Name = "NAME",
                         Address = "ADDRESS",
                         TaxNo = "TAX NUMBER",
@@ -29,7 +29,7 @@ namespace Reservations {
                         Email = "email@server.com"
                      }
                 }
-            };
+            ];
         }
 
     }

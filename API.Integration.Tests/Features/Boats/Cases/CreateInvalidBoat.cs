@@ -16,7 +16,7 @@ namespace Boats {
         }
 
         private static object[] BoatUsage_Must_Exist() {
-            return new object[] {
+            return [
                 new TestBoat {
                     StatusCode = 450,
                     BoatUsageId = 99,
@@ -37,11 +37,11 @@ namespace Boats {
                         ExpireDate = DateHelpers.StringToDate("2050-12-31")
                     }
                 }
-            };
+            ];
         }
 
         private static object[] BoatUsage_Must_Be_Active() {
-            return new object[] {
+            return [
                 new TestBoat {
                     StatusCode = 450,
                     BoatUsageId = 3,
@@ -62,11 +62,11 @@ namespace Boats {
                         ExpireDate = DateHelpers.StringToDate("2050-12-31")
                     }
                 }
-            };
+            ];
         }
 
         private static object[] HullType_Must_Exist() {
-            return new object[] {
+            return [
                 new TestBoat {
                     StatusCode = 451,
                     BoatUsageId = 1,
@@ -87,11 +87,11 @@ namespace Boats {
                         ExpireDate = DateHelpers.StringToDate("2050-12-31")
                     }
                 }
-            };
+            ];
         }
 
         private static object[] HullType_Must_Be_Active() {
-            return new object[] {
+            return [
                 new TestBoat {
                     StatusCode = 451,
                     BoatUsageId = 1,
@@ -112,7 +112,7 @@ namespace Boats {
                         ExpireDate = DateHelpers.StringToDate("2050-12-31")
                     }
                 }
-            };
+            ];
         }
 
     }

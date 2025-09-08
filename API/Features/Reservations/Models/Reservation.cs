@@ -9,7 +9,7 @@ namespace API.Features.Reservations {
         public Guid ReservationId { get; set; }
         public int BoatId { get; set; }
         public Boat Boat { get; set; }
-        public ReservationBoatOwner BoatOwner { get; set; }
+        public ReservationBoatUser BoatUser { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
         public bool IsDocked { get; set; }

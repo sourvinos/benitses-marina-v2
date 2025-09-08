@@ -19,7 +19,7 @@ namespace API.Features.Reservations {
             var reservations = await context.Reservations
                 .AsNoTracking()
                 .Include(x => x.Boat).ThenInclude(x => x.Type)
-                .Include(x => x.BoatOwner)
+                .Include(x => x.BoatUser)
                 .ToListAsync();
             return ReservationMappingDomainToListVM.DomainToListVM(reservations);
         }
@@ -29,7 +29,7 @@ namespace API.Features.Reservations {
                 .AsNoTracking()
                 .Include(x => x.Boat).ThenInclude(x => x.Type)
                 .Include(x => x.Boat).ThenInclude(x => x.Usage)
-                .Include(x => x.BoatOwner)
+                .Include(x => x.BoatUser)
                 .Where(x => x.ReservationId.ToString() == reservationId)
                 .SingleOrDefaultAsync();
             return x;

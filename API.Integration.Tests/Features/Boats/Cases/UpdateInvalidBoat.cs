@@ -14,7 +14,7 @@ namespace Boats {
         }
 
         private static object[] BoatUsage_Must_Exist() {
-            return new object[] {
+            return [
                 new TestBoat {
                     Id = 1,
                     StatusCode = 450,
@@ -37,11 +37,11 @@ namespace Boats {
                     },
                     PutAt = "2023-09-07 09:55:16"
                 }
-            };
+            ];
         }
 
         private static object[] HullType_Must_Exist() {
-            return new object[] {
+            return [
                 new TestBoat {
                     Id = 1,
                     StatusCode = 451,
@@ -64,7 +64,7 @@ namespace Boats {
                     },
                     PutAt = "2023-09-07 09:55:16"
                 }
-            };
+            ];
         }
 
     }

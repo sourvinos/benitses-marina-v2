@@ -13,7 +13,7 @@ namespace Boats {
         }
 
         private static object[] Create_Valid_Boat() {
-            return new object[] {
+            return [
                 new TestBoat {
                     BoatUsageId = 1,
                     HullTypeId = 1,
@@ -33,7 +33,7 @@ namespace Boats {
                         ExpireDate = DateHelpers.StringToDate("2050-12-31")
                     }
                 }
-            };
+            ];
         }
     }
 

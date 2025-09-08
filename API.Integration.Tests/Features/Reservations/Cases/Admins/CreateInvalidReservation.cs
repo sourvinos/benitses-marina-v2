@@ -14,7 +14,7 @@ namespace Reservations {
         }
 
         private static object[] Boat_Must_Exist() {
-            return new object[] {
+            return [
                 new TestReservation {
                     StatusCode = 452,
                     BoatId = 999,
@@ -22,7 +22,7 @@ namespace Reservations {
                     ToDate = DateHelpers.StringToDate("2025-01-01"),
                     IsDocked = true,
                     IsDryDock = false,
-                    BoatOwner = new TestReservationBoatOwner {
+                    BoatUser = new TestReservationBoatUser {
                         Name = "NAME",
                         Address = "ADDRESS",
                         TaxNo = "TAX NUMBER",
@@ -31,11 +31,11 @@ namespace Reservations {
                         Email = "email@server.com"
                      }
                 }
-            };
+            ];
         }
 
         private static object[] Boat_Must_Be_Active() {
-            return new object[] {
+            return [
                 new TestReservation {
                     StatusCode = 452,
                     BoatId = 2,
@@ -43,7 +43,7 @@ namespace Reservations {
                     ToDate = DateHelpers.StringToDate("2025-01-01"),
                     IsDocked = true,
                     IsDryDock = false,
-                    BoatOwner = new TestReservationBoatOwner {
+                    BoatUser = new TestReservationBoatUser {
                         Name = "NAME",
                         Address = "ADDRESS",
                         TaxNo = "TAX NUMBER",
@@ -52,7 +52,7 @@ namespace Reservations {
                         Email = "email@server.com"
                      }
                 }
-            };
+            ];
         }
 
     }

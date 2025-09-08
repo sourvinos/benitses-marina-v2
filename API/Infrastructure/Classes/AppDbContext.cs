@@ -20,7 +20,7 @@ namespace API.Infrastructure.Classes {
         public DbSet<BoatUsage> BoatUsages { get; set; }
         public DbSet<HullType> HullTypes { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
-        public DbSet<ReservationBoatOwner> ReservationBoatOwners { get; set; }
+        public DbSet<ReservationBoatUser> ReservationBoatUsers { get; set; }
         public DbSet<Token> Tokens { get; set; }
         public DbSet<EmailQueue> EmailQueues { get; set; }
 

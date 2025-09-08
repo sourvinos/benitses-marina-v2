@@ -55,7 +55,7 @@ namespace Users {
         public async Task Admins_Can_List() {
             var actionResponse = await List.Action(_httpClient, _baseUrl, _url, "john", Helpers.AdminPassword());
             var records = JsonSerializer.Deserialize<List<UserReadDto>>(await actionResponse.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-            Assert.Equal(2, records.Count);
+            Assert.Equal(4, records.Count);
         }
 
     }

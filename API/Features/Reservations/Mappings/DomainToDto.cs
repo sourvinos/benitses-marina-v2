@@ -18,9 +18,9 @@ namespace API.Features.Reservations {
                     Loa = reservation.Boat.Loa,
                     Beam = reservation.Boat.Beam
                 },
-                Owner = new SimpleEntity {
-                    Id = reservation.BoatOwner.Id,
-                    Description = reservation.BoatOwner.Name,
+                User = new SimpleEntity {
+                    Id = reservation.BoatUser.Id,
+                    Description = reservation.BoatUser.Name,
                 },
                 FromDate = DateHelpers.DateToISOString(reservation.FromDate),
                 ToDate = DateHelpers.DateToISOString(reservation.ToDate),

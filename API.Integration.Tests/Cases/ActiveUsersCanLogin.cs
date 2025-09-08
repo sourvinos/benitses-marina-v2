@@ -14,21 +14,21 @@ namespace Cases {
         }
 
         private static object[] Active_Simple_Users_Can_Login() {
-            return new object[] {
+            return [
                 new Login {
                     Username = "simpleuser",
                     Password = Helpers.SimpleUserPassword()
                 }
-            };
+            ];
         }
 
         private static object[] Active_Admins_Can_Login() {
-            return new object[] {
+            return [
                 new Login {
                     Username = "john",
                     Password = Helpers.AdminPassword()
                 }
-            };
+            ];
         }
 
     }

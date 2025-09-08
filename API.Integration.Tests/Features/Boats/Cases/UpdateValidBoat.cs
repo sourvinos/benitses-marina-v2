@@ -13,7 +13,7 @@ namespace Boats {
         }
 
         private static object[] Update_Valid_Boat() {
-            return new object[] {
+            return [
                 new TestBoat {
                     Id = 1,
                     BoatUsageId = 1,
@@ -35,7 +35,7 @@ namespace Boats {
                     },
                     PutAt = "2025-08-12 05:00:18"
                 }
-            };
+            ];
         }
 
     }

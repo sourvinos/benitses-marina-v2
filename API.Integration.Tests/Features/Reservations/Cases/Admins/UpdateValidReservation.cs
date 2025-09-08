@@ -14,7 +14,7 @@ namespace Reservations {
         }
 
         private static object[] Update_Valid_Reservation() {
-            return new object[] {
+            return [
                 new TestReservation {
                     ReservationId = Guid.Parse("08ddda11-0ce6-4a22-85bd-d16bd63e2a88"),
                     BoatId = 1,
@@ -22,7 +22,7 @@ namespace Reservations {
                     ToDate = DateHelpers.StringToDate("2025-01-10"),
                     IsDocked = true,
                     IsDryDock = false,
-                    BoatOwner = new TestReservationBoatOwner {
+                    BoatUser = new TestReservationBoatUser {
                         Name = "NAME",
                         Address = "ADDRESS",
                         TaxNo = "TAX NUMBER",
@@ -32,7 +32,7 @@ namespace Reservations {
                     },
                     PutAt = "2025-08-13 05:28:08"
                 }
-            };
+            ];
         }
 
     }

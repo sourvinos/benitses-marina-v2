@@ -13,24 +13,24 @@ namespace Users {
         }
 
         private static object[] ValidAdmin() {
-            return new object[] {
+            return [
                 new TestNewUser {
                     Username = "username",
                     Displayname = "Display Name",
                     Email = "johnsourvinos1@hotmail.com",
                     IsAdmin = true
                 }
-            };
+            ];
         }
 
         private static object[] ValidSimpleUser() {
-            return new object[] {
+            return [
                 new TestNewUser {
                     Username = "username",
                     Displayname = "Display Name",
                     Email = "new-email@server.com",
                 }
-            };
+            ];
         }
 
     }

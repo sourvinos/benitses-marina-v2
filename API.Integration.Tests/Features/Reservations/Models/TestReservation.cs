@@ -15,7 +15,7 @@ namespace Reservations {
         public bool IsDryDock { get; set; }
         public string PutAt { get; set; }
 
-        public TestReservationBoatOwner BoatOwner { get; set; }
+        public TestReservationBoatUser BoatUser { get; set; }
 
     }
 

@@ -15,7 +15,7 @@ namespace Reservations {
         }
 
         private static object[] Boat_Must_Exist() {
-            return new object[] {
+            return [
                 new TestReservation {
                     StatusCode = 452,
                     ReservationId = Guid.Parse("08ddda11-0ce6-4a22-85bd-d16bd63e2a88"),
@@ -24,7 +24,7 @@ namespace Reservations {
                     ToDate = DateHelpers.StringToDate("2025-01-10"),
                     IsDocked = true,
                     IsDryDock = false,
-                    BoatOwner = new TestReservationBoatOwner {
+                    BoatUser = new TestReservationBoatUser {
                         Name = "NAME",
                         Address = "ADDRESS",
                         TaxNo = "TAX NUMBER",
@@ -33,11 +33,11 @@ namespace Reservations {
                         Email = "email@server.com"
                      }
                 }
-            };
+            ];
         }
 
         private static object[] Reservation_Must_Not_Be_Already_Updated() {
-            return new object[] {
+            return [
                 new TestReservation {
                     StatusCode = 415,
                     ReservationId = Guid.Parse("08ddda11-0ce6-4a22-85bd-d16bd63e2a88"),
@@ -46,7 +46,7 @@ namespace Reservations {
                     ToDate = DateHelpers.StringToDate("2025-01-10"),
                     IsDocked = true,
                     IsDryDock = false,
-                    BoatOwner = new TestReservationBoatOwner {
+                    BoatUser = new TestReservationBoatUser {
                         Name = "NAME",
                         Address = "ADDRESS",
                         TaxNo = "TAX NUMBER",
@@ -56,7 +56,7 @@ namespace Reservations {
                     },
                     PutAt = "2025-08-13 05:25:08"
                 }
-            };
+            ];
         }
 
     }

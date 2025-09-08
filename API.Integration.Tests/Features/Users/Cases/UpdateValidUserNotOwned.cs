@@ -12,7 +12,7 @@ namespace Users {
         }
 
         private static object[] AccountIsOwnedByAnotherUser() {
-            return new object[] {
+            return [
                 new TestUpdateUser {
                     StatusCode = 490,
                     Id = "e7e014fd-5608-4936-866e-ec11fc8c16da",
@@ -22,7 +22,7 @@ namespace Users {
                     IsAdmin = true,
                     IsActive = true
                 }
-            };
+            ];
         }
 
     }

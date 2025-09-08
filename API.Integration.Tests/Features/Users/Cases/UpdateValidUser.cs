@@ -12,7 +12,7 @@ namespace Users {
         }
 
         private static object[] ValidModel() {
-            return new object[] {
+            return [
                 new TestUpdateUser {
                     Id = "eae03de1-6742-4015-9d52-102dba5d7365",
                     Username = "simpleuser",
@@ -21,7 +21,7 @@ namespace Users {
                     IsAdmin = false,
                     IsActive = true
                 }
-            };
+            ];
         }
 
     }

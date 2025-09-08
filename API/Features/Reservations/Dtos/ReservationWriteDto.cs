@@ -7,7 +7,7 @@ namespace API.Features.Reservations {
 
         public Guid ReservationId { get; set; }
         public int BoatId { get; set; }
-        public ReservationBoatOwnerWriteDto BoatOwner { get; set; }
+        public ReservationBoatUserWriteDto BoatUser { get; set; }
         public string FromDate { get; set; }
         public string ToDate { get; set; }
         public bool IsDocked { get; set; }

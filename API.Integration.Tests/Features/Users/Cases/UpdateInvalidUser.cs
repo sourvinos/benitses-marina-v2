@@ -13,7 +13,7 @@ namespace Users {
         }
 
         private static object[] UsernameAlreadyExists() {
-            return new object[] {
+            return [
                 new TestUpdateUser {
                     StatusCode = 492,
                     Id = "eae03de1-6742-4015-9d52-102dba5d7365",
@@ -23,11 +23,11 @@ namespace Users {
                     IsAdmin = false,
                     IsActive = true
                 }
-            };
+            ];
         }
 
         private static object[] EmailAlreadyExists() {
-            return new object[] {
+            return [
                 new TestUpdateUser {
                     StatusCode = 492,
                     Id = "e7e014fd-5608-4936-866e-ec11fc8c16da",
@@ -37,7 +37,7 @@ namespace Users {
                     IsAdmin = false,
                     IsActive = true
                 }
-            };
+            ];
         }
 
     }

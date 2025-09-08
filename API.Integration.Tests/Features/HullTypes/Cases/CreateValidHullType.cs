@@ -13,11 +13,11 @@ namespace HullTypes {
         }
 
         private static object[] ValidRecord() {
-            return new object[] {
+            return [
                 new TestHullType {
                     Description = Helpers.CreateRandomString(128),
                 }
-            };
+            ];
         }
 
     }

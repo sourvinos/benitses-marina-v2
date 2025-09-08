@@ -13,11 +13,11 @@ namespace BoatUsages {
         }
 
         private static object[] ValidRecord() {
-            return new object[] {
+            return [
                 new TestBoatUsage {
                     Description = Helpers.CreateRandomString(128),
                 }
-            };
+            ];
         }
 
     }
