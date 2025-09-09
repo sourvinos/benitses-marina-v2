@@ -20,15 +20,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace API {
 
-    public class Startup {
+    public class Startup(IConfiguration configuration, IWebHostEnvironment environment) {
 
-        public IConfiguration Configuration { get; }
-        public IWebHostEnvironment Environment { get; }
-
-        public Startup(IConfiguration configuration, IWebHostEnvironment environment) {
-            Configuration = configuration;
-            Environment = environment;
-        }
+        public IConfiguration Configuration { get; } = configuration;
+        public IWebHostEnvironment Environment { get; } = environment;
 
         public void ConfigureLocalDevelopmentServices(IServiceCollection services) {
             services.AddDbContextFactory<AppDbContext>(options =>

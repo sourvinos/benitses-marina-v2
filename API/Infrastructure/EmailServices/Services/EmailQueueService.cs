@@ -14,25 +14,17 @@ using Microsoft.Extensions.Options;
 
 namespace API.Infrastructure.EmailServices {
 
-    public class EmailQueueService : BackgroundService {
+    public class EmailQueueService(IEmailAccountSender emailAccountSender, IEmailQueueRepository queueRepo, IEmailUserDetailsSender emailUserDetailsSender, IOptions<EnvironmentSettings> environmentSettings, UserManager<UserExtended> userManager) : BackgroundService {
 
         #region variables
 
-        private readonly EnvironmentSettings environmentSettings;
-        private readonly IEmailAccountSender emailAccountSender;
-        private readonly IEmailQueueRepository emailQueueRepo;
-        private readonly IEmailUserDetailsSender emailUserSender;
-        private readonly UserManager<UserExtended> userManager;
+        private readonly EnvironmentSettings environmentSettings = environmentSettings.Value;
+        private readonly IEmailAccountSender emailAccountSender = emailAccountSender;
+        private readonly IEmailQueueRepository emailQueueRepo = queueRepo;
+        private readonly IEmailUserDetailsSender emailUserSender = emailUserDetailsSender;
+        private readonly UserManager<UserExtended> userManager = userManager;
 
         #endregion
-
-        public EmailQueueService(IEmailAccountSender emailAccountSender, IEmailQueueRepository queueRepo, IEmailUserDetailsSender emailUserDetailsSender, IOptions<EnvironmentSettings> environmentSettings, UserManager<UserExtended> userManager) {
-            this.emailAccountSender = emailAccountSender;
-            this.emailQueueRepo = queueRepo;
-            this.emailUserSender = emailUserDetailsSender;
-            this.environmentSettings = environmentSettings.Value;
-            this.userManager = userManager;
-        }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken) {
             while (!stoppingToken.IsCancellationRequested) {

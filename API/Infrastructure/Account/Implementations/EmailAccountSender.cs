@@ -9,19 +9,14 @@ using System.Threading.Tasks;
 
 namespace API.Infrastructure.Account {
 
-    public class EmailAccountSender : IEmailAccountSender {
+    public class EmailAccountSender(IOptions<EmailUserSettings> emailUserSettings, IOptions<EnvironmentSettings> environmentSettings) : IEmailAccountSender {
 
         #region variables
 
-        private readonly EnvironmentSettings environmentSettings;
-        private readonly EmailUserSettings emailUserSettings;
+        private readonly EnvironmentSettings environmentSettings = environmentSettings.Value;
+        private readonly EmailUserSettings emailUserSettings = emailUserSettings.Value;
 
         #endregion
-
-        public EmailAccountSender(IOptions<EmailUserSettings> emailUserSettings, IOptions<EnvironmentSettings> environmentSettings) {
-            this.emailUserSettings = emailUserSettings.Value;
-            this.environmentSettings = environmentSettings.Value;
-        }
 
         public async Task EmailForgotPassword(string username, string displayname, string email, string returnUrl) {
             using var smtp = new SmtpClient();

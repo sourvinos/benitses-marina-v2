@@ -7,9 +7,7 @@ using Microsoft.Extensions.Options;
 
 namespace API.Features.BoatUsages {
 
-    public class BoatUsageValidation : Repository<BoatUsage>, IBoatUsageValidation {
-
-        public BoatUsageValidation(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> settings, UserManager<UserExtended> userManager) : base(appDbContext, httpContext, settings, userManager) { }
+    public class BoatUsageValidation(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> settings, UserManager<UserExtended> userManager) : Repository<BoatUsage>(appDbContext, httpContext, settings, userManager), IBoatUsageValidation {
 
         public int IsValid(BoatUsage z, BoatUsageWriteDto boat) {
             return true switch {

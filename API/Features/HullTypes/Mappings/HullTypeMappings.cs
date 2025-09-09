@@ -6,19 +6,19 @@ namespace API.Features.HullTypes {
     public static class HullTypeMappings {
 
         public static List<HullTypeListVM> DomainToListVM(List<HullType> hullTypes) {
-            return hullTypes.Select(x => new HullTypeListVM {
+            return [.. hullTypes.Select(x => new HullTypeListVM {
                 Id = x.Id,
                 Description = x.Description,
                 IsActive = x.IsActive,
-            }).ToList();
+            })];
         }
 
         public static List<HullTypeBrowserVM> DomainToBrowserListVM(List<HullType> hullTypes) {
-            return hullTypes.Select(x => new HullTypeBrowserVM {
+            return [.. hullTypes.Select(x => new HullTypeBrowserVM {
                 Id = x.Id,
                 Description = x.Description,
                 IsActive = x.IsActive,
-            }).ToList();
+            })];
         }
 
         public static HullTypeBrowserVM DomainToBrowserVM(HullType hullType) {

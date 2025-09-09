@@ -4,19 +4,15 @@ using Microsoft.AspNetCore.Identity;
 
 namespace API.Infrastructure.Users {
 
-    public class UserValidation : IUserValidation<IUser> {
+    public class UserValidation(IHttpContextAccessor httpContext, UserManager<UserExtended> userManager) : IUserValidation<IUser> {
 
         #region variables
 
-        private readonly IHttpContextAccessor httpContext;
-        private readonly UserManager<UserExtended> userManager;
+        private readonly IHttpContextAccessor httpContext = httpContext;
+        private readonly UserManager<UserExtended> userManager = userManager;
 
         #endregion
 
-        public UserValidation(IHttpContextAccessor httpContext, UserManager<UserExtended> userManager) {
-            this.httpContext = httpContext;
-            this.userManager = userManager;
-        }
 
         public int IsValid(IUser user) {
             return true switch {

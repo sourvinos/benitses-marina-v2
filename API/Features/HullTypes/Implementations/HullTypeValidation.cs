@@ -7,9 +7,7 @@ using Microsoft.Extensions.Options;
 
 namespace API.Features.HullTypes {
 
-    public class HullTypeValidation : Repository<HullType>, IHullTypeValidation {
-
-        public HullTypeValidation(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> settings, UserManager<UserExtended> userManager) : base(appDbContext, httpContext, settings, userManager) { }
+    public class HullTypeValidation(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> settings, UserManager<UserExtended> userManager) : Repository<HullType>(appDbContext, httpContext, settings, userManager), IHullTypeValidation {
 
         public int IsValid(HullType z, HullTypeWriteDto Boat) {
             return true switch {

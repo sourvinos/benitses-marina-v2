@@ -6,19 +6,19 @@ namespace API.Features.BoatUsages {
     public static class BoatUsageMappings {
 
         public static List<BoatUsageListVM> DomainToListVM(List<BoatUsage> boatUsages) {
-            return boatUsages.Select(x => new BoatUsageListVM {
+            return [.. boatUsages.Select(x => new BoatUsageListVM {
                 Id = x.Id,
                 Description = x.Description,
                 IsActive = x.IsActive,
-            }).ToList();
+            })];
         }
 
         public static List<BoatUsageBrowserVM> DomainToBrowserListVM(List<BoatUsage> boatUsages) {
-            return boatUsages.Select(x => new BoatUsageBrowserVM {
+            return [.. boatUsages.Select(x => new BoatUsageBrowserVM {
                 Id = x.Id,
                 Description = x.Description,
                 IsActive = x.IsActive,
-            }).ToList();
+            })];
         }
 
         public static BoatUsageBrowserVM DomainToBrowserVM(BoatUsage boatUsage) {

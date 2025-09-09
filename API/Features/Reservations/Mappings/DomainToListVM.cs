@@ -8,7 +8,7 @@ namespace API.Features.Reservations {
     public static class ReservationMappingDomainToListVM {
 
         public static List<ReservationListVM> DomainToListVM(List<Reservation> reservations) {
-            var x = reservations.Select(x => new ReservationListVM {
+            return [.. reservations.Select(x => new ReservationListVM {
                 ReservationId = x.ReservationId,
                 Boat = new ReservationBoatReadDto {
                     Id = x.Boat.Id,
@@ -24,8 +24,7 @@ namespace API.Features.Reservations {
                 ToDate = DateHelpers.DateToISOString(x.ToDate),
                 IsDocked = x.IsDocked,
                 IsDryDock = x.IsDryDock
-            }).ToList();
-            return x;
+            })];
         }
 
     }

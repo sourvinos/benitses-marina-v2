@@ -6,17 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Infrastructure.EmailServices {
 
     [Route("api/[controller]")]
-    public class EmailQueuesController : ControllerBase {
+    public class EmailQueuesController(IEmailQueueRepository emailQueueRepo) : ControllerBase {
 
         #region variables
 
-        private readonly IEmailQueueRepository emailQueueRepo;
+        private readonly IEmailQueueRepository emailQueueRepo = emailQueueRepo;
 
         #endregion
-
-        public EmailQueuesController(IEmailQueueRepository emailQueueRepo) {
-            this.emailQueueRepo = emailQueueRepo;
-        }
 
         [HttpPost]
         [AllowAnonymous]

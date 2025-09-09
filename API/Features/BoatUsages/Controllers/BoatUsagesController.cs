@@ -9,19 +9,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Features.BoatUsages {
 
     [Route("api/[controller]")]
-    public class BoatUsagesController : ControllerBase {
+    public class BoatUsagesController(IBoatUsageRepository repo, IBoatUsageValidation validation) : ControllerBase {
 
         #region variables
 
-        private readonly IBoatUsageRepository repo;
-        private readonly IBoatUsageValidation validation;
+        private readonly IBoatUsageRepository repo = repo;
+        private readonly IBoatUsageValidation validation = validation;
 
         #endregion
-
-        public BoatUsagesController(IBoatUsageRepository repo, IBoatUsageValidation validation) {
-            this.repo = repo;
-            this.validation = validation;
-        }
 
         [HttpGet]
         [Authorize(Roles = "admin")]

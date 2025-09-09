@@ -11,10 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Features.HullTypes {
 
-    public class HullTypeRepository : Repository<HullType>, IHullTypeRepository {
-
-
-        public HullTypeRepository(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> settings, UserManager<UserExtended> userManager) : base(appDbContext, httpContext, settings, userManager) { }
+    public class HullTypeRepository(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> settings, UserManager<UserExtended> userManager) : Repository<HullType>(appDbContext, httpContext, settings, userManager), IHullTypeRepository {
 
         public async Task<IEnumerable<HullTypeListVM>> GetAsync() {
             var hullTypes = await context.HullTypes
@@ -40,10 +37,9 @@ namespace API.Features.HullTypes {
         }
 
         public async Task<HullType> GetByIdAsync(int id) {
-            var x = await context.HullTypes
+            return await context.HullTypes
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
-            return x;
         }
 
     }

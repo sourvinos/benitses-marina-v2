@@ -13,19 +13,12 @@ using Microsoft.Extensions.Options;
 
 namespace API.Infrastructure.Implementations {
 
-    public class Repository<T> : IRepository<T> where T : class {
+    public class Repository<T>(AppDbContext context, IHttpContextAccessor httpContextAccessor, IOptions<TestingEnvironment> testingSettings, UserManager<UserExtended> userManager) : IRepository<T> where T : class {
 
-        private readonly IHttpContextAccessor httpContextAccessor;
-        private readonly TestingEnvironment testingSettings;
-        private readonly UserManager<UserExtended> userManager;
-        protected readonly AppDbContext context;
-
-        public Repository(AppDbContext context, IHttpContextAccessor httpContextAccessor, IOptions<TestingEnvironment> testingSettings, UserManager<UserExtended> userManager) {
-            this.context = context;
-            this.httpContextAccessor = httpContextAccessor;
-            this.testingSettings = testingSettings.Value;
-            this.userManager = userManager;
-        }
+        private readonly IHttpContextAccessor httpContextAccessor = httpContextAccessor;
+        private readonly TestingEnvironment testingSettings = testingSettings.Value;
+        private readonly UserManager<UserExtended> userManager = userManager;
+        protected readonly AppDbContext context = context;
 
         public T Create(T entity) {
             using var transaction = context.Database.BeginTransaction();

@@ -9,19 +9,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Features.HullTypes {
 
     [Route("api/[controller]")]
-    public class HullTypesController : ControllerBase {
+    public class HullTypesController(IHullTypeRepository repo, IHullTypeValidation validation) : ControllerBase {
 
         #region variables
 
-        private readonly IHullTypeRepository repo;
-        private readonly IHullTypeValidation validation;
+        private readonly IHullTypeRepository repo = repo;
+        private readonly IHullTypeValidation validation = validation;
 
         #endregion
-
-        public HullTypesController(IHullTypeRepository repo, IHullTypeValidation validation) {
-            this.repo = repo;
-            this.validation = validation;
-        }
 
         [HttpGet]
         [Authorize(Roles = "admin")]

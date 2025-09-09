@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 
 namespace API.Features.Reservations {
 
-    public class ReservationValidation : Repository<Reservation>, IReservationValidation {
-
-        public ReservationValidation(AppDbContext context, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> testingEnvironment, UserManager<UserExtended> userManager) : base(context, httpContext, testingEnvironment, userManager) { }
+    public class ReservationValidation(AppDbContext context, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> testingEnvironment, UserManager<UserExtended> userManager) : Repository<Reservation>(context, httpContext, testingEnvironment, userManager), IReservationValidation {
 
         public async Task<int> IsValidAsync(Reservation z, ReservationWriteDto reservation) {
             return true switch {

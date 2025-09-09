@@ -10,21 +10,15 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Infrastructure.Users {
 
     [Route("api/[controller]")]
-    public class UsersController : ControllerBase {
+    public class UsersController(IHttpContextAccessor httpContext, IUserRepository userRepo, IUserValidation<IUser> userValidation) : ControllerBase {
 
         #region variables
 
-        private readonly IHttpContextAccessor httpContext;
-        private readonly IUserRepository userRepo;
-        private readonly IUserValidation<IUser> userValidation;
+        private readonly IHttpContextAccessor httpContext = httpContext;
+        private readonly IUserRepository userRepo = userRepo;
+        private readonly IUserValidation<IUser> userValidation = userValidation;
 
         #endregion
-
-        public UsersController(IHttpContextAccessor httpContext, IUserRepository userRepo, IUserValidation<IUser> userValidation) {
-            this.httpContext = httpContext;
-            this.userRepo = userRepo;
-            this.userValidation = userValidation;
-        }
 
         [HttpGet]
         [Authorize(Roles = "admin")]

@@ -11,10 +11,7 @@ using Microsoft.Extensions.Options;
 
 namespace API.Features.BoatUsages {
 
-    public class BoatUsageRepository : Repository<BoatUsage>, IBoatUsageRepository {
-
-
-        public BoatUsageRepository(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> settings, UserManager<UserExtended> userManager) : base(appDbContext, httpContext, settings, userManager) { }
+    public class BoatUsageRepository(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> settings, UserManager<UserExtended> userManager) : Repository<BoatUsage>(appDbContext, httpContext, settings, userManager), IBoatUsageRepository {
 
         public async Task<IEnumerable<BoatUsageListVM>> GetAsync() {
             var BoatUsages = await context.BoatUsages
@@ -40,10 +37,9 @@ namespace API.Features.BoatUsages {
         }
 
         public async Task<BoatUsage> GetByIdAsync(int id) {
-            var x = await context.BoatUsages
+            return await context.BoatUsages
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
-            return x;
         }
 
     }

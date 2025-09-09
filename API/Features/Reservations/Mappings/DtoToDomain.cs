@@ -5,7 +5,7 @@ namespace API.Features.Reservations {
     public static class ReservationMappingDtoToDomain {
 
         public static Reservation DtoToDomain(ReservationWriteDto reservation) {
-            var x = new Reservation {
+            return new Reservation {
                 ReservationId = reservation.ReservationId,
                 BoatId = reservation.BoatId,
                 BoatUser = new ReservationBoatUser {
@@ -26,7 +26,6 @@ namespace API.Features.Reservations {
                 PutAt = reservation.PutAt,
                 PutUser = reservation.PutUser
             };
-            return x;
         }
 
     }

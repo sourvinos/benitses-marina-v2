@@ -9,19 +9,14 @@ using System.Threading.Tasks;
 
 namespace API.Infrastructure.Users {
 
-    public class EmailUserDetailsSender : IEmailUserDetailsSender {
+    public class EmailUserDetailsSender(IOptions<EmailUserSettings> emailUserSettings, IOptions<EnvironmentSettings> environmentSettings) : IEmailUserDetailsSender {
 
         #region variables
 
-        private readonly EmailUserSettings emailUserSettings;
-        private readonly EnvironmentSettings environmentSettings;
+        private readonly EmailUserSettings emailUserSettings = emailUserSettings.Value;
+        private readonly EnvironmentSettings environmentSettings = environmentSettings.Value;
 
         #endregion
-
-        public EmailUserDetailsSender(IOptions<EmailUserSettings> emailUserSettings, IOptions<EnvironmentSettings> environmentSettings) {
-            this.emailUserSettings = emailUserSettings.Value;
-            this.environmentSettings = environmentSettings.Value;
-        }
 
         public async Task EmailUserDetails(UserExtended user) {
             using var smtp = new SmtpClient();

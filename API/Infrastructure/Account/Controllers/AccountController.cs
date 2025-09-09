@@ -13,17 +13,15 @@ using System.Threading.Tasks;
 namespace API.Infrastructure.Account {
 
     [Route("api/[controller]")]
-    public class AccountController : Controller {
+    public class AccountController(IHttpContextAccessor httpContextAccessor, SignInManager<UserExtended> signInManager, UserManager<UserExtended> userManager) : Controller {
 
-        private readonly IHttpContextAccessor httpContextAccessor;
-        private readonly SignInManager<UserExtended> signInManager;
-        private readonly UserManager<UserExtended> userManager;
+        #region variables
 
-        public AccountController(IHttpContextAccessor httpContextAccessor, SignInManager<UserExtended> signInManager, UserManager<UserExtended> userManager) {
-            this.httpContextAccessor = httpContextAccessor;
-            this.signInManager = signInManager;
-            this.userManager = userManager;
-        }
+        private readonly IHttpContextAccessor httpContextAccessor = httpContextAccessor;
+        private readonly SignInManager<UserExtended> signInManager = signInManager;
+        private readonly UserManager<UserExtended> userManager = userManager;
+
+        #endregion
 
         [AllowAnonymous]
         [HttpPost("[action]")]

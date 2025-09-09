@@ -9,19 +9,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Features.Reservations {
 
     [Route("api/[controller]")]
-    public class ReservationsController : ControllerBase {
+    public class ReservationsController(IReservationRepository repo, IReservationValidation validation) : ControllerBase {
 
         #region variables
 
-        private readonly IReservationRepository repo;
-        private readonly IReservationValidation validation;
+        private readonly IReservationRepository repo = repo;
+        private readonly IReservationValidation validation = validation;
 
         #endregion
-
-        public ReservationsController(IReservationRepository repo, IReservationValidation validation) {
-            this.repo = repo;
-            this.validation = validation;
-        }
 
         [HttpGet()]
         [Authorize(Roles = "user, admin")]

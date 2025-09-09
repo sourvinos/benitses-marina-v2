@@ -12,9 +12,7 @@ using API.Infrastructure.Helpers;
 
 namespace API.Infrastructure.EmailServices {
 
-    public class EmailQueueRepository : Repository<EmailQueue>, IEmailQueueRepository {
-
-        public EmailQueueRepository(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> settings, UserManager<UserExtended> userManager) : base(appDbContext, httpContext, settings, userManager) { }
+    public class EmailQueueRepository(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> settings, UserManager<UserExtended> userManager) : Repository<EmailQueue>(appDbContext, httpContext, settings, userManager), IEmailQueueRepository {
 
         public async Task<EmailQueue> GetFirstNotCompleted() {
             return await context.EmailQueues

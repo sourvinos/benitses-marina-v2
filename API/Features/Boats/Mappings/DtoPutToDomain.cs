@@ -5,7 +5,7 @@ namespace API.Features.Boats {
     public static class BoatMappingDtoPutToDomain {
 
         public static Boat DtoPutToDomain(Boat x, BoatWriteDto boat) {
-            var z = new Boat {
+            return new Boat {
                 Id = boat.Id,
                 BoatUsageId = boat.BoatUsageId,
                 HullTypeId = boat.HullTypeId,
@@ -31,7 +31,6 @@ namespace API.Features.Boats {
                 PutAt = boat.PutAt,
                 PutUser = boat.PutUser
             };
-            return z;
         }
 
     }

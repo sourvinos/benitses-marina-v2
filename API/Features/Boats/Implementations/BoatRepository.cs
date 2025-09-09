@@ -39,7 +39,7 @@ namespace API.Features.Boats {
         }
 
         public async Task<Boat> GetByIdAsync(int id, bool includeTables) {
-            var x = includeTables
+            return includeTables
                 ? await context.Boats
                     .AsNoTracking()
                     .Include(x => x.HullType)
@@ -49,7 +49,6 @@ namespace API.Features.Boats {
                 : await context.Boats
                     .AsNoTracking()
                     .SingleOrDefaultAsync(x => x.Id == id);
-            return x;
         }
 
     }

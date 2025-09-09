@@ -11,9 +11,7 @@ using System.Linq;
 
 namespace API.Features.Reservations {
 
-    public class ReservationRepository : Repository<Reservation>, IReservationRepository {
-
-        public ReservationRepository(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> settings, UserManager<UserExtended> userManager) : base(appDbContext, httpContext, settings, userManager) { }
+    public class ReservationRepository(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> settings, UserManager<UserExtended> userManager) : Repository<Reservation>(appDbContext, httpContext, settings, userManager), IReservationRepository {
 
         public async Task<IEnumerable<ReservationListVM>> GetAsync() {
             var reservations = await context.Reservations
@@ -25,14 +23,13 @@ namespace API.Features.Reservations {
         }
 
         public async Task<Reservation> GetByIdAsync(string reservationId) {
-            var x = await context.Reservations
+            return await context.Reservations
                 .AsNoTracking()
                 .Include(x => x.Boat).ThenInclude(x => x.HullType)
                 .Include(x => x.Boat).ThenInclude(x => x.Usage)
                 .Include(x => x.BoatUser)
                 .Where(x => x.ReservationId.ToString() == reservationId)
                 .SingleOrDefaultAsync();
-            return x;
         }
 
 

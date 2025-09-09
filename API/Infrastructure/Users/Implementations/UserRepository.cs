@@ -14,23 +14,16 @@ using Microsoft.AspNetCore.Http;
 
 namespace API.Infrastructure.Users {
 
-    public class UserRepository : IUserRepository {
+    public class UserRepository(AppDbContext context, IHttpContextAccessor httpContextAccessor, IOptions<TestingEnvironment> testingSettings, UserManager<UserExtended> userManager) : IUserRepository {
 
         #region variables
 
-        private readonly AppDbContext context;
-        private readonly IHttpContextAccessor httpContextAccessor;
-        private readonly TestingEnvironment testingSettings;
-        private readonly UserManager<UserExtended> userManager;
+        private readonly AppDbContext context = context;
+        private readonly IHttpContextAccessor httpContextAccessor = httpContextAccessor;
+        private readonly TestingEnvironment testingSettings = testingSettings.Value;
+        private readonly UserManager<UserExtended> userManager = userManager;
 
         #endregion
-
-        public UserRepository(AppDbContext context, IHttpContextAccessor httpContextAccessor, IOptions<TestingEnvironment> testingSettings, UserManager<UserExtended> userManager) {
-            this.context = context;
-            this.httpContextAccessor = httpContextAccessor;
-            this.testingSettings = testingSettings.Value;
-            this.userManager = userManager;
-        }
 
         public async Task<IEnumerable<UserListVM>> GetAsync() {
             var users = await userManager.Users

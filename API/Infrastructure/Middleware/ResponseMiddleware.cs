@@ -12,15 +12,10 @@ using Serilog;
 
 namespace API.Infrastructure.Middleware {
 
-    public class ResponseMiddleware : IMiddleware {
+    public class ResponseMiddleware(IHttpContextAccessor httpContextAccessor, UserManager<UserExtended> userManager) : IMiddleware {
 
-        private readonly IHttpContextAccessor httpContextAccessor;
-        private readonly UserManager<UserExtended> userManager;
-
-        public ResponseMiddleware(IHttpContextAccessor httpContextAccessor, UserManager<UserExtended> userManager) {
-            this.httpContextAccessor = httpContextAccessor;
-            this.userManager = userManager;
-        }
+        private readonly IHttpContextAccessor httpContextAccessor = httpContextAccessor;
+        private readonly UserManager<UserExtended> userManager = userManager;
 
         public async Task InvokeAsync(HttpContext httpContext, RequestDelegate next) {
             try {

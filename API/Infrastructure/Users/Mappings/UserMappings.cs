@@ -7,14 +7,14 @@ namespace API.Infrastructure.Users {
     public static class UserMappings {
 
         public static List<UserListVM> DomainToListVM(List<UserExtended> users) {
-            return users.Select(x => new UserListVM {
+            return [.. users.Select(x => new UserListVM {
                 Id = x.Id,
                 Username = x.UserName,
                 Displayname = x.Displayname,
                 Email = x.Email,
                 IsAdmin = x.IsAdmin,
                 IsActive = x.IsActive,
-            }).ToList();
+            })];
         }
 
         public static UserReadDto DomainToDto(UserExtended user) {

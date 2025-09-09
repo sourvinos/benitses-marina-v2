@@ -15,21 +15,15 @@ using Microsoft.IdentityModel.Tokens;
 namespace API.Infrastructure.Auth {
 
     [Route("api/[controller]")]
-    public class AuthController : ControllerBase {
+    public class AuthController(AppDbContext context, IOptions<TokenSettings> settings, UserManager<UserExtended> userManager) : ControllerBase {
 
         #region variables
 
-        private readonly AppDbContext context;
-        private readonly TokenSettings settings;
-        private readonly UserManager<UserExtended> userManager;
+        private readonly AppDbContext context = context;
+        private readonly TokenSettings settings = settings.Value;
+        private readonly UserManager<UserExtended> userManager = userManager;
 
         #endregion
-
-        public AuthController(AppDbContext context, IOptions<TokenSettings> settings, UserManager<UserExtended> userManager) {
-            this.context = context;
-            this.settings = settings.Value;
-            this.userManager = userManager;
-        }
 
         [HttpPost("[action]")]
         public async Task<Login> Auth([FromBody] TokenRequest model) {
