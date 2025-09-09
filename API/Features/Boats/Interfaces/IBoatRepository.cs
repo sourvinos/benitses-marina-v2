@@ -10,7 +10,6 @@ namespace API.Features.Boats {
         Task<IEnumerable<BoatBrowserVM>> GetForBrowserAsync();
         Task<BoatBrowserVM> GetByIdForBrowserAsync(int id);
         Task<Boat> GetByIdAsync(int id, bool includeTables);
-        BoatWriteDto UpdateInsurancePutDto(Boat x, BoatWriteDto boat);
 
     }
 

@@ -9,10 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Features.Boats {
 
-    public class BoatValidation : Repository<BoatWriteDto>, IBoatValidation {
-
-
-        public BoatValidation(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> settings, UserManager<UserExtended> userManager) : base(appDbContext, httpContext, settings, userManager) { }
+    public class BoatValidation(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> settings, UserManager<UserExtended> userManager) : Repository<BoatWriteDto>(appDbContext, httpContext, settings, userManager), IBoatValidation {
 
         public async Task<int> IsValidAsync(Boat z, BoatWriteDto boat) {
             return true switch {

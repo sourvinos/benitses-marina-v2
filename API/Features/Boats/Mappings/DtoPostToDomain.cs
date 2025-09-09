@@ -2,20 +2,19 @@ using API.Infrastructure.Helpers;
 
 namespace API.Features.Boats {
 
-    public static class BoatMappingDtoToDomain {
+    public static class BoatMappingDtoPostToDomain {
 
-        public static Boat DtoToDomain(BoatWriteDto boat) {
-            return new Boat {
+        public static Boat DtoPostToDomain(BoatWriteDto boat) {
+            var x = new Boat {
                 Id = boat.Id,
                 BoatUsageId = boat.BoatUsageId,
                 HullTypeId = boat.HullTypeId,
                 Description = boat.Description,
                 Insurance = new BoatInsurance {
-                    Id = boat.Insurance.Id,
-                    BoatId = boat.Insurance.BoatId,
+                    BoatId = boat.Id,
                     Company = boat.Insurance.Company,
                     ContractNo = boat.Insurance.ContractNo,
-                    ExpireDate = DateHelpers.StringToDate(boat.Insurance.ExpireDate)
+                    ExpireDate = boat.Insurance.ExpireDate != null ? DateHelpers.StringToDate(boat.Insurance.ExpireDate) : null
                 },
                 Flag = boat.Flag,
                 Loa = boat.Loa,
@@ -31,6 +30,7 @@ namespace API.Features.Boats {
                 PutAt = boat.PutAt,
                 PutUser = boat.PutUser
             };
+            return x;
         }
 
     }

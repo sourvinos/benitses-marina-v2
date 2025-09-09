@@ -11,9 +11,7 @@ using API.Features.Reservations;
 
 namespace API.Infrastructure.Classes {
 
-    public class AppDbContext : IdentityDbContext<IdentityUser> {
-
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+    public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<IdentityUser>(options) {
 
         public DbSet<Boat> Boats { get; set; }
         public DbSet<BoatInsurance> BoatInsurances { get; set; }
@@ -32,6 +30,7 @@ namespace API.Infrastructure.Classes {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
 
         private static void ApplyConfigurations(ModelBuilder modelBuilder) {
+            modelBuilder.ApplyConfiguration(new BoatConfig());
             modelBuilder.ApplyConfiguration(new UserConfig());
         }
 

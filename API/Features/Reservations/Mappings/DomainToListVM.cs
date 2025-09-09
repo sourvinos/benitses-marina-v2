@@ -13,8 +13,8 @@ namespace API.Features.Reservations {
                 Boat = new ReservationBoatReadDto {
                     Id = x.Boat.Id,
                     Type = new SimpleEntity {
-                        Id = x.Boat.Type.Id,
-                        Description = x.Boat.Type.Description
+                        Id = x.Boat.HullType.Id,
+                        Description = x.Boat.HullType.Description
                     },
                     Description = x.Boat.Description,
                     Loa = x.Boat.Loa,

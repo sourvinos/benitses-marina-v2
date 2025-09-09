@@ -9,10 +9,35 @@ namespace Boats {
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         public IEnumerator<object[]> GetEnumerator() {
-            yield return Create_Valid_Boat();
+            yield return Create_Valid_Boat_With_Insurance_Date_Null();
+            yield return Create_Valid_Boat_With_Insurance_Date_Not_Null();
         }
 
-        private static object[] Create_Valid_Boat() {
+        private static object[] Create_Valid_Boat_With_Insurance_Date_Null() {
+            return [
+                new TestBoat {
+                    BoatUsageId = 1,
+                    HullTypeId = 1,
+                    Description = "DESCRIPTION",
+                    Flag = "FLAG",
+                    Loa = 12.5M,
+                    Beam = 3.5M,
+                    Draft = 0.5M,
+                    RegistryPort = "REGISTRY PORT",
+                    RegistryNo = "REGISTRY NO",
+                    IsAthenian = true,
+                    IsFishingBoat = false,
+                    IsActive = true,
+                    Insurance = new TestBoatInsurance {
+                        Company = "AXA",
+                        ContractNo  ="3100-16363",
+                        ExpireDate = null
+                    }
+                }
+            ];
+        }
+
+        private static object[] Create_Valid_Boat_With_Insurance_Date_Not_Null() {
             return [
                 new TestBoat {
                     BoatUsageId = 1,

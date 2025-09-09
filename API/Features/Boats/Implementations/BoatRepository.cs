@@ -11,14 +11,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Features.Boats {
 
-    public class BoatRepository : Repository<Boat>, IBoatRepository {
-
-        public BoatRepository(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> settings, UserManager<UserExtended> userManager) : base(appDbContext, httpContext, settings, userManager) { }
+    public class BoatRepository(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> testingEnvironment, UserManager<UserExtended> userManager) : Repository<Boat>(appDbContext, httpContext, testingEnvironment, userManager), IBoatRepository {
 
         public async Task<IEnumerable<BoatListVM>> GetAsync() {
             var boats = await context.Boats
                 .AsNoTracking()
-                .Include(x => x.Type)
+                .Include(x => x.HullType)
                 .Include(x => x.Usage)
                 .OrderBy(x => x.Description)
                 .ToListAsync();
@@ -41,22 +39,17 @@ namespace API.Features.Boats {
         }
 
         public async Task<Boat> GetByIdAsync(int id, bool includeTables) {
-            return includeTables
+            var x = includeTables
                 ? await context.Boats
                     .AsNoTracking()
-                    .Include(x => x.Type)
+                    .Include(x => x.HullType)
                     .Include(x => x.Usage)
                     .Include(x => x.Insurance)
                     .SingleOrDefaultAsync(x => x.Id == id)
                 : await context.Boats
                     .AsNoTracking()
                     .SingleOrDefaultAsync(x => x.Id == id);
-        }
-
-        public BoatWriteDto UpdateInsurancePutDto(Boat x, BoatWriteDto boat) {
-            boat.Insurance.Id = x.Insurance.Id;
-            boat.Insurance.BoatId = x.Insurance.BoatId;
-            return boat;
+            return x;
         }
 
     }

@@ -1,6 +1,5 @@
 using API.Infrastructure.Classes;
 using API.Infrastructure.Helpers;
-using API.Infrastructure.Responses;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore;

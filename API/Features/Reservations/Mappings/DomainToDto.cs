@@ -12,7 +12,7 @@ namespace API.Features.Reservations {
                     Id = reservation.Boat.Id,
                     Type = new SimpleEntity {
                         Id = reservation.Boat.Id,
-                        Description = reservation.Boat.Type.Description,
+                        Description = reservation.Boat.HullType.Description,
                     },
                     Description = reservation.Boat.Description,
                     Loa = reservation.Boat.Loa,

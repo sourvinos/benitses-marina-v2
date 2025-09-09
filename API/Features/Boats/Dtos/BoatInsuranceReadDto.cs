@@ -6,7 +6,7 @@ namespace API.Features.Boats {
         public int BoatId { get; set; }
         public string Company { get; set; }
         public string ContractNo { get; set; }
-        public string ExpireDate { get; set; }
+        public string? ExpireDate { get; set; }
 
     }
 

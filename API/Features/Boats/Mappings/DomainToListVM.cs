@@ -6,7 +6,7 @@ namespace API.Features.Boats {
     public static class BoatMappingDomainToListVM {
 
         public static List<BoatListVM> DomainToListVM(List<Boat> boats) {
-            return boats.Select(x => new BoatListVM {
+            return [.. boats.Select(x => new BoatListVM {
                 Id = x.Id,
                 Description = x.Description,
                 Loa = x.Loa,
@@ -17,7 +17,7 @@ namespace API.Features.Boats {
                 IsAthenian = x.IsAthenian,
                 IsFishingBoat = x.IsFishingBoat,
                 IsActive = x.IsActive,
-            }).ToList();
+            })];
         }
 
     }

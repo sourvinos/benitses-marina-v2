@@ -9,19 +9,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Features.Boats {
 
     [Route("api/[controller]")]
-    public class BoatsController : ControllerBase {
+    public class BoatsController(IBoatRepository repo, IBoatValidation validation) : ControllerBase {
 
         #region variables
 
-        private readonly IBoatRepository repo;
-        private readonly IBoatValidation validation;
+        private readonly IBoatRepository repo = repo;
+        private readonly IBoatValidation validation = validation;
 
         #endregion
-
-        public BoatsController(IBoatRepository repo, IBoatValidation validation) {
-            this.repo = repo;
-            this.validation = validation;
-        }
 
         [HttpGet]
         [Authorize(Roles = "user, admin")]
@@ -59,7 +54,7 @@ namespace API.Features.Boats {
         public ResponseWithBody Post([FromBody] BoatWriteDto boat) {
             var x = validation.IsValidAsync(null, boat).Result;
             if (x == 200) {
-                var z = repo.Create((Boat)repo.AttachMetadataToPostDto(BoatMappingDtoToDomain.DtoToDomain(boat)));
+                var z = repo.Create((Boat)repo.AttachMetadataToPostDto(BoatMappingDtoPostToDomain.DtoPostToDomain(boat)));
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),
@@ -81,7 +76,7 @@ namespace API.Features.Boats {
             if (x != null) {
                 var z = validation.IsValidAsync(x, boat).Result;
                 if (z == 200) {
-                    var i = repo.Update((Boat)repo.AttachMetadataToPutDto(x, BoatMappingDtoToDomain.DtoToDomain(repo.UpdateInsurancePutDto(x, boat))));
+                    var i = repo.Update((Boat)repo.AttachMetadataToPutDto(x, BoatMappingDtoPutToDomain.DtoPutToDomain(x,boat)));
                     return new ResponseWithBody {
                         Code = 200,
                         Icon = Icons.Success.ToString(),

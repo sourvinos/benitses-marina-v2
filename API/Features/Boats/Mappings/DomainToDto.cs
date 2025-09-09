@@ -9,8 +9,8 @@ namespace API.Features.Boats {
             return new BoatReadDto {
                 Id = boat.Id,
                 Type = new SimpleEntity {
-                    Id = boat.Type.Id,
-                    Description = boat.Type.Description,
+                    Id = boat.HullType.Id,
+                    Description = boat.HullType.Description,
                 },
                 Usage = new SimpleEntity {
                     Id = boat.Usage.Id,
@@ -21,7 +21,7 @@ namespace API.Features.Boats {
                     BoatId = boat.Insurance.BoatId,
                     Company = boat.Insurance.Company,
                     ContractNo = boat.Insurance.ContractNo,
-                    ExpireDate = DateHelpers.DateToISOString(boat.Insurance.ExpireDate)
+                    ExpireDate = boat.Insurance.ExpireDate != null ? DateHelpers.DateToISOString((System.DateTime)boat.Insurance.ExpireDate) : ""
                 },
                 Description = boat.Description,
                 Flag = boat.Flag,
