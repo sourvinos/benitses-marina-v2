@@ -38,7 +38,7 @@ namespace Reservations {
             return [
                 new TestReservation {
                     StatusCode = 452,
-                    BoatId = 2,
+                    BoatId = 3,
                     FromDate = DateHelpers.StringToDate("2025-01-01"),
                     ToDate = DateHelpers.StringToDate("2025-01-01"),
                     IsDocked = true,

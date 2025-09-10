@@ -2,9 +2,9 @@ using API.Infrastructure.Helpers;
 
 namespace API.Features.Reservations {
 
-    public static class ReservationMappingDtoToDomain {
+    public static class ReservationMappingPostToDomainDto {
 
-        public static Reservation DtoToDomain(ReservationWriteDto reservation) {
+        public static Reservation ReservationPostToDomainDto(ReservationWriteDto reservation) {
             return new Reservation {
                 ReservationId = reservation.ReservationId,
                 BoatId = reservation.BoatId,

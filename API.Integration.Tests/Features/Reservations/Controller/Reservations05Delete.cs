@@ -18,7 +18,7 @@ namespace Reservations {
         private readonly string _actionVerb = "delete";
         private readonly string _baseUrl;
         private readonly string _notFoundUrl = "/reservations/b140036a-5b03-4098-9774-8878f252fdb7";
-        private readonly string _deleteUrl = "/reservations/08ddda11-0ce6-4a22-85bd-d16bd63e2a88";
+        private readonly string _deleteUrl = "/reservations/b486f34c-f8ae-4b14-ba80-79d1f28bac26";
 
         #endregion
 

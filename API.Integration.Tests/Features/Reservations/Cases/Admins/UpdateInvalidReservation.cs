@@ -18,7 +18,7 @@ namespace Reservations {
             return [
                 new TestReservation {
                     StatusCode = 452,
-                    ReservationId = Guid.Parse("08ddda11-0ce6-4a22-85bd-d16bd63e2a88"),
+                    ReservationId = Guid.Parse("b486f34c-f8ae-4b14-ba80-79d1f28bac26"),
                     BoatId = 999,
                     FromDate = DateHelpers.StringToDate("2025-01-01"),
                     ToDate = DateHelpers.StringToDate("2025-01-10"),
@@ -40,7 +40,7 @@ namespace Reservations {
             return [
                 new TestReservation {
                     StatusCode = 415,
-                    ReservationId = Guid.Parse("08ddda11-0ce6-4a22-85bd-d16bd63e2a88"),
+                    ReservationId = Guid.Parse("b486f34c-f8ae-4b14-ba80-79d1f28bac26"),
                     BoatId = 1,
                     FromDate = DateHelpers.StringToDate("2025-01-01"),
                     ToDate = DateHelpers.StringToDate("2025-01-10"),

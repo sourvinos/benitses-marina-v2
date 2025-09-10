@@ -19,7 +19,7 @@ namespace API.Features.Reservations {
                 .Include(x => x.Boat).ThenInclude(x => x.HullType)
                 .Include(x => x.BoatUser)
                 .ToListAsync();
-            return ReservationMappingDomainToListVM.DomainToListVM(reservations);
+            return ReservationMappingReadDomainToListVM.ReservationReadDomainToListVM(reservations);
         }
 
         public async Task<Reservation> GetByIdAsync(string reservationId) {

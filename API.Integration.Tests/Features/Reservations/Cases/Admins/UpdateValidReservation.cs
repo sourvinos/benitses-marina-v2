@@ -16,7 +16,7 @@ namespace Reservations {
         private static object[] Update_Valid_Reservation() {
             return [
                 new TestReservation {
-                    ReservationId = Guid.Parse("08ddda11-0ce6-4a22-85bd-d16bd63e2a88"),
+                    ReservationId = Guid.Parse("b486f34c-f8ae-4b14-ba80-79d1f28bac26"),
                     BoatId = 1,
                     FromDate = DateHelpers.StringToDate("2025-01-01"),
                     ToDate = DateHelpers.StringToDate("2025-01-10"),
@@ -30,7 +30,7 @@ namespace Reservations {
                         Phones = "PHONES",
                         Email = "email@server.com"
                     },
-                    PutAt = "2025-08-13 05:28:08"
+                    PutAt = "2025-08-12 00:00:00"
                 }
             ];
         }

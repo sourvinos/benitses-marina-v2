@@ -34,7 +34,7 @@ namespace Boats {
                         ContractNo  ="3100-16363",
                         ExpireDate = null
                     },
-                    PutAt = "2025-08-12 05:00:18"
+                    PutAt = "2025-09-09 12:11:04"
                 }
             ];
         }
@@ -60,7 +60,7 @@ namespace Boats {
                         ContractNo  ="3100-16363",
                         ExpireDate = DateHelpers.StringToDate("2050-12-31")
                     },
-                    PutAt = "2025-08-12 05:00:18"
+                    PutAt = "2025-09-09 12:11:04"
                 }
             ];
         }

@@ -51,7 +51,7 @@ namespace Boats {
         public async Task Active_Users_Can_List(Login login) {
             var actionResponse = await List.Action(_httpClient, _baseUrl, _url, login.Username, login.Password);
             var records = JsonSerializer.Deserialize<List<BoatUsageBrowserVM>>(await actionResponse.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-            Assert.Equal(2, records.Count);
+            Assert.Equal(3, records.Count);
         }
 
     }
