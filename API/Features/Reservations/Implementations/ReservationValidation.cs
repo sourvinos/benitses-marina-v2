@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using API.Infrastructure.Helpers;
 
 namespace API.Features.Reservations {
 
@@ -15,6 +16,7 @@ namespace API.Features.Reservations {
             return true switch {
                 var x when x == !await IsValidBoatId(reservation) => 452,
                 var x when x == IsAlreadyUpdated(z, reservation) => 415,
+                var x when x == AreDaysCorrect(reservation) => 453,
                 _ => 200,
             };
         }
@@ -24,6 +26,12 @@ namespace API.Features.Reservations {
                 ? await context.Boats.AsNoTracking().FirstOrDefaultAsync(x => x.Id == reservation.BoatId && x.IsActive) != null
                 : await context.BoatUsages.AsNoTracking().FirstOrDefaultAsync(x => x.Id == reservation.BoatId) != null;
         }
+
+        private static bool AreDaysCorrect(ReservationWriteDto reservation) {
+            var actualDays = DateHelpers.StringToDate(reservation.ToDate) - DateHelpers.StringToDate(reservation.FromDate);
+            return reservation.Days != actualDays.Days;
+        }
+
 
         private static bool IsAlreadyUpdated(Reservation z, ReservationWriteDto reservation) {
             return z != null && z.PutAt != reservation.PutAt;

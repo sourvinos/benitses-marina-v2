@@ -11,6 +11,7 @@ namespace Reservations {
         public int BoatId { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
+        public int Days { get; set; }
         public bool IsDocked { get; set; }
         public bool IsDryDock { get; set; }
         public string PutAt { get; set; }

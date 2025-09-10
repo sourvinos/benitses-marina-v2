@@ -20,6 +20,7 @@ namespace API.Features.Reservations {
                 },
                 FromDate = DateHelpers.StringToDate(reservation.FromDate),
                 ToDate = DateHelpers.StringToDate(reservation.ToDate),
+                Days = reservation.Days,
                 IsDocked = reservation.IsDocked,
                 IsDryDock = reservation.IsDryDock,
                 PostAt = reservation.PostAt,

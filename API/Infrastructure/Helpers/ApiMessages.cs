@@ -27,6 +27,7 @@ namespace API.Infrastructure.Helpers {
         public static string InvalidBoatUsage() { return "The boat usage does not exist or is inactive"; }
         public static string InvalidHullType() { return "The hull type does not exist or is inactive"; }
         public static string InvalidBoat() { return "The boat does not exist or is inactive"; }
+        public static string InvalidDays() { return "The days or the departure day are not correct"; }
 
         #endregion
 
