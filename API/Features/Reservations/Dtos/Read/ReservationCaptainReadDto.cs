@@ -1,11 +1,9 @@
-using System;
-
 namespace API.Features.Reservations {
 
-    public class ReservationBoatUserWriteDto {
+    public class ReservationCaptainReadDto {
 
         public int Id { get; set; }
-        public Guid ReservationId { get; set; }
+        public string ReservationId { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public string TaxNo { get; set; }

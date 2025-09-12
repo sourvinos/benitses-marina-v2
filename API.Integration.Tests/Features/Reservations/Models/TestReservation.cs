@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Reservations {
 
@@ -15,8 +16,8 @@ namespace Reservations {
         public bool IsDocked { get; set; }
         public bool IsDryDock { get; set; }
         public string PutAt { get; set; }
-
         public TestReservationBoatUser BoatUser { get; set; }
+        public List<TestReservationBerth> Berths { get; set; }
 
     }
 

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using API.Infrastructure.Helpers;
 
 namespace API.Features.Reservations {
@@ -5,18 +7,19 @@ namespace API.Features.Reservations {
     public static class ReservationMappingPostToDomainDto {
 
         public static Reservation ReservationPostToDomainDto(ReservationWriteDto reservation) {
-            return new Reservation {
+            var x = new Reservation {
                 ReservationId = reservation.ReservationId,
                 BoatId = reservation.BoatId,
-                BoatUser = new ReservationBoatUser {
+                Captain = new ReservationCaptain {
                     ReservationId = reservation.ReservationId,
-                    Name = reservation.BoatUser.Name,
-                    Address = reservation.BoatUser.Address,
-                    TaxNo = reservation.BoatUser.TaxNo,
-                    TaxOffice = reservation.BoatUser.TaxOffice,
-                    Phones = reservation.BoatUser.Phones,
-                    Email = reservation.BoatUser.Email
+                    Name = reservation.Captain.Name,
+                    Address = reservation.Captain.Address,
+                    TaxNo = reservation.Captain.TaxNo,
+                    TaxOffice = reservation.Captain.TaxOffice,
+                    Phones = reservation.Captain.Phones,
+                    Email = reservation.Captain.Email
                 },
+                Berths = BuildBerths(reservation),
                 FromDate = DateHelpers.StringToDate(reservation.FromDate),
                 ToDate = DateHelpers.StringToDate(reservation.ToDate),
                 Days = reservation.Days,
@@ -27,6 +30,20 @@ namespace API.Features.Reservations {
                 PutAt = reservation.PutAt,
                 PutUser = reservation.PutUser
             };
+            return x;
+        }
+
+        private static List<ReservationBerth> BuildBerths(ReservationWriteDto reservation) {
+            var x = new List<ReservationBerth>();
+            foreach (var berth in reservation.Berths) {
+                var z = new ReservationBerth {
+                    Id = berth.Id,
+                    ReservationId = reservation.ReservationId,
+                    BerthId = berth.BerthId
+                };
+                x.Add(z);
+            }
+            return x;
         }
 
     }

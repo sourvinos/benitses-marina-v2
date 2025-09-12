@@ -15,8 +15,8 @@ namespace API.Features.Reservations {
         public async Task<int> IsValidAsync(Reservation z, ReservationWriteDto reservation) {
             return true switch {
                 var x when x == !await IsValidBoatId(reservation) => 452,
-                var x when x == IsAlreadyUpdated(z, reservation) => 415,
                 var x when x == AreDaysCorrect(reservation) => 453,
+                var x when x == IsAlreadyUpdated(z, reservation) => 415,
                 _ => 200,
             };
         }
@@ -31,7 +31,6 @@ namespace API.Features.Reservations {
             var actualDays = DateHelpers.StringToDate(reservation.ToDate) - DateHelpers.StringToDate(reservation.FromDate);
             return reservation.Days != actualDays.Days;
         }
-
 
         private static bool IsAlreadyUpdated(Reservation z, ReservationWriteDto reservation) {
             return z != null && z.PutAt != reservation.PutAt;

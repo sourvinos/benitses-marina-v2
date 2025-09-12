@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Infrastructure.Extensions;
 using API.Infrastructure.Helpers;
@@ -6,33 +6,39 @@ using API.Infrastructure.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Features.Reservations {
+namespace API.Features.Berths {
 
     [Route("api/[controller]")]
-    public class ReservationsController(IReservationRepository repo, IReservationValidation validation) : ControllerBase {
+    public class BerthsController(IBerthRepository repo, IBerthValidation validation) : ControllerBase {
 
         #region variables
 
-        private readonly IReservationRepository repo = repo;
-        private readonly IReservationValidation validation = validation;
+        private readonly IBerthRepository repo = repo;
+        private readonly IBerthValidation validation = validation;
 
         #endregion
 
-        [HttpGet()]
-        [Authorize(Roles = "user, admin")]
-        public async Task<IEnumerable<ReservationListVM>> GetAsync() {
+        [HttpGet]
+        [Authorize(Roles = "admin")]
+        public async Task<IEnumerable<BerthListVM>> GetAsync() {
             return await repo.GetAsync();
         }
 
-        [HttpGet("{reservationId}")]
+        [HttpGet("[action]")]
         [Authorize(Roles = "user, admin")]
-        public async Task<ResponseWithBody> GetByIdAsync(string reservationId) {
-            var x = await repo.GetByIdAsync(reservationId, true);
+        public async Task<IEnumerable<BerthBrowserVM>> GetForBrowserAsync() {
+            return await repo.GetForBrowserAsync();
+        }
+
+        [HttpGet("{id}")]
+        [Authorize(Roles = "admin")]
+        public async Task<ResponseWithBody> GetByIdAsync(int id) {
+            var x = await repo.GetByIdAsync(id);
             if (x != null) {
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Info.ToString(),
-                    Body = ReservationMappingReadDomainToDto.ReservationDomainToDto(x),
+                    Body = BerthMappings.DomainToDto(x),
                     Message = ApiMessages.OK()
                 };
             } else {
@@ -45,10 +51,10 @@ namespace API.Features.Reservations {
         [HttpPost]
         [Authorize(Roles = "admin")]
         [ServiceFilter(typeof(ModelValidationAttribute))]
-        public async Task<ResponseWithBody> PostAsync([FromBody] ReservationWriteDto reservation) {
-            var x = validation.IsValidAsync(null, reservation);
-            if (await x == 200) {
-                var z = repo.Create((Reservation)repo.AttachMetadataToPostDto(ReservationMappingPostToDomainDto.ReservationPostToDomainDto(reservation)));
+        public ResponseWithBody Post([FromBody] BerthWriteDto berth) {
+            var x = validation.IsValid(null, berth);
+            if (x == 200) {
+                var z = repo.Create((Berth)repo.AttachMetadataToPostDto(BerthMappings.DtoToDomail(berth)));
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),
@@ -57,7 +63,7 @@ namespace API.Features.Reservations {
                 };
             } else {
                 throw new CustomException() {
-                    ResponseCode = await x
+                    ResponseCode = x
                 };
             }
         }
@@ -65,12 +71,12 @@ namespace API.Features.Reservations {
         [HttpPut]
         [Authorize(Roles = "admin")]
         [ServiceFilter(typeof(ModelValidationAttribute))]
-        public async Task<ResponseWithBody> Put([FromBody] ReservationWriteDto reservation) {
-            var x = await repo.GetByIdAsync(reservation.ReservationId.ToString(), true);
+        public async Task<ResponseWithBody> Put([FromBody] BerthWriteDto berth) {
+            var x = await repo.GetByIdAsync(berth.Id);
             if (x != null) {
-                var z = validation.IsValidAsync(x, reservation);
-                if (await z == 200) {
-                    var i = repo.Update(reservation.ReservationId, (Reservation)repo.AttachMetadataToPutDto(x, ReservationMappingPutToDomainDto.ReservationPutToDomainDto(x, reservation)));
+                var z = validation.IsValid(x, berth);
+                if (z == 200) {
+                    var i = repo.Update((Berth)repo.AttachMetadataToPostDto(BerthMappings.DtoToDomail(berth)));
                     return new ResponseWithBody {
                         Code = 200,
                         Icon = Icons.Success.ToString(),
@@ -79,7 +85,7 @@ namespace API.Features.Reservations {
                     };
                 } else {
                     throw new CustomException() {
-                        ResponseCode = await z
+                        ResponseCode = z
                     };
                 }
             } else {
@@ -89,10 +95,10 @@ namespace API.Features.Reservations {
             }
         }
 
-        [HttpDelete("{reservationId}")]
+        [HttpDelete("{id}")]
         [Authorize(Roles = "admin")]
-        public async Task<ResponseWithBody> Delete([FromRoute] string reservationId) {
-            var x = await repo.GetByIdAsync(reservationId, true);
+        public async Task<ResponseWithBody> Delete([FromRoute] int id) {
+            var x = await repo.GetByIdAsync(id);
             if (x != null) {
                 repo.Delete(x);
                 return new ResponseWithBody {

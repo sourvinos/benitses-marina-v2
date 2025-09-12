@@ -1,14 +1,14 @@
-using System;
-using API.Infrastructure.Classes;
+using System.Collections.Generic;
 using API.Infrastructure.Interfaces;
 
 namespace API.Features.Reservations {
 
     public class ReservationReadDto : IMetadata {
 
-        public Guid ReservationId { get; set; }
+        public string ReservationId { get; set; }
         public ReservationBoatReadDto Boat { get; set; }
-        public SimpleEntity User { get; set; }
+        public ReservationCaptainReadDto Captain { get; set; }
+        public List<ReservationBerthReadDto> Berths { get; set; }
         public string FromDate { get; set; }
         public string ToDate { get; set; }
         public int Days { get; set; }

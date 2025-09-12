@@ -5,10 +5,15 @@ namespace API.Features.Reservations {
     public class ReservationBoatReadDto {
 
         public int Id { get; set; }
-        public SimpleEntity Type { get; set; }
         public string Description { get; set; }
+        public SimpleEntity HullType { get; set; }
+        public SimpleEntity Usage { get; set; }
+        public string Flag { get; set; }
         public decimal Loa { get; set; }
         public decimal Beam { get; set; }
+        public decimal Draft { get; set; }
+        public string RegistryPort { get; set; }
+        public string RegistryNo { get; set; }
 
     }
 

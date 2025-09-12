@@ -7,10 +7,10 @@ namespace API.Features.Reservations {
 
     public static class ReservationMappingReadDomainToListVM {
 
-        public static List<ReservationListVM> ReservationReadDomainToListVM(List<Reservation> reservations) {
+        public static List<ReservationListVM> ReservationDomainToListVM(List<Reservation> reservations) {
             return [.. reservations.Select(x => new ReservationListVM {
                 ReservationId = x.ReservationId,
-                Boat = new ReservationBoatReadDto {
+                Boat = new ReservationListBoatVM {
                     Id = x.Boat.Id,
                     Type = new SimpleEntity {
                         Id = x.Boat.HullType.Id,
@@ -20,6 +20,14 @@ namespace API.Features.Reservations {
                     Loa = x.Boat.Loa,
                     Beam = x.Boat.Beam
                 },
+                Berths = [.. x.Berths.Select(x => new ReservationListBerthVM {
+                    Id = x.Id,
+                    ReservationId = x.ReservationId.ToString(),
+                    Berth = new SimpleEntity {
+                        Id = x.Berth.Id,
+                        Description = x.Berth.Description
+                    }
+                })],
                 FromDate = DateHelpers.DateToISOString(x.FromDate),
                 ToDate = DateHelpers.DateToISOString(x.ToDate),
                 IsDocked = x.IsDocked,

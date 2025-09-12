@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using API.Features.Boats;
 using API.Infrastructure.Interfaces;
 
@@ -9,7 +10,8 @@ namespace API.Features.Reservations {
         public Guid ReservationId { get; set; }
         public int BoatId { get; set; }
         public Boat Boat { get; set; }
-        public ReservationBoatUser BoatUser { get; set; }
+        public ReservationCaptain Captain { get; set; }
+        public List<ReservationBerth> Berths { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
         public int Days { get; set; }

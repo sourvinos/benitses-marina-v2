@@ -8,17 +8,20 @@ using API.Features.HullTypes;
 using API.Features.BoatUsages;
 using API.Features.Boats;
 using API.Features.Reservations;
+using API.Features.Berths;
 
 namespace API.Infrastructure.Classes {
 
     public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<IdentityUser>(options) {
 
+        public DbSet<Berth> Berths { get; set; }
         public DbSet<Boat> Boats { get; set; }
         public DbSet<BoatInsurance> BoatInsurances { get; set; }
         public DbSet<BoatUsage> BoatUsages { get; set; }
         public DbSet<HullType> HullTypes { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
-        public DbSet<ReservationBoatUser> ReservationBoatUsers { get; set; }
+        public DbSet<ReservationBerth> ReservationBerths { get; set; }
+        public DbSet<ReservationCaptain> ReservationCaptains { get; set; }
         public DbSet<Token> Tokens { get; set; }
         public DbSet<EmailQueue> EmailQueues { get; set; }
 
