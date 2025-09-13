@@ -9,8 +9,7 @@ namespace API.Features.Boats {
         public string Company { get; set; }
         public string ContractNo { get; set; }
         public DateTime? ExpireDate { get; set; }
-        public Boat Boat { get; set; }
-
+ 
     }
 
 }

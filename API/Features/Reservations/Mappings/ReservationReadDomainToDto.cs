@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using API.Infrastructure.Classes;
 using API.Infrastructure.Helpers;
@@ -19,6 +20,14 @@ namespace API.Features.Reservations {
                     HullType = new SimpleEntity {
                         Id = reservation.Boat.HullType.Id,
                         Description = reservation.Boat.HullType.Description
+                    },
+                    Insurance = new ReservationBoatInsuranceReadDto {
+                        Id = reservation.Boat.Insurance.Id,
+                        BoatId = reservation.Boat.Insurance.BoatId,
+                        Company = reservation.Boat.Insurance.Company,
+                        ContractNo = reservation.Boat.Insurance.ContractNo,
+                        ExpireDate = reservation.Boat.Insurance.ExpireDate != null ? DateHelpers.DateToISOString((DateTime)reservation.Boat.Insurance.ExpireDate) : "",
+                        IsExpired = IsInsuranceExpired(reservation.Boat.Insurance.ExpireDate)
                     },
                     Flag = reservation.Boat.Flag,
                     Loa = reservation.Boat.Loa,
@@ -55,7 +64,11 @@ namespace API.Features.Reservations {
                 PutAt = reservation.PutAt,
                 PutUser = reservation.PutUser
             };
-         }
+        }
+
+        private static bool IsInsuranceExpired(DateTime? date) {
+            return date == null || date < DateHelpers.GetLocalDateTime();
+        }
 
     }
 

@@ -33,6 +33,7 @@ namespace API.Features.Reservations {
                     .AsNoTracking()
                     .Include(x => x.Boat).ThenInclude(x => x.HullType)
                     .Include(x => x.Boat).ThenInclude(x => x.Usage)
+                    .Include(x => x.Boat).ThenInclude(x => x.Insurance)
                     .Include(x => x.Captain)
                     .Include(x => x.Berths).ThenInclude(x => x.Berth)
                     .Where(x => x.ReservationId.ToString() == reservationId)
