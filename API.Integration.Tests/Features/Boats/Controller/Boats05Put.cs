@@ -1,28 +1,28 @@
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Cases;
 using Infrastructure;
 using Responses;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Boats {
 
     [Collection("Sequence")]
-    public class Boats03Post : IClassFixture<AppSettingsFixture> {
+    public class Boats05Put : IClassFixture<AppSettingsFixture> {
 
         #region variables
 
         private readonly AppSettingsFixture _appSettingsFixture;
         private readonly HttpClient _httpClient;
         private readonly TestHostFixture _testHostFixture = new();
-        private readonly string _actionVerb = "post";
+        private readonly string _actionVerb = "put";
         private readonly string _baseUrl;
         private readonly string _url = "/boats";
 
         #endregion
 
-        public Boats03Post(AppSettingsFixture appsettings) {
+        public Boats05Put(AppSettingsFixture appsettings) {
             _appSettingsFixture = appsettings;
             _baseUrl = _appSettingsFixture.Configuration.GetSection("TestingEnvironment").GetSection("BaseUrl").Value;
             _httpClient = _testHostFixture.Client;
@@ -48,20 +48,20 @@ namespace Boats {
 
         [Theory]
         [ClassData(typeof(CreateValidBoat))]
-        public async Task Simple_Users_Can_Not_Create(TestBoat record) {
+        public async Task Simple_Users_Can_Not_Update(TestBoat record) {
             await Forbidden.Action(_httpClient, _baseUrl, _url, _actionVerb, "simpleuser", Helpers.SimpleUserPassword(), record);
         }
 
         [Theory]
-        [ClassData(typeof(CreateInvalidBoat))]
-        public async Task Admins_Can_Not_Create_When_Invalid(TestBoat record) {
+        [ClassData(typeof(UpdateInvalidBoat))]
+        public async Task Admins_Can_Not_Update_When_Invalid(TestBoat record) {
             var actionResponse = await RecordInvalidNotSaved.Action(_httpClient, _baseUrl, _url, _actionVerb, "john", Helpers.AdminPassword(), record);
             Assert.Equal((HttpStatusCode)record.StatusCode, actionResponse.StatusCode);
         }
 
         [Theory]
-        [ClassData(typeof(CreateValidBoat))]
-        public async Task Admins_Can_Create_When_Valid(TestBoat record) {
+        [ClassData(typeof(UpdateValidBoat))]
+        public async Task Admins_Can_Update_When_Valid(TestBoat record) {
             await RecordSaved.Action(_httpClient, _baseUrl, _url, _actionVerb, "john", Helpers.AdminPassword(), record);
         }
 

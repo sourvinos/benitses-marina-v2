@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Net.Http;
-using System.Text.Json;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
-using API.Features.BoatUsages;
 using Cases;
 using Infrastructure;
 using Responses;
@@ -11,7 +8,7 @@ using Xunit;
 namespace Boats {
 
     [Collection("Sequence")]
-    public class Boats02GetForBrowser : IClassFixture<AppSettingsFixture> {
+    public class Boats02GetGetById : IClassFixture<AppSettingsFixture> {
 
         #region variables
 
@@ -20,11 +17,12 @@ namespace Boats {
         private readonly TestHostFixture _testHostFixture = new();
         private readonly string _actionVerb = "get";
         private readonly string _baseUrl;
-        private readonly string _url = "/boats/getForBrowser";
+        private readonly string _url = "/boats/1";
+        private readonly string _notFoundUrl = "/boats/9999";
 
         #endregion
 
-        public Boats02GetForBrowser(AppSettingsFixture appsettings) {
+        public Boats02GetGetById(AppSettingsFixture appsettings) {
             _appSettingsFixture = appsettings;
             _baseUrl = _appSettingsFixture.Configuration.GetSection("TestingEnvironment").GetSection("BaseUrl").Value;
             _httpClient = _testHostFixture.Client;
@@ -46,12 +44,19 @@ namespace Boats {
             await InvalidCredentials.Action(_httpClient, _baseUrl, _url, _actionVerb, login.Username, login.Password, null);
         }
 
-        [Theory]
-        [ClassData(typeof(ActiveUsersCanLogin))]
-        public async Task Active_Users_Can_List(Login login) {
-            var actionResponse = await List.Action(_httpClient, _baseUrl, _url, login.Username, login.Password);
-            var records = JsonSerializer.Deserialize<List<BoatUsageBrowserVM>>(await actionResponse.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-            Assert.Equal(3, records.Count);
+        [Fact]
+        public async Task Simple_Users_Can_Get_By_Id() {
+            await RecordFound.Action(_httpClient, _baseUrl, _url, "simpleuser", Helpers.SimpleUserPassword());
+        }
+
+        [Fact]
+        public async Task Admins_Not_Found_When_Not_Exists() {
+            await RecordNotFound.Action(_httpClient, _baseUrl, _notFoundUrl, "john", Helpers.AdminPassword());
+        }
+
+        [Fact]
+        public async Task Admins_Can_Get_By_Id() {
+            await RecordFound.Action(_httpClient, _baseUrl, _url, "john", Helpers.AdminPassword());
         }
 
     }
