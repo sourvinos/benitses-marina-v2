@@ -16,14 +16,18 @@ namespace Reservations {
         private static object[] Update_Valid_Reservation() {
             return [
                 new TestReservation {
-                    ReservationId = Guid.Parse("b486f34c-f8ae-4b14-ba80-79d1f28bac26"),
+                    ReservationId = Guid.Parse("91430e54-c26b-44aa-956b-ed4477c4013a"),
                     BoatId = 1,
                     FromDate = DateHelpers.StringToDate("2025-01-01"),
                     ToDate = DateHelpers.StringToDate("2025-01-10"),
                     Days = 9,
                     IsDocked = true,
                     IsDryDock = false,
-                    BoatUser = new TestReservationBoatUser {
+                    Berths = [
+                        new() { Id = 6, ReservationId = Guid.Parse("91430e54-c26b-44aa-956b-ed4477c4013a"), BerthId = 1 },
+                        new() { Id = 7, ReservationId = Guid.Parse("91430e54-c26b-44aa-956b-ed4477c4013a"), BerthId = 2 }
+                    ],
+                    Captain = new TestReservationCaptain {
                         Name = "NAME",
                         Address = "ADDRESS",
                         TaxNo = "TAX NUMBER",
@@ -31,7 +35,7 @@ namespace Reservations {
                         Phones = "PHONES",
                         Email = "email@server.com"
                     },
-                    PutAt = "2025-08-12 00:00:00"
+                    PutAt = "2025-08-13 05:25:08"
                 }
             ];
         }

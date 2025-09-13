@@ -6,8 +6,8 @@ namespace API.Features.Reservations {
 
     public static class ReservationMappingReadDomainToDto {
 
-        public static ReservationReadDto ReservationDomainToDto(Reservation reservation) {
-            var x = new ReservationReadDto {
+        public static ReservationReadDto ReservationReadDomainToDto(Reservation reservation) {
+            return new ReservationReadDto {
                 ReservationId = reservation.ReservationId.ToString(),
                 Boat = new ReservationBoatReadDto {
                     Id = reservation.Boat.Id,
@@ -55,8 +55,7 @@ namespace API.Features.Reservations {
                 PutAt = reservation.PutAt,
                 PutUser = reservation.PutUser
             };
-            return x;
-        }
+         }
 
     }
 

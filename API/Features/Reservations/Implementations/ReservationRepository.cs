@@ -13,7 +13,6 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace API.Features.Reservations {
 
-
     public class ReservationRepository(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> testingEnvironment, UserManager<UserExtended> userManager) : Repository<Reservation>(appDbContext, httpContext, testingEnvironment, userManager), IReservationRepository {
 
         private readonly TestingEnvironment testingEnvironment = testingEnvironment.Value;
@@ -28,17 +27,6 @@ namespace API.Features.Reservations {
             return ReservationMappingReadDomainToListVM.ReservationDomainToListVM(reservations);
         }
 
-        // public async Task<Reservation> GetByIdAsync(string reservationId) {
-        //     return await context.Reservations
-        //         .AsNoTracking()
-        //         .Include(x => x.Boat).ThenInclude(x => x.HullType)
-        //         .Include(x => x.Boat).ThenInclude(x => x.Usage)
-        //         .Include(x => x.Captain)
-        //         .Include(x => x.Berths).ThenInclude(x => x.Berth)
-        //         .Where(x => x.ReservationId.ToString() == reservationId)
-        //         .SingleOrDefaultAsync();
-        // }
-
         public async Task<Reservation> GetByIdAsync(string reservationId, bool includeTables) {
             return includeTables
                 ? await context.Reservations
@@ -46,7 +34,7 @@ namespace API.Features.Reservations {
                     .Include(x => x.Boat).ThenInclude(x => x.HullType)
                     .Include(x => x.Boat).ThenInclude(x => x.Usage)
                     .Include(x => x.Captain)
-                    .Include(x => x.Berths)
+                    .Include(x => x.Berths).ThenInclude(x => x.Berth)
                     .Where(x => x.ReservationId.ToString() == reservationId)
                     .SingleOrDefaultAsync()
                : await context.Reservations

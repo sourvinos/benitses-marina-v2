@@ -16,7 +16,7 @@ namespace Reservations {
         private readonly HttpClient _httpClient;
         private readonly TestHostFixture _testHostFixture = new();
         private readonly string _actionVerb = "get";
-        private readonly string _url = "/reservations/b486f34c-f8ae-4b14-ba80-79d1f28bac26";
+        private readonly string _url = "/reservations/91430e54-c26b-44aa-956b-ed4477c4013a";
         private readonly string _baseUrl;
         private readonly string _notFoundUrl = "/reservations/b140036a-5b03-4098-9774-8878f252fdb7";
 

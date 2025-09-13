@@ -32,7 +32,7 @@ namespace API.Features.Reservations {
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Info.ToString(),
-                    Body = ReservationMappingReadDomainToDto.ReservationDomainToDto(x),
+                    Body = ReservationMappingReadDomainToDto.ReservationReadDomainToDto(x),
                     Message = ApiMessages.OK()
                 };
             } else {
@@ -48,7 +48,7 @@ namespace API.Features.Reservations {
         public async Task<ResponseWithBody> PostAsync([FromBody] ReservationWriteDto reservation) {
             var x = validation.IsValidAsync(null, reservation);
             if (await x == 200) {
-                var z = repo.Create((Reservation)repo.AttachMetadataToPostDto(ReservationMappingPostToDomainDto.ReservationPostToDomainDto(reservation)));
+                var z = repo.Create((Reservation)repo.AttachMetadataToPostDto(ReservationMappingPostDtoToDomain.ReservationPostToDomainDto(reservation)));
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),
@@ -70,7 +70,7 @@ namespace API.Features.Reservations {
             if (x != null) {
                 var z = validation.IsValidAsync(x, reservation);
                 if (await z == 200) {
-                    var i = repo.Update(reservation.ReservationId, (Reservation)repo.AttachMetadataToPutDto(x, ReservationMappingPutToDomainDto.ReservationPutToDomainDto(x, reservation)));
+                    var i = repo.Update(reservation.ReservationId, (Reservation)repo.AttachMetadataToPutDto(x, ReservationMappingPutDtoToDomain.ReservationPutDtoToDomain(x, reservation)));
                     return new ResponseWithBody {
                         Code = 200,
                         Icon = Icons.Success.ToString(),

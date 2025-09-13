@@ -1,13 +1,12 @@
 using System.Collections.Generic;
-using System.Linq;
 using API.Infrastructure.Helpers;
 
 namespace API.Features.Reservations {
 
-    public static class ReservationMappingPostToDomainDto {
+    public static class ReservationMappingPostDtoToDomain {
 
         public static Reservation ReservationPostToDomainDto(ReservationWriteDto reservation) {
-            var x = new Reservation {
+            return new Reservation {
                 ReservationId = reservation.ReservationId,
                 BoatId = reservation.BoatId,
                 Captain = new ReservationCaptain {
@@ -30,7 +29,6 @@ namespace API.Features.Reservations {
                 PutAt = reservation.PutAt,
                 PutUser = reservation.PutUser
             };
-            return x;
         }
 
         private static List<ReservationBerth> BuildBerths(ReservationWriteDto reservation) {

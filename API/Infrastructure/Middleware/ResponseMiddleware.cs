@@ -75,6 +75,7 @@ namespace API.Infrastructure.Middleware {
                 451 => ApiMessages.InvalidHullType(),
                 452 => ApiMessages.InvalidBoat(),
                 453 => ApiMessages.InvalidDays(),
+                454 => ApiMessages.InvalidBerth(),
                 491 => ApiMessages.RecordInUse(),
                 490 => ApiMessages.NotOwnRecord(),
                 492 => ApiMessages.InvalidNewUser(),

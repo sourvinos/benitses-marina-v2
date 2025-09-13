@@ -2,7 +2,7 @@ using System;
 
 namespace Reservations {
 
-    public class TestReservationBoatUser {
+    public class TestReservationCaptain {
 
         public int Id { get; set; }
         public Guid ReservationId { get; set; }

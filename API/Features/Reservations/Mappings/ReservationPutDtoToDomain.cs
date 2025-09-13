@@ -3,10 +3,10 @@ using API.Infrastructure.Helpers;
 
 namespace API.Features.Reservations {
 
-    public static class ReservationMappingPutToDomainDto {
+    public static class ReservationMappingPutDtoToDomain {
 
-        public static Reservation ReservationPutToDomainDto(Reservation x, ReservationWriteDto reservation) {
-            var z = new Reservation {
+        public static Reservation ReservationPutDtoToDomain(Reservation x, ReservationWriteDto reservation) {
+            return new Reservation {
                 ReservationId = reservation.ReservationId,
                 BoatId = reservation.BoatId,
                 Captain = new ReservationCaptain {
@@ -30,7 +30,6 @@ namespace API.Features.Reservations {
                 PutAt = reservation.PutAt,
                 PutUser = reservation.PutUser
             };
-            return z;
         }
 
         private static List<ReservationBerth> BuildBerths(ReservationWriteDto reservation) {

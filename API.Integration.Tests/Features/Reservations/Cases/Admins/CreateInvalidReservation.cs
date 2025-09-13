@@ -9,9 +9,92 @@ namespace Reservations {
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         public IEnumerator<object[]> GetEnumerator() {
+            yield return Berth_First_Must_Exist();
+            yield return Berth_Middle_Must_Exist();
+            yield return Berth_Last_Must_Exist();
             yield return Boat_Must_Exist();
             yield return Boat_Must_Be_Active();
             yield return Incorrect_Days();
+        }
+
+        private static object[] Berth_First_Must_Exist() {
+            return [
+                new TestReservation {
+                    StatusCode = 454,
+                    BoatId = 1,
+                    FromDate = DateHelpers.StringToDate("2025-01-01"),
+                    ToDate = DateHelpers.StringToDate("2025-01-10"),
+                    Days = 9,
+                    IsDocked = true,
+                    IsDryDock = false,
+                    Berths = [
+                        new TestReservationBerth { BerthId = 99 },
+                        new TestReservationBerth { BerthId = 1 }
+                    ],
+                    Captain = new TestReservationCaptain {
+                        Name = "NAME",
+                        Address = "ADDRESS",
+                        TaxNo = "TAX NUMBER",
+                        TaxOffice = "TAX OFFICE",
+                        Phones = "PHONES",
+                        Email = "email@server.com"
+                    }
+                }
+            ];
+        }
+
+        private static object[] Berth_Middle_Must_Exist() {
+            return [
+                new TestReservation {
+                    StatusCode = 454,
+                    BoatId = 1,
+                    FromDate = DateHelpers.StringToDate("2025-01-01"),
+                    ToDate = DateHelpers.StringToDate("2025-01-10"),
+                    Days = 9,
+                    IsDocked = true,
+                    IsDryDock = false,
+                    Berths = [
+                        new TestReservationBerth { BerthId = 1 },
+                        new TestReservationBerth { BerthId = 99 },
+                        new TestReservationBerth { BerthId = 2 }
+                    ],
+                    Captain = new TestReservationCaptain {
+                        Name = "NAME",
+                        Address = "ADDRESS",
+                        TaxNo = "TAX NUMBER",
+                        TaxOffice = "TAX OFFICE",
+                        Phones = "PHONES",
+                        Email = "email@server.com"
+                    }
+                }
+            ];
+        }
+
+        private static object[] Berth_Last_Must_Exist() {
+            return [
+                new TestReservation {
+                    StatusCode = 454,
+                    BoatId = 1,
+                    FromDate = DateHelpers.StringToDate("2025-01-01"),
+                    ToDate = DateHelpers.StringToDate("2025-01-10"),
+                    Days = 9,
+                    IsDocked = true,
+                    IsDryDock = false,
+                    Berths = [
+                        new TestReservationBerth { BerthId = 1 },
+                        new TestReservationBerth { BerthId = 2 },
+                        new TestReservationBerth { BerthId = 99 }
+                    ],
+                    Captain = new TestReservationCaptain {
+                        Name = "NAME",
+                        Address = "ADDRESS",
+                        TaxNo = "TAX NUMBER",
+                        TaxOffice = "TAX OFFICE",
+                        Phones = "PHONES",
+                        Email = "email@server.com"
+                    }
+                }
+            ];
         }
 
         private static object[] Boat_Must_Exist() {
@@ -24,7 +107,7 @@ namespace Reservations {
                     Days = 1,
                     IsDocked = true,
                     IsDryDock = false,
-                    BoatUser = new TestReservationBoatUser {
+                    Captain = new TestReservationCaptain {
                         Name = "NAME",
                         Address = "ADDRESS",
                         TaxNo = "TAX NUMBER",
@@ -46,7 +129,7 @@ namespace Reservations {
                     Days = 1,
                     IsDocked = true,
                     IsDryDock = false,
-                    BoatUser = new TestReservationBoatUser {
+                    Captain = new TestReservationCaptain {
                         Name = "NAME",
                         Address = "ADDRESS",
                         TaxNo = "TAX NUMBER",
@@ -68,7 +151,7 @@ namespace Reservations {
                     Days = 3,
                     IsDocked = true,
                     IsDryDock = false,
-                    BoatUser = new TestReservationBoatUser {
+                    Captain = new TestReservationCaptain {
                         Name = "NAME",
                         Address = "ADDRESS",
                         TaxNo = "TAX NUMBER",

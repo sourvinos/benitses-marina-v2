@@ -21,7 +21,11 @@ namespace Reservations {
                     Days = 9,
                     IsDocked = true,
                     IsDryDock = false,
-                    BoatUser = new TestReservationBoatUser {
+                    Berths = [
+                        new TestReservationBerth { BerthId = 1 },
+                        new TestReservationBerth { BerthId = 2 }
+                    ],
+                    Captain = new TestReservationCaptain {
                         Name = "NAME",
                         Address = "ADDRESS",
                         TaxNo = "TAX NUMBER",
