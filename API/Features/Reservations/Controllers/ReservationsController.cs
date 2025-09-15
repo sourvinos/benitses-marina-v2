@@ -24,6 +24,18 @@ namespace API.Features.Reservations {
             return await repo.GetAsync();
         }
 
+        [HttpGet("arrivals/{date}")]
+        [Authorize(Roles = "user, admin")]
+        public async Task<IEnumerable<ReservationListVM>> GetArrivalsAsync(string date) {
+            return await repo.GetArrivalsAsync(date);
+        }
+
+        [HttpGet("departures/{date}")]
+        [Authorize(Roles = "user, admin")]
+        public async Task<IEnumerable<ReservationListVM>> GetDeparturesAsync(string date) {
+            return await repo.GetDeparturesAsync(date);
+        }
+
         [HttpGet("{reservationId}")]
         [Authorize(Roles = "user, admin")]
         public async Task<ResponseWithBody> GetByIdAsync(string reservationId) {

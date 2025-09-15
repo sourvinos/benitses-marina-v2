@@ -9,7 +9,7 @@ namespace Users {
 
         public IEnumerator<object[]> GetEnumerator() {
             yield return EmailAlreadyExists();
-            // yield return UsernameAlreadyExists();
+            yield return UsernameAlreadyExists();
         }
 
         private static object[] EmailAlreadyExists() {
@@ -18,7 +18,7 @@ namespace Users {
                     StatusCode = 492,
                     Username = "newuser",
                     Displayname = "New User",
-                    Email = "ohnsourvinos@hotmail.com",
+                    Email = "johnsourvinos@hotmail.com",
                     IsAdmin = false,
                     IsActive = true
                 }

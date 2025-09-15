@@ -8,7 +8,7 @@ namespace Users {
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         public IEnumerator<object[]> GetEnumerator() {
-            // yield return UsernameAlreadyExists();
+            yield return UsernameAlreadyExists();
             yield return EmailAlreadyExists();
         }
 

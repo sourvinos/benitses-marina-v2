@@ -27,6 +27,26 @@ namespace API.Features.Reservations {
             return ReservationMappingReadDomainToListVM.ReservationDomainToListVM(reservations);
         }
 
+        public async Task<IEnumerable<ReservationListVM>> GetArrivalsAsync(string date) {
+            var reservations = await context.Reservations
+                .AsNoTracking()
+                .Include(x => x.Boat).ThenInclude(x => x.HullType)
+                .Include(x => x.Berths).ThenInclude(x => x.Berth)
+                .Where(x => x.FromDate == Convert.ToDateTime(date))
+                .ToListAsync();
+            return ReservationMappingReadDomainToListVM.ReservationDomainToListVM(reservations);
+        }
+
+        public async Task<IEnumerable<ReservationListVM>> GetDeparturesAsync(string date) {
+            var reservations = await context.Reservations
+                .AsNoTracking()
+                .Include(x => x.Boat).ThenInclude(x => x.HullType)
+                .Include(x => x.Berths).ThenInclude(x => x.Berth)
+                .Where(x => x.ToDate == Convert.ToDateTime(date))
+                .ToListAsync();
+            return ReservationMappingReadDomainToListVM.ReservationDomainToListVM(reservations);
+        }
+
         public async Task<Reservation> GetByIdAsync(string reservationId, bool includeTables) {
             return includeTables
                 ? await context.Reservations
