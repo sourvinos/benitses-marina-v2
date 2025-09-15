@@ -57,6 +57,7 @@ namespace API.Features.Reservations {
                 FromDate = DateHelpers.DateToISOString(reservation.FromDate),
                 ToDate = DateHelpers.DateToISOString(reservation.ToDate),
                 Days = reservation.Days,
+                IsPassingBy = reservation.IsPassingBy,
                 IsDocked = reservation.IsDocked,
                 IsDryDock = reservation.IsDryDock,
                 PostAt = reservation.PostAt,

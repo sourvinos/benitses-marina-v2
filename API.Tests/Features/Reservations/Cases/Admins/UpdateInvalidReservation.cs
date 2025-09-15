@@ -27,6 +27,7 @@ namespace Reservations {
                     FromDate = DateHelpers.StringToDate("2025-01-01"),
                     ToDate = DateHelpers.StringToDate("2025-01-10"),
                     Days = 9,
+                    IsPassingBy = true,
                     IsDocked = true,
                     IsDryDock = false,
                     Berths = [
@@ -55,6 +56,7 @@ namespace Reservations {
                     FromDate = DateHelpers.StringToDate("2025-01-01"),
                     ToDate = DateHelpers.StringToDate("2025-01-10"),
                     Days = 9,
+                    IsPassingBy = true,
                     IsDocked = true,
                     IsDryDock = false,
                     Berths = [
@@ -84,6 +86,7 @@ namespace Reservations {
                     FromDate = DateHelpers.StringToDate("2025-01-01"),
                     ToDate = DateHelpers.StringToDate("2025-01-10"),
                     Days = 9,
+                    IsPassingBy = true,
                     IsDocked = true,
                     IsDryDock = false,
                     Berths = [
@@ -113,6 +116,7 @@ namespace Reservations {
                     FromDate = DateHelpers.StringToDate("2025-01-01"),
                     ToDate = DateHelpers.StringToDate("2025-01-10"),
                     Days = 9,
+                    IsPassingBy = true,
                     IsDocked = true,
                     IsDryDock = false,
                     Berths = [
@@ -141,6 +145,7 @@ namespace Reservations {
                     FromDate = DateHelpers.StringToDate("2025-01-01"),
                     ToDate = DateHelpers.StringToDate("2025-01-10"),
                     Days = 9,
+                    IsPassingBy = true,
                     IsDocked = true,
                     IsDryDock = false,
                     Berths = [
@@ -169,6 +174,7 @@ namespace Reservations {
                     FromDate = DateHelpers.StringToDate("2025-01-01"),
                     ToDate = DateHelpers.StringToDate("2025-01-02"),
                     Days = 3,
+                    IsPassingBy = true,
                     IsDocked = true,
                     IsDryDock = false,
                     Berths = [

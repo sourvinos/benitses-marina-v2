@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using API.Infrastructure.Classes;
@@ -30,6 +31,8 @@ namespace API.Features.Reservations {
                 })],
                 FromDate = DateHelpers.DateToISOString(x.FromDate),
                 ToDate = DateHelpers.DateToISOString(x.ToDate),
+                Days = x.ToDate.Subtract(x.FromDate).Days,
+                IsPassingBy = x.IsPassingBy,
                 IsDocked = x.IsDocked,
                 IsDryDock = x.IsDryDock
             })];
