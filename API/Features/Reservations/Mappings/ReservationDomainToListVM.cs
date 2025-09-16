@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using API.Infrastructure.Classes;
@@ -6,9 +5,9 @@ using API.Infrastructure.Helpers;
 
 namespace API.Features.Reservations {
 
-    public static class ReservationMappingReadDomainToListVM {
+    public static class ReservationDomainToListVM {
 
-        public static List<ReservationListVM> ReservationDomainToListVM(List<Reservation> reservations) {
+        public static List<ReservationListVM> Read(List<Reservation> reservations) {
             return [.. reservations.Select(x => new ReservationListVM {
                 ReservationId = x.ReservationId,
                 Boat = new ReservationListBoatVM {

@@ -5,9 +5,9 @@ using API.Infrastructure.Helpers;
 
 namespace API.Features.Reservations {
 
-    public static class ReservationMappingReadDomainToDto {
+    public static class ReservationDomainToDto {
 
-        public static ReservationReadDto ReservationReadDomainToDto(Reservation reservation) {
+        public static ReservationReadDto Read(Reservation reservation) {
             return new ReservationReadDto {
                 ReservationId = reservation.ReservationId.ToString(),
                 Boat = new ReservationBoatReadDto {

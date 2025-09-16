@@ -27,6 +27,7 @@ namespace API.Infrastructure.Extensions {
 
             services.AddTransient<IReservationRepository, ReservationRepository>();
             services.AddTransient<IReservationValidation, ReservationValidation>();
+            services.AddTransient<IReservationEmailSender, ReservationEmailSender>();
 
             services.AddTransient<IEmailAccountSender, EmailAccountSender>();
             services.AddTransient<IEmailQueueRepository, EmailQueueRepository>();

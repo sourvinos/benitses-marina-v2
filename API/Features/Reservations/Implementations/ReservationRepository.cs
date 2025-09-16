@@ -24,7 +24,7 @@ namespace API.Features.Reservations {
                 .Include(x => x.Captain)
                 .Include(x => x.Berths).ThenInclude(x => x.Berth)
                 .ToListAsync();
-            return ReservationMappingReadDomainToListVM.ReservationDomainToListVM(reservations);
+            return ReservationDomainToListVM.Read(reservations);
         }
 
         public async Task<IEnumerable<ReservationListVM>> GetArrivalsAsync(string date) {
@@ -34,7 +34,7 @@ namespace API.Features.Reservations {
                 .Include(x => x.Berths).ThenInclude(x => x.Berth)
                 .Where(x => x.FromDate == Convert.ToDateTime(date))
                 .ToListAsync();
-            return ReservationMappingReadDomainToListVM.ReservationDomainToListVM(reservations);
+            return ReservationDomainToListVM.Read(reservations);
         }
 
         public async Task<IEnumerable<ReservationListVM>> GetDeparturesAsync(string date) {
@@ -44,7 +44,7 @@ namespace API.Features.Reservations {
                 .Include(x => x.Berths).ThenInclude(x => x.Berth)
                 .Where(x => x.ToDate == Convert.ToDateTime(date))
                 .ToListAsync();
-            return ReservationMappingReadDomainToListVM.ReservationDomainToListVM(reservations);
+            return ReservationDomainToListVM.Read(reservations);
         }
 
         public async Task<Reservation> GetByIdAsync(string reservationId, bool includeTables) {
@@ -62,6 +62,15 @@ namespace API.Features.Reservations {
                   .AsNoTracking()
                   .Where(x => x.ReservationId.ToString() == reservationId)
                   .SingleOrDefaultAsync();
+        }
+
+        public async Task<Reservation> GetByIdForEmailAsync(string reservationId) {
+            return await context.Reservations
+                .AsNoTracking()
+                .Include(x => x.Boat)
+                .Include(x => x.Captain)
+                .Where(x => x.ReservationId.ToString() == reservationId)
+                .SingleOrDefaultAsync();
         }
 
         public Reservation Update(Guid reservationId, Reservation reservation) {

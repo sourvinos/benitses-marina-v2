@@ -9,10 +9,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
 using API.Infrastructure.Helpers;
+using API.Infrastructure.Extensions;
 
 namespace API.Infrastructure.EmailServices {
 
-    public class EmailQueueRepository(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> settings, UserManager<UserExtended> userManager) : Repository<EmailQueue>(appDbContext, httpContext, settings, userManager), IEmailQueueRepository {
+    public class EmailQueueRepository(AppDbContext appDbContext, IHttpContextAccessor httpContextAccessor, IOptions<TestingEnvironment> settings, UserManager<UserExtended> userManager) : Repository<EmailQueue>(appDbContext, httpContextAccessor, settings, userManager), IEmailQueueRepository {
+
+        #region variables
+
+        private readonly IHttpContextAccessor httpContextAccessor = httpContextAccessor;
+        private readonly UserManager<UserExtended> userManager = userManager;
+
+        #endregion
 
         public async Task<EmailQueue> GetFirstNotCompleted() {
             return await context.EmailQueues
@@ -22,17 +30,16 @@ namespace API.Infrastructure.EmailServices {
         }
 
         public async Task<EmailQueue> GetByIdAsync(string entityId) {
-            return await context.EmailQueues
-                .FirstOrDefaultAsync(x => x.EntityId.ToString() == entityId);
+            return await context.EmailQueues.FirstOrDefaultAsync(x => x.EntityId.ToString() == entityId);
         }
 
         public EmailQueue CreateEmailQueue(EmailQueueDto emailQueue) {
+            var userId = Identity.GetConnectedUserId(httpContextAccessor);
             return new EmailQueue {
                 EntityId = IsNotGuid(emailQueue.EntityId) ? Guid.NewGuid() : emailQueue.EntityId,
                 Initiator = emailQueue.Initiator,
-                FromDate = emailQueue.FromDate != null ? emailQueue.FromDate : null,
-                ToDate = emailQueue.ToDate != null ? emailQueue.ToDate : null,
-                CustomerId = emailQueue.CustomerId,
+                Filenames = emailQueue.Filenames,
+                UserFullname = userId != "" ? Identity.GetConnectedUserDetails(userManager, userId).Fullname : "",
                 Priority = emailQueue.Priority,
                 IsSent = false,
                 PostAt = DateHelpers.DateTimeToISOString(DateHelpers.GetLocalDateTime())

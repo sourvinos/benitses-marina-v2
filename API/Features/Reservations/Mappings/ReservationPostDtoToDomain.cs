@@ -3,9 +3,9 @@ using API.Infrastructure.Helpers;
 
 namespace API.Features.Reservations {
 
-    public static class ReservationMappingPostDtoToDomain {
+    public static class ReservationPostDtoToDomain {
 
-        public static Reservation ReservationPostToDomainDto(ReservationWriteDto reservation) {
+        public static Reservation Write(ReservationWriteDto reservation) {
             return new Reservation {
                 ReservationId = reservation.ReservationId,
                 BoatId = reservation.BoatId,

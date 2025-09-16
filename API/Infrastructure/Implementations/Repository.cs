@@ -15,10 +15,10 @@ namespace API.Infrastructure.Implementations {
 
     public class Repository<T>(AppDbContext context, IHttpContextAccessor httpContextAccessor, IOptions<TestingEnvironment> testingSettings, UserManager<UserExtended> userManager) : IRepository<T> where T : class {
 
+        protected readonly AppDbContext context = context;
         private readonly IHttpContextAccessor httpContextAccessor = httpContextAccessor;
         private readonly TestingEnvironment testingSettings = testingSettings.Value;
         private readonly UserManager<UserExtended> userManager = userManager;
-        protected readonly AppDbContext context = context;
 
         public T Create(T entity) {
             using var transaction = context.Database.BeginTransaction();
