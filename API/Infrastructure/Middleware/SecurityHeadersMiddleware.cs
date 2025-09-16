@@ -9,8 +9,6 @@ namespace API.Infrastructure.Middleware {
         private readonly RequestDelegate _next = next;
 
         public async Task InvokeAsync(HttpContext context) {
-            context.Response.Headers.Remove("Server");
-            context.Response.Headers.Remove("X-Powered-By");
             context.Response.Headers.Append("X-XSS-Protection", new StringValues("1; mode=block"));
             context.Response.Headers.Append("X-Frame-Options", new StringValues("DENY"));
             context.Response.Headers.Append("Referrer-Policy", new StringValues("no-referrer-when-downgrade"));

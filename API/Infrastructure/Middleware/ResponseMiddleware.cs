@@ -14,8 +14,12 @@ namespace API.Infrastructure.Middleware {
 
     public class ResponseMiddleware(IHttpContextAccessor httpContextAccessor, UserManager<UserExtended> userManager) : IMiddleware {
 
+        #region variables
+
         private readonly IHttpContextAccessor httpContextAccessor = httpContextAccessor;
         private readonly UserManager<UserExtended> userManager = userManager;
+
+        #endregion
 
         public async Task InvokeAsync(HttpContext httpContext, RequestDelegate next) {
             try {

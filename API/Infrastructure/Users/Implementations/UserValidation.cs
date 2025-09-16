@@ -13,7 +13,6 @@ namespace API.Infrastructure.Users {
 
         #endregion
 
-
         public int IsValid(IUser user) {
             return true switch {
                 _ => 200,
