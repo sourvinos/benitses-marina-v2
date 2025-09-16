@@ -16,7 +16,7 @@ namespace Reservations {
         private static object[] Update_Valid_Reservation() {
             return [
                 new TestReservation {
-                    ReservationId = Guid.Parse("91430e54-c26b-44aa-956b-ed4477c4013a"),
+                    ReservationId = Guid.Parse("08ddf478-3633-41ce-8dd9-d7abb2f9be3c"),
                     BoatId = 1,
                     FromDate = DateHelpers.StringToDate("2025-01-01"),
                     ToDate = DateHelpers.StringToDate("2025-01-10"),
@@ -25,8 +25,8 @@ namespace Reservations {
                     IsDocked = true,
                     IsDryDock = false,
                     Berths = [
-                        new() { Id = 6, ReservationId = Guid.Parse("91430e54-c26b-44aa-956b-ed4477c4013a"), BerthId = 1 },
-                        new() { Id = 7, ReservationId = Guid.Parse("91430e54-c26b-44aa-956b-ed4477c4013a"), BerthId = 2 }
+                        new() { Id = 6, ReservationId = Guid.Parse("08ddf478-3633-41ce-8dd9-d7abb2f9be3c"), BerthId = 1 },
+                        new() { Id = 7, ReservationId = Guid.Parse("08ddf478-3633-41ce-8dd9-d7abb2f9be3c"), BerthId = 2 }
                     ],
                     Captain = new TestReservationCaptain {
                         Name = "NAME",
