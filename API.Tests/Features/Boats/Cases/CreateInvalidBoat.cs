@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using API.Infrastructure.Helpers;
 
 namespace Boats {
 
@@ -34,7 +33,12 @@ namespace Boats {
                     Insurance = new TestBoatInsurance {
                         Company = "AXA",
                         ContractNo  ="3100-16363",
-                        ExpireDate = DateHelpers.StringToDate("2050-12-31")
+                        ExpireDate = "2050-12-31"
+                    },
+                    FishingLicence = new TestBoatFishingLicence{
+                        IssuingAuthority = "CORFU",
+                        LicenceNo = "123/7456",
+                        ExpireDate = "2026-12-31"
                     }
                 }
             ];
@@ -59,7 +63,12 @@ namespace Boats {
                     Insurance = new TestBoatInsurance {
                         Company = "AXA",
                         ContractNo  ="3100-16363",
-                        ExpireDate = DateHelpers.StringToDate("2050-12-31")
+                        ExpireDate = "2050-12-31"
+                    },
+                    FishingLicence = new TestBoatFishingLicence{
+                        IssuingAuthority = "CORFU",
+                        LicenceNo = "123/7456",
+                        ExpireDate = "2026-12-31"
                     }
                 }
             ];
@@ -84,7 +93,7 @@ namespace Boats {
                     Insurance = new TestBoatInsurance {
                         Company = "AXA",
                         ContractNo  ="3100-16363",
-                        ExpireDate = DateHelpers.StringToDate("2050-12-31")
+                        ExpireDate = "2050-12-31"
                     }
                 }
             ];
@@ -109,7 +118,7 @@ namespace Boats {
                     Insurance = new TestBoatInsurance {
                         Company = "AXA",
                         ContractNo  ="3100-16363",
-                        ExpireDate = DateHelpers.StringToDate("2050-12-31")
+                        ExpireDate = "2050-12-31"
                     }
                 }
             ];

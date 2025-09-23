@@ -12,9 +12,15 @@ namespace API.Features.Boats {
                 Description = boat.Description,
                 Insurance = new BoatInsurance {
                     BoatId = boat.Id,
-                    Company = boat.Insurance.Company,
-                    ContractNo = boat.Insurance.ContractNo,
-                    ExpireDate = boat.Insurance.ExpireDate != null ? DateHelpers.StringToDate(boat.Insurance.ExpireDate) : null
+                    Company = boat.Insurance != null ? boat.Insurance.Company : "",
+                    ContractNo = boat.Insurance != null ? boat.Insurance.ContractNo : "",
+                    ExpireDate = boat.Insurance != null ? (boat.Insurance.ExpireDate != null ? DateHelpers.StringToDate(boat.Insurance.ExpireDate) : null) : null
+                },
+                FishingLicence = new BoatFishingLicence {
+                    BoatId = boat.Id,
+                    IssuingAuthority = boat.FishingLicence != null ? boat.FishingLicence.IssuingAuthority : "",
+                    LicenceNo = boat.FishingLicence != null ? boat.FishingLicence.LicenceNo : "",
+                    ExpireDate = boat.Insurance != null ? (boat.FishingLicence.ExpireDate != null ? DateHelpers.StringToDate(boat.FishingLicence.ExpireDate) : null) : null
                 },
                 Flag = boat.Flag,
                 Loa = boat.Loa,

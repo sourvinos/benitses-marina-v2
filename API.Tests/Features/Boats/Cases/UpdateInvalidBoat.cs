@@ -33,7 +33,7 @@ namespace Boats {
                     Insurance = new TestBoatInsurance {
                         Company = "AXA",
                         ContractNo  ="3100-16363",
-                        ExpireDate = DateHelpers.StringToDate("2050-12-31")
+                        ExpireDate = "2050-12-31"
                     },
                     PutAt = "2023-09-07 09:55:16"
                 }
@@ -60,7 +60,7 @@ namespace Boats {
                     Insurance = new TestBoatInsurance {
                         Company = "AXA",
                         ContractNo  ="3100-16363",
-                        ExpireDate = DateHelpers.StringToDate("2050-12-31")
+                        ExpireDate = "2050-12-31"
                     },
                     PutAt = "2023-09-07 09:55:16"
                 }

@@ -21,7 +21,8 @@ namespace API.Features.Boats {
         public bool IsActive { get; set; }
         public BoatUsage Usage { get; set; }
         public HullType HullType { get; set; }
-        public BoatInsurance? Insurance { get; set; }
+        public BoatInsurance Insurance { get; set; }
+        public BoatFishingLicence FishingLicence { get; set; }
         public string PostAt { get; set; }
         public string PostUser { get; set; }
         public string PutAt { get; set; }

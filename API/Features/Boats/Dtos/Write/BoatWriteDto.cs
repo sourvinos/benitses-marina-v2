@@ -1,13 +1,14 @@
-using API.Infrastructure.Classes;
 using API.Infrastructure.Interfaces;
 
 namespace API.Features.Boats {
 
-    public class BoatReadDto : IBaseEntity, IMetadata {
+    public class BoatWriteDto : IBaseEntity, IMetadata {
 
         public int Id { get; set; }
-        public SimpleEntity Type { get; set; }
-        public SimpleEntity Usage { get; set; }
+        public int BoatUsageId { get; set; }
+        public int HullTypeId { get; set; }
+        public BoatInsuranceWriteDto Insurance { get; set; }
+        public BoatFishingLicenceWriteDto FishingLicence { get; set; }
         public string Description { get; set; }
         public string Flag { get; set; }
         public decimal Loa { get; set; }
@@ -15,7 +16,6 @@ namespace API.Features.Boats {
         public decimal Draft { get; set; }
         public string RegistryPort { get; set; }
         public string RegistryNo { get; set; }
-        public BoatInsuranceReadDto Insurance { get; set; }
         public bool IsAthenian { get; set; }
         public bool IsFishingBoat { get; set; }
         public bool IsActive { get; set; }

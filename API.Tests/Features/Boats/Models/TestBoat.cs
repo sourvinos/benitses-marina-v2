@@ -17,7 +17,8 @@ namespace Boats {
         public bool IsAthenian { get; set; }
         public bool IsFishingBoat { get; set; }
         public bool IsActive { get; set; }
-        public TestBoatInsurance Insurance { get; set; }
+        public TestBoatInsurance? Insurance { get; set; }
+        public TestBoatFishingLicence? FishingLicence { get; set; }
         public string PutAt { get; set; }
 
     }

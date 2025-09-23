@@ -44,6 +44,7 @@ namespace API.Features.Boats {
                     .AsNoTracking()
                     .Include(x => x.HullType)
                     .Include(x => x.Usage)
+                    .Include(x => x.FishingLicence)
                     .Include(x => x.Insurance)
                     .SingleOrDefaultAsync(x => x.Id == id)
                 : await context.Boats

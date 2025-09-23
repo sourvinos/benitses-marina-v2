@@ -58,7 +58,7 @@ namespace Boats {
                     Insurance = new TestBoatInsurance {
                         Company = "AXA",
                         ContractNo  ="3100-16363",
-                        ExpireDate = DateHelpers.StringToDate("2050-12-31")
+                        ExpireDate = "2050-12-31"
                     },
                     PutAt = "2025-09-09 12:11:04"
                 }
