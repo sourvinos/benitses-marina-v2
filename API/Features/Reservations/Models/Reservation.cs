@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using API.Features.Boats;
+using API.Features.Boats.Admin;
 using API.Infrastructure.Interfaces;
 
 namespace API.Features.Reservations {

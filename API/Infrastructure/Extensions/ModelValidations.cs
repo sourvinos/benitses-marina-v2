@@ -1,6 +1,6 @@
+using API.Features.Boats.Admin;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using API.Features.Boats;
 
 namespace API.Infrastructure.Extensions {
 

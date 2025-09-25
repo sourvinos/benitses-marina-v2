@@ -6,9 +6,9 @@ using API.Infrastructure.EmailServices;
 using API.Infrastructure.Users;
 using API.Features.HullTypes;
 using API.Features.BoatUsages;
-using API.Features.Boats;
 using API.Features.Reservations;
 using API.Features.Berths;
+using API.Features.Boats.Admin;
 
 namespace API.Infrastructure.Classes {
 

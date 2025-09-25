@@ -1,4 +1,3 @@
-using API.Features.Boats;
 using API.Features.HullTypes;
 using API.Features.BoatUsages;
 using API.Features.Reservations;
@@ -7,6 +6,8 @@ using API.Infrastructure.Auth;
 using API.Infrastructure.EmailServices;
 using API.Infrastructure.Users;
 using Microsoft.Extensions.DependencyInjection;
+using API.Features.Boats.Admin;
+using API.Features.Boats.Insurances;
 
 namespace API.Infrastructure.Extensions {
 
@@ -18,6 +19,7 @@ namespace API.Infrastructure.Extensions {
 
             services.AddTransient<IBoatRepository, BoatRepository>();
             services.AddTransient<IBoatValidation, BoatValidation>();
+            services.AddTransient<IExpiredInsuranceRepository, ExpiredInsuranceRepository>();
 
             services.AddTransient<IBoatUsageRepository, BoatUsageRepository>();
             services.AddTransient<IBoatUsageValidation, BoatUsageValidation>();
