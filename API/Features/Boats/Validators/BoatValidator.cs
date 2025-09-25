@@ -1,4 +1,3 @@
-using API.Infrastructure.Helpers;
 using FluentValidation;
 
 namespace API.Features.Boats {
@@ -13,12 +12,8 @@ namespace API.Features.Boats {
             RuleFor(x => x.Draft).GreaterThanOrEqualTo(0).LessThan(9);
             RuleFor(x => x.RegistryPort).NotNull().MaximumLength(128);
             RuleFor(x => x.RegistryNo).NotNull().MaximumLength(128);
-            RuleFor(x => x.Insurance.ExpireDate).Must(DateHelpers.BeNullOrCorrectFormat).When(x => x.Insurance.ExpireDate != null);
-            RuleFor(x => x.Insurance.Company).MaximumLength(128);
-            RuleFor(x => x.Insurance.ContractNo).MaximumLength(128);
-            RuleFor(x => x.FishingLicence.ExpireDate).Must(DateHelpers.BeNullOrCorrectFormat).When(x => x.FishingLicence.ExpireDate != null);
-            RuleFor(x => x.FishingLicence.IssuingAuthority).MaximumLength(128);
-            RuleFor(x => x.FishingLicence.LicenceNo).MaximumLength(128);
+            RuleFor(x => x.FishingLicence).SetValidator(new FishingLicenceValidator());
+            RuleFor(x => x.Insurance).SetValidator(new InsuranceValidator());
         }
 
     }
