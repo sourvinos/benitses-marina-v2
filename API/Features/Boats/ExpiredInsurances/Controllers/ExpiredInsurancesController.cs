@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,8 +15,8 @@ namespace API.Features.Boats.Insurances {
 
         [HttpGet()]
         [Authorize(Roles = "user, admin")]
-        public async Task<IEnumerable<ExpiredInsuranceVM>> GetAsync() {
-            return await repo.GetExpiredInsurances();
+        public IEnumerable<ExpiredInsuranceVM> Get() {
+            return repo.GetExpiredInsurances();
         }
 
     }

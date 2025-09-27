@@ -1,6 +1,8 @@
 using API.Features.HullTypes;
 using API.Features.BoatUsages;
 using API.Infrastructure.Interfaces;
+using API.Features.Reservations;
+using System.Collections.Generic;
 
 namespace API.Features.Boats.Admin {
 
@@ -23,6 +25,7 @@ namespace API.Features.Boats.Admin {
         public HullType HullType { get; set; }
         public BoatFishingLicence FishingLicence { get; set; }
         public BoatInsurance Insurance { get; set; }
+        public IEnumerable<Reservation> Reservations { get; set; }
         public string PostAt { get; set; }
         public string PostUser { get; set; }
         public string PutAt { get; set; }
