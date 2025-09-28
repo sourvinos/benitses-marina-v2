@@ -13,29 +13,20 @@ namespace API.Features.Boats.Admin {
 
     public class BoatRepository(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> testingEnvironment, UserManager<UserExtended> userManager) : Repository<Boat>(appDbContext, httpContext, testingEnvironment, userManager), IBoatRepository {
 
-        public async Task<IEnumerable<BoatListVM>> GetAsync() {
-            var boats = await context.Boats
+        public IEnumerable<BoatListVM> Get() {
+            var boats = context.Boats
                 .AsNoTracking()
                 .Include(x => x.HullType)
                 .Include(x => x.Usage)
-                .OrderBy(x => x.Description)
-                .ToListAsync();
+                .OrderBy(x => x.Description);
             return BoatMappingDomainToListVM.DomainToListVM(boats);
         }
 
-        public async Task<IEnumerable<BoatBrowserVM>> GetForBrowserAsync() {
-            var boats = await context.Boats
+        public IEnumerable<BoatBrowserVM> GetForBrowser() {
+            var boats = context.Boats
                 .AsNoTracking()
-                .OrderBy(x => x.Description)
-                .ToListAsync();
+                .OrderBy(x => x.Description);
             return BoatMappingDomainToBrowserListVM.DomainToBrowserListVM(boats);
-        }
-
-        public async Task<BoatBrowserVM> GetByIdForBrowserAsync(int id) {
-            var boat = await context.Boats
-                .AsNoTracking()
-                .SingleOrDefaultAsync(x => x.Id == id);
-            return BoatMappingDomainToBrowserVM.DomainToBrowserVM(boat);
         }
 
         public async Task<Boat> GetByIdAsync(int id, bool includeTables) {

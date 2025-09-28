@@ -20,14 +20,14 @@ namespace API.Features.BoatUsages {
 
         [HttpGet]
         [Authorize(Roles = "admin")]
-        public async Task<IEnumerable<BoatUsageListVM>> GetAsync() {
-            return await repo.GetAsync();
+        public IEnumerable<BoatUsageListVM> Get() {
+            return repo.Get();
         }
 
         [HttpGet("[action]")]
         [Authorize(Roles = "user, admin")]
-        public async Task<IEnumerable<BoatUsageBrowserVM>> GetForBrowserAsync() {
-            return await repo.GetForBrowserAsync();
+        public IEnumerable<BoatUsageBrowserVM> GetForBrowser() {
+            return  repo.GetForBrowser();
         }
 
         [HttpGet("{id}")]

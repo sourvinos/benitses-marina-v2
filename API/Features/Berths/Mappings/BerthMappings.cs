@@ -5,7 +5,7 @@ namespace API.Features.Berths {
 
     public static class BerthMappings {
 
-        public static List<BerthListVM> DomainToListVM(List<Berth> berth) {
+        public static IEnumerable<BerthListVM> DomainToListVM(IQueryable<Berth> berth) {
             return [.. berth.Select(x => new BerthListVM {
                 Id = x.Id,
                 Description = x.Description,
@@ -13,20 +13,12 @@ namespace API.Features.Berths {
             })];
         }
 
-        public static List<BerthBrowserVM> DomainToBrowserListVM(List<Berth> berth) {
+        public static IEnumerable<BerthBrowserVM> DomainToBrowserListVM(IQueryable<Berth> berth) {
             return [.. berth.Select(x => new BerthBrowserVM {
                 Id = x.Id,
                 Description = x.Description,
                 IsActive = x.IsActive,
             })];
-        }
-
-        public static BerthBrowserVM DomainToBrowserVM(Berth berth) {
-            return new BerthBrowserVM {
-                Id = berth.Id,
-                Description = berth.Description,
-                IsActive = berth.IsActive,
-            };
         }
 
         public static BerthReadDto DomainToDto(Berth berth) {

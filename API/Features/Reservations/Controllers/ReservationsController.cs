@@ -20,20 +20,20 @@ namespace API.Features.Reservations {
 
         [HttpGet()]
         [Authorize(Roles = "user, admin")]
-        public async Task<IEnumerable<ReservationListVM>> GetAsync() {
-            return await repo.GetAsync();
+        public IEnumerable<ReservationListVM> Get() {
+            return repo.Get();
         }
 
         [HttpGet("arrivals/{date}")]
         [Authorize(Roles = "user, admin")]
-        public async Task<IEnumerable<ReservationListVM>> GetArrivalsAsync(string date) {
-            return await repo.GetArrivalsAsync(date);
+        public IEnumerable<ReservationListVM> GetArrivals(string date) {
+            return repo.GetArrivals(date);
         }
 
         [HttpGet("departures/{date}")]
         [Authorize(Roles = "user, admin")]
-        public async Task<IEnumerable<ReservationListVM>> GetDeparturesAsync(string date) {
-            return await repo.GetDeparturesAsync(date);
+        public IEnumerable<ReservationListVM> GetDepartures(string date) {
+            return repo.GetDepartures(date);
         }
 
         [HttpGet("{reservationId}")]

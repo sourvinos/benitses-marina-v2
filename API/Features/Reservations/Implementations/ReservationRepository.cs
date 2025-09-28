@@ -17,33 +17,30 @@ namespace API.Features.Reservations {
 
         private readonly TestingEnvironment testingEnvironment = testingEnvironment.Value;
 
-        public async Task<IEnumerable<ReservationListVM>> GetAsync() {
-            var reservations = await context.Reservations
+        public IEnumerable<ReservationListVM> Get() {
+            var reservations = context.Reservations
                 .AsNoTracking()
                 .Include(x => x.Boat).ThenInclude(x => x.HullType)
                 .Include(x => x.Captain)
-                .Include(x => x.Berths).ThenInclude(x => x.Berth)
-                .ToListAsync();
+                .Include(x => x.Berths).ThenInclude(x => x.Berth);
             return ReservationDomainToListVM.Read(reservations);
         }
 
-        public async Task<IEnumerable<ReservationListVM>> GetArrivalsAsync(string date) {
-            var reservations = await context.Reservations
+        public IEnumerable<ReservationListVM> GetArrivals(string date) {
+            var reservations = context.Reservations
                 .AsNoTracking()
                 .Include(x => x.Boat).ThenInclude(x => x.HullType)
                 .Include(x => x.Berths).ThenInclude(x => x.Berth)
-                .Where(x => x.FromDate == Convert.ToDateTime(date))
-                .ToListAsync();
+                .Where(x => x.FromDate == Convert.ToDateTime(date));
             return ReservationDomainToListVM.Read(reservations);
         }
 
-        public async Task<IEnumerable<ReservationListVM>> GetDeparturesAsync(string date) {
-            var reservations = await context.Reservations
+        public IEnumerable<ReservationListVM> GetDepartures(string date) {
+            var reservations = context.Reservations
                 .AsNoTracking()
                 .Include(x => x.Boat).ThenInclude(x => x.HullType)
                 .Include(x => x.Berths).ThenInclude(x => x.Berth)
-                .Where(x => x.ToDate == Convert.ToDateTime(date))
-                .ToListAsync();
+                .Where(x => x.ToDate == Convert.ToDateTime(date));
             return ReservationDomainToListVM.Read(reservations);
         }
 

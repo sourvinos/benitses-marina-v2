@@ -20,14 +20,14 @@ namespace API.Features.Boats.Admin {
 
         [HttpGet]
         [Authorize(Roles = "user, admin")]
-        public async Task<IEnumerable<BoatListVM>> GetAsync() {
-            return await repo.GetAsync();
+        public IEnumerable<BoatListVM> Get() {
+            return repo.Get();
         }
 
         [HttpGet("[action]")]
         [Authorize(Roles = "user, admin")]
-        public async Task<IEnumerable<BoatBrowserVM>> GetForBrowserAsync() {
-            return await repo.GetForBrowserAsync();
+        public IEnumerable<BoatBrowserVM> GetForBrowser() {
+            return repo.GetForBrowser();
         }
 
         [HttpGet("{id}")]
@@ -76,7 +76,7 @@ namespace API.Features.Boats.Admin {
             if (x != null) {
                 var z = validation.IsValidAsync(x, boat).Result;
                 if (z == 200) {
-                    var i = repo.Update((Boat)repo.AttachMetadataToPutDto(x, BoatMappingDtoPutToDomain.DtoPutToDomain(x,boat)));
+                    var i = repo.Update((Boat)repo.AttachMetadataToPutDto(x, BoatMappingDtoPutToDomain.DtoPutToDomain(x, boat)));
                     return new ResponseWithBody {
                         Code = 200,
                         Icon = Icons.Success.ToString(),

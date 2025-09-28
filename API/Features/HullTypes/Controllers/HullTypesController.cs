@@ -20,14 +20,14 @@ namespace API.Features.HullTypes {
 
         [HttpGet]
         [Authorize(Roles = "admin")]
-        public async Task<IEnumerable<HullTypeListVM>> GetAsync() {
-            return await repo.GetAsync();
+        public IEnumerable<HullTypeListVM> Get() {
+            return repo.Get();
         }
 
         [HttpGet("[action]")]
         [Authorize(Roles = "user, admin")]
-        public async Task<IEnumerable<HullTypeBrowserVM>> GetForBrowserAsync() {
-            return await repo.GetForBrowserAsync();
+        public IEnumerable<HullTypeBrowserVM> GetForBrowser() {
+            return repo.GetForBrowser();
         }
 
         [HttpGet("{id}")]

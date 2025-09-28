@@ -13,27 +13,18 @@ namespace API.Features.HullTypes {
 
     public class HullTypeRepository(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> settings, UserManager<UserExtended> userManager) : Repository<HullType>(appDbContext, httpContext, settings, userManager), IHullTypeRepository {
 
-        public async Task<IEnumerable<HullTypeListVM>> GetAsync() {
-            var hullTypes = await context.HullTypes
+        public IEnumerable<HullTypeListVM> Get() {
+            var hullTypes = context.HullTypes
                 .AsNoTracking()
-                .OrderBy(x => x.Description)
-                .ToListAsync();
+                .OrderBy(x => x.Description);
             return HullTypeMappings.DomainToListVM(hullTypes);
         }
 
-        public async Task<IEnumerable<HullTypeBrowserVM>> GetForBrowserAsync() {
-            var hullTypes = await context.HullTypes
+        public IEnumerable<HullTypeBrowserVM> GetForBrowser() {
+            var hullTypes = context.HullTypes
                 .AsNoTracking()
-                .OrderBy(x => x.Description)
-                .ToListAsync();
+                .OrderBy(x => x.Description);
             return HullTypeMappings.DomainToBrowserListVM(hullTypes);
-        }
-
-        public async Task<HullTypeBrowserVM> GetByIdForBrowserAsync(int id) {
-            var hullType = await context.HullTypes
-                .AsNoTracking()
-                .SingleOrDefaultAsync(x => x.Id == id);
-            return HullTypeMappings.DomainToBrowserVM(hullType);
         }
 
         public async Task<HullType> GetByIdAsync(int id) {

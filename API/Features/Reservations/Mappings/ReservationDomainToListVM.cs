@@ -7,7 +7,7 @@ namespace API.Features.Reservations {
 
     public static class ReservationDomainToListVM {
 
-        public static List<ReservationListVM> Read(List<Reservation> reservations) {
+        public static IEnumerable<ReservationListVM> Read(IQueryable<Reservation> reservations) {
             return [.. reservations.Select(x => new ReservationListVM {
                 ReservationId = x.ReservationId,
                 Boat = new ReservationListBoatVM {
@@ -20,7 +20,7 @@ namespace API.Features.Reservations {
                     Loa = x.Boat.Loa,
                     Beam = x.Boat.Beam
                 },
-                Berths = [.. x.Berths.Select(x => new ReservationListBerthVM {
+                Berths = [.. x.Berths.ToList().Select(x => new ReservationListBerthVM {
                     Id = x.Id,
                     ReservationId = x.ReservationId.ToString(),
                     Berth = new SimpleEntity {

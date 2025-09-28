@@ -5,7 +5,7 @@ namespace API.Features.BoatUsages {
 
     public static class BoatUsageMappings {
 
-        public static List<BoatUsageListVM> DomainToListVM(List<BoatUsage> boatUsages) {
+        public static IEnumerable<BoatUsageListVM> DomainToListVM(IQueryable<BoatUsage> boatUsages) {
             return [.. boatUsages.Select(x => new BoatUsageListVM {
                 Id = x.Id,
                 Description = x.Description,
@@ -13,7 +13,7 @@ namespace API.Features.BoatUsages {
             })];
         }
 
-        public static List<BoatUsageBrowserVM> DomainToBrowserListVM(List<BoatUsage> boatUsages) {
+        public static IEnumerable<BoatUsageBrowserVM> DomainToBrowserListVM(IQueryable<BoatUsage> boatUsages) {
             return [.. boatUsages.Select(x => new BoatUsageBrowserVM {
                 Id = x.Id,
                 Description = x.Description,

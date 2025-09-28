@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
+using API.Infrastructure.Helpers;
 
 namespace API.Features.Boats.Admin {
 
     public static class BoatMappingDomainToBrowserListVM {
 
-        public static List<BoatBrowserVM> DomainToBrowserListVM(List<Boat> boats) {
+        public static IEnumerable<BoatBrowserVM> DomainToBrowserListVM(IQueryable<Boat> boats) {
             return [.. boats.Select(x => new BoatBrowserVM {
                 Id = x.Id,
                 Description = x.Description,
@@ -16,10 +17,11 @@ namespace API.Features.Boats.Admin {
                 RegistryNo = x.RegistryNo,
                 IsAthenian = x.IsAthenian,
                 IsFishingBoat = x.IsFishingBoat,
+                IsInsuranceValid = x.Insurance.ExpireDate >= DateHelpers.GetLocalDateTime() || x.Insurance.ExpireDate != null,
                 IsActive = x.IsActive,
             })];
         }
- 
-   }
+
+    }
 
 }

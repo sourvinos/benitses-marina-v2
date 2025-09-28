@@ -6,9 +6,8 @@ namespace API.Features.Berths {
 
     public interface IBerthRepository : IRepository<Berth> {
 
-        Task<IEnumerable<BerthListVM>> GetAsync();
-        Task<IEnumerable<BerthBrowserVM>> GetForBrowserAsync();
-        Task<BerthBrowserVM> GetByIdForBrowserAsync(int id);
+        IEnumerable<BerthListVM> Get();
+        IEnumerable<BerthBrowserVM> GetForBrowser();
         Task<Berth> GetByIdAsync(int id);
 
     }

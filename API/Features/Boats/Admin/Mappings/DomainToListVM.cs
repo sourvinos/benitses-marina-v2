@@ -5,7 +5,7 @@ namespace API.Features.Boats.Admin {
 
     public static class BoatMappingDomainToListVM {
 
-        public static List<BoatListVM> DomainToListVM(List<Boat> boats) {
+        public static IEnumerable<BoatListVM> DomainToListVM(IQueryable<Boat> boats) {
             return [.. boats.Select(x => new BoatListVM {
                 Id = x.Id,
                 Description = x.Description,

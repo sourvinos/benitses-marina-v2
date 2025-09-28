@@ -5,7 +5,7 @@ namespace API.Features.HullTypes {
 
     public static class HullTypeMappings {
 
-        public static List<HullTypeListVM> DomainToListVM(List<HullType> hullTypes) {
+        public static IEnumerable<HullTypeListVM> DomainToListVM(IQueryable<HullType> hullTypes) {
             return [.. hullTypes.Select(x => new HullTypeListVM {
                 Id = x.Id,
                 Description = x.Description,
@@ -13,7 +13,7 @@ namespace API.Features.HullTypes {
             })];
         }
 
-        public static List<HullTypeBrowserVM> DomainToBrowserListVM(List<HullType> hullTypes) {
+        public static IEnumerable<HullTypeBrowserVM> DomainToBrowserListVM(IQueryable<HullType> hullTypes) {
             return [.. hullTypes.Select(x => new HullTypeBrowserVM {
                 Id = x.Id,
                 Description = x.Description,

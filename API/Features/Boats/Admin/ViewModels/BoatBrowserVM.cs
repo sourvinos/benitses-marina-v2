@@ -11,6 +11,7 @@ namespace API.Features.Boats.Admin {
         public string RegistryNo { get; set; }
         public bool IsAthenian { get; set; }
         public bool IsFishingBoat { get; set; }
+        public bool IsInsuranceValid { get; set; }
         public bool IsActive { get; set; }
 
     }

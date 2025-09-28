@@ -13,27 +13,25 @@ namespace API.Features.BoatUsages {
 
     public class BoatUsageRepository(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> settings, UserManager<UserExtended> userManager) : Repository<BoatUsage>(appDbContext, httpContext, settings, userManager), IBoatUsageRepository {
 
-        public async Task<IEnumerable<BoatUsageListVM>> GetAsync() {
-            var BoatUsages = await context.BoatUsages
+        public IEnumerable<BoatUsageListVM> Get() {
+            var boatUsages = context.BoatUsages
                 .AsNoTracking()
-                .OrderBy(x => x.Description)
-                .ToListAsync();
-            return BoatUsageMappings.DomainToListVM(BoatUsages);
+                .OrderBy(x => x.Description);
+            return BoatUsageMappings.DomainToListVM(boatUsages);
         }
 
-        public async Task<IEnumerable<BoatUsageBrowserVM>> GetForBrowserAsync() {
-            var BoatUsages = await context.BoatUsages
+        public IEnumerable<BoatUsageBrowserVM> GetForBrowser() {
+            var boatUsages = context.BoatUsages
                 .AsNoTracking()
-                .OrderBy(x => x.Description)
-                .ToListAsync();
-            return BoatUsageMappings.DomainToBrowserListVM(BoatUsages);
+                .OrderBy(x => x.Description);
+            return BoatUsageMappings.DomainToBrowserListVM(boatUsages);
         }
 
         public async Task<BoatUsageBrowserVM> GetByIdForBrowserAsync(int id) {
-            var BoatUsage = await context.BoatUsages
+            var boatUsage = await context.BoatUsages
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
-            return BoatUsageMappings.DomainToBrowserVM(BoatUsage);
+            return BoatUsageMappings.DomainToBrowserVM(boatUsage);
         }
 
         public async Task<BoatUsage> GetByIdAsync(int id) {

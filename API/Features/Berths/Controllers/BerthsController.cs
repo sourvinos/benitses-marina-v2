@@ -20,14 +20,14 @@ namespace API.Features.Berths {
 
         [HttpGet]
         [Authorize(Roles = "admin")]
-        public async Task<IEnumerable<BerthListVM>> GetAsync() {
-            return await repo.GetAsync();
+        public IEnumerable<BerthListVM> Get() {
+            return repo.Get();
         }
 
         [HttpGet("[action]")]
         [Authorize(Roles = "user, admin")]
-        public async Task<IEnumerable<BerthBrowserVM>> GetForBrowserAsync() {
-            return await repo.GetForBrowserAsync();
+        public IEnumerable<BerthBrowserVM> GetForBrowser() {
+            return repo.GetForBrowser();
         }
 
         [HttpGet("{id}")]
