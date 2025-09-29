@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace API.Features.Reservations {
 
@@ -8,7 +7,7 @@ namespace API.Features.Reservations {
 
         public Guid ReservationId { get; set; }
         public ReservationListBoatVM Boat { get; set; }
-        public IList<ReservationListBerthVM> Berths { get; set; }
+        public IEnumerable<ReservationListBerthVM> Berths { get; set; }
         public string FromDate { get; set; }
         public string ToDate { get; set; }
         public int Days { get; set; }

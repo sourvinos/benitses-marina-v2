@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System.Linq;
 using API.Infrastructure.Helpers;
 
 namespace API.Features.Reservations {
@@ -19,7 +19,10 @@ namespace API.Features.Reservations {
                     Phones = reservation.Captain.Phones,
                     Email = reservation.Captain.Email
                 },
-                Berths = BuildBerths(reservation),
+                Berths = [.. reservation.Berths.Select(x => new ReservationBerth {
+                    Id = x.Id,
+                    BerthId = x.BerthId,
+                })],
                 FromDate = DateHelpers.StringToDate(reservation.FromDate),
                 ToDate = DateHelpers.StringToDate(reservation.ToDate),
                 Days = reservation.Days,
@@ -31,19 +34,6 @@ namespace API.Features.Reservations {
                 PutAt = reservation.PutAt,
                 PutUser = reservation.PutUser
             };
-        }
-
-        private static List<ReservationBerth> BuildBerths(ReservationWriteDto reservation) {
-            var x = new List<ReservationBerth>();
-            foreach (var berth in reservation.Berths) {
-                var z = new ReservationBerth {
-                    Id = berth.Id,
-                    ReservationId = reservation.ReservationId,
-                    BerthId = berth.BerthId
-                };
-                x.Add(z);
-            }
-            return x;
         }
 
     }

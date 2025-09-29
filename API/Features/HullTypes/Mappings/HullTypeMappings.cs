@@ -21,14 +21,6 @@ namespace API.Features.HullTypes {
             })];
         }
 
-        public static HullTypeBrowserVM DomainToBrowserVM(HullType hullType) {
-            return new HullTypeBrowserVM {
-                Id = hullType.Id,
-                Description = hullType.Description,
-                IsActive = hullType.IsActive,
-            };
-        }
-
         public static HullTypeReadDto DomainToDto(HullType hullType) {
             return new HullTypeReadDto {
                 Id = hullType.Id,

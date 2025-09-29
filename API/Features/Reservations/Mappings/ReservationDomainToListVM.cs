@@ -20,14 +20,14 @@ namespace API.Features.Reservations {
                     Loa = x.Boat.Loa,
                     Beam = x.Boat.Beam
                 },
-                Berths = [.. x.Berths.ToList().Select(x => new ReservationListBerthVM {
-                    Id = x.Id,
+                Berths = x.Berths.Select(x => new ReservationListBerthVM {
+                    Id = x.Berth.Id,
                     ReservationId = x.ReservationId.ToString(),
                     Berth = new SimpleEntity {
                         Id = x.Berth.Id,
                         Description = x.Berth.Description
                     }
-                })],
+                }),
                 FromDate = DateHelpers.DateToISOString(x.FromDate),
                 ToDate = DateHelpers.DateToISOString(x.ToDate),
                 Days = x.ToDate.Subtract(x.FromDate).Days,
