@@ -9,6 +9,8 @@ using API.Features.BoatUsages;
 using API.Features.Reservations;
 using API.Features.Berths;
 using API.Features.Boats.Admin;
+using API.Features.PeriodTypes;
+using API.Features.SeasonTypes;
 
 namespace API.Infrastructure.Classes {
 
@@ -16,6 +18,8 @@ namespace API.Infrastructure.Classes {
 
         // FK Tables
         public DbSet<Berth> Berths { get; set; }
+        public DbSet<PeriodType> PeriodTypes { get; set; }
+        public DbSet<SeasonType> SeasonTypes { get; set; }
         // Boats
         public DbSet<Boat> Boats { get; set; }
         public DbSet<BoatFishingLicence> BoatFishingLicences { get; set; }

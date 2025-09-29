@@ -8,6 +8,8 @@ using API.Infrastructure.Users;
 using Microsoft.Extensions.DependencyInjection;
 using API.Features.Boats.Admin;
 using API.Features.Boats.Insurances;
+using API.Features.PeriodTypes;
+using API.Features.SeasonTypes;
 
 namespace API.Infrastructure.Extensions {
 
@@ -26,6 +28,12 @@ namespace API.Infrastructure.Extensions {
 
             services.AddTransient<IHullTypeRepository, HullTypeRepository>();
             services.AddTransient<IHullTypeValidation, HullTypeValidation>();
+
+            services.AddTransient<IPeriodTypeRepository, PeriodTypeRepository>();
+            services.AddTransient<IPeriodTypeValidation, PeriodTypeValidation>();
+
+            services.AddTransient<ISeasonTypeRepository, SeasonTypeRepository>();
+            services.AddTransient<ISeasonTypeValidation, SeasonTypeValidation>();
 
             services.AddTransient<IReservationRepository, ReservationRepository>();
             services.AddTransient<IReservationValidation, ReservationValidation>();
