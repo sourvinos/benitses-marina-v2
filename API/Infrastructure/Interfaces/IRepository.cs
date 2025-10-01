@@ -9,7 +9,7 @@ namespace API.Infrastructure.Interfaces {
         T Update(T entity);
         void Delete(T entity);
         void DeleteRange(IEnumerable<T> entities);
-        IMetadata AttachMetadataToPostDto(IMetadata entity);
+        IMetadata AttachMetadataToPutDto(IMetadata entity);
         IMetadata AttachMetadataToPutDto(IMetadata existingEntity, IMetadata updatedEntity);
 
     }

@@ -54,7 +54,7 @@ namespace API.Features.PeriodTypes {
         public ResponseWithBody Post([FromBody] PeriodTypeWriteDto periodType) {
             var x = validation.IsValid(null, periodType);
             if (x == 200) {
-                var z = repo.Create((PeriodType)repo.AttachMetadataToPostDto(PeriodTypeMappings.DtoToDomail(periodType)));
+                var z = repo.Create((PeriodType)repo.AttachMetadataToPutDto(PeriodTypeMappings.DtoToDomail(periodType)));
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),
@@ -76,7 +76,7 @@ namespace API.Features.PeriodTypes {
             if (x != null) {
                 var z = validation.IsValid(x, periodType);
                 if (z == 200) {
-                    var i = repo.Update((PeriodType)repo.AttachMetadataToPostDto(PeriodTypeMappings.DtoToDomail(periodType)));
+                    var i = repo.Update((PeriodType)repo.AttachMetadataToPutDto(PeriodTypeMappings.DtoToDomail(periodType)));
                     return new ResponseWithBody {
                         Code = 200,
                         Icon = Icons.Success.ToString(),

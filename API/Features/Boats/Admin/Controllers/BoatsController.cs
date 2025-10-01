@@ -54,7 +54,7 @@ namespace API.Features.Boats.Admin {
         public ResponseWithBody Post([FromBody] BoatWriteDto boat) {
             var x = validation.IsValidAsync(null, boat).Result;
             if (x == 200) {
-                var z = repo.Create((Boat)repo.AttachMetadataToPostDto(BoatMappingDtoPostToDomain.DtoPostToDomain(boat)));
+                var z = repo.Create((Boat)repo.AttachMetadataToPutDto(BoatMappingDtoPostToDomain.DtoPostToDomain(boat)));
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),

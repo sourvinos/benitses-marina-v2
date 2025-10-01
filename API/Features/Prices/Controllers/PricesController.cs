@@ -1,44 +1,68 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Infrastructure.Extensions;
 using API.Infrastructure.Helpers;
 using API.Infrastructure.Responses;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Features.HullTypes {
+namespace API.Features.Prices {
 
     [Route("api/[controller]")]
-    public class HullTypesController(IHullTypeRepository repo, IHullTypeValidation validation) : ControllerBase {
+    public class PricesController : ControllerBase {
 
         #region variables
 
-        private readonly IHullTypeRepository repo = repo;
-        private readonly IHullTypeValidation validation = validation;
+        private readonly IPriceRepository priceRepo;
+        private readonly IPriceValidation priceValidation;
 
         #endregion
 
+        public PricesController(IPriceRepository priceRepo, IPriceValidation priceValidation) {
+            this.priceRepo = priceRepo;
+            this.priceValidation = priceValidation;
+        }
+
         [HttpGet]
-        [Authorize(Roles = "admin")]
-        public IEnumerable<HullTypeListVM> Get() {
-            return repo.Get();
+        [Authorize(Roles = "user, admin")]
+        public IEnumerable<PriceListVM> Get() {
+            return priceRepo.Get();
         }
 
         [HttpGet("[action]")]
         [Authorize(Roles = "user, admin")]
-        public IEnumerable<HullTypeBrowserVM> GetForBrowser() {
-            return repo.GetForBrowser();
+        public IEnumerable<PriceListBrowserVM> GetForBrowser() {
+            return priceRepo.GetForBrowser();
         }
 
-        [HttpGet("{id}")]
-        [Authorize(Roles = "admin")]
+        [HttpGet("[action]/{id}")]
+        [Authorize(Roles = "user, admin")]
         public async Task<ResponseWithBody> GetByIdAsync(int id) {
-            var x = await repo.GetByIdAsync(id);
+            var x = await priceRepo.GetByIdAsync(id, true);
             if (x != null) {
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Info.ToString(),
-                    Body = HullTypeMappings.DomainToDto(x),
+                    Message = ApiMessages.OK(),
+                    Body = PriceMappingDomainToDto.Get(x)
+                };
+            } else {
+                throw new CustomException() {
+                    ResponseCode = 404
+                };
+            }
+        }
+
+        [HttpGet("[action]/{code}")]
+        [Authorize(Roles = "user, admin")]
+        public async Task<ResponseWithBody> GetByCodeAsync(string code) {
+            var x = await priceRepo.GetByCodeAsync(code);
+            if (x != null) {
+                return new ResponseWithBody {
+                    Code = 200,
+                    Icon = Icons.Info.ToString(),
+                    Body = PriceMappingDomainToDto.Get(x),
                     Message = ApiMessages.OK()
                 };
             } else {
@@ -51,10 +75,10 @@ namespace API.Features.HullTypes {
         [HttpPost]
         [Authorize(Roles = "admin")]
         [ServiceFilter(typeof(ModelValidationAttribute))]
-        public ResponseWithBody Post([FromBody] HullTypeWriteDto hullType) {
-            var x = validation.IsValid(null, hullType);
+        public ResponseWithBody Post([FromBody] PriceWriteDto price) {
+            var x = priceValidation.IsValid(null, price);
             if (x == 200) {
-                var z = repo.Create((HullType)repo.AttachMetadataToPutDto(HullTypeMappings.DtoToDomail(hullType)));
+                var z = priceRepo.Create((Price)priceRepo.AttachMetadataToPutDto(PriceMappingDtoPostToDomain.Post(price)));
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),
@@ -71,12 +95,12 @@ namespace API.Features.HullTypes {
         [HttpPut]
         [Authorize(Roles = "admin")]
         [ServiceFilter(typeof(ModelValidationAttribute))]
-        public async Task<ResponseWithBody> Put([FromBody] HullTypeWriteDto hullType) {
-            var x = await repo.GetByIdAsync(hullType.Id);
+        public async Task<ResponseWithBody> PutAsync([FromBody] PriceWriteDto price) {
+            var x = await priceRepo.GetByIdAsync(price.Id, false);
             if (x != null) {
-                var z = validation.IsValid(x, hullType);
+                var z = priceValidation.IsValid(x, price);
                 if (z == 200) {
-                    var i = repo.Update((HullType)repo.AttachMetadataToPutDto(HullTypeMappings.DtoToDomail(hullType)));
+                    var i = priceRepo.Update((Price)priceRepo.AttachMetadataToPutDto(x, PriceMappingDtoPutToDomain.Put(x, price)));
                     return new ResponseWithBody {
                         Code = 200,
                         Icon = Icons.Success.ToString(),
@@ -97,14 +121,14 @@ namespace API.Features.HullTypes {
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "admin")]
-        public async Task<ResponseWithBody> Delete([FromRoute] int id) {
-            var x = await repo.GetByIdAsync(id);
+        public async Task<Response> Delete([FromRoute] int id) {
+            var x = await priceRepo.GetByIdAsync(id, false);
             if (x != null) {
-                repo.Delete(x);
-                return new ResponseWithBody {
+                priceRepo.Delete(x);
+                return new Response {
                     Code = 200,
                     Icon = Icons.Success.ToString(),
-                    Body = x,
+                    Id = x.Id.ToString(),
                     Message = ApiMessages.OK()
                 };
             } else {

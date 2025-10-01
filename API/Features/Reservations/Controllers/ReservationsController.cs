@@ -60,7 +60,7 @@ namespace API.Features.Reservations {
         public async Task<ResponseWithBody> PostAsync([FromBody] ReservationWriteDto reservation) {
             var x = validation.IsValidAsync(null, reservation);
             if (await x == 200) {
-                var z = repo.Create((Reservation)repo.AttachMetadataToPostDto(ReservationPostDtoToDomain.Write(reservation)));
+                var z = repo.Create((Reservation)repo.AttachMetadataToPutDto(ReservationPostDtoToDomain.Write(reservation)));
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),

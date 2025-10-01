@@ -54,7 +54,7 @@ namespace API.Features.Berths {
         public ResponseWithBody Post([FromBody] BerthWriteDto berth) {
             var x = validation.IsValid(null, berth);
             if (x == 200) {
-                var z = repo.Create((Berth)repo.AttachMetadataToPostDto(BerthMappings.DtoToDomail(berth)));
+                var z = repo.Create((Berth)repo.AttachMetadataToPutDto(BerthMappings.DtoToDomail(berth)));
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),
@@ -76,7 +76,7 @@ namespace API.Features.Berths {
             if (x != null) {
                 var z = validation.IsValid(x, berth);
                 if (z == 200) {
-                    var i = repo.Update((Berth)repo.AttachMetadataToPostDto(BerthMappings.DtoToDomail(berth)));
+                    var i = repo.Update((Berth)repo.AttachMetadataToPutDto(BerthMappings.DtoToDomail(berth)));
                     return new ResponseWithBody {
                         Code = 200,
                         Icon = Icons.Success.ToString(),

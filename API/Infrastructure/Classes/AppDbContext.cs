@@ -11,6 +11,7 @@ using API.Features.Berths;
 using API.Features.Boats.Admin;
 using API.Features.PeriodTypes;
 using API.Features.SeasonTypes;
+using API.Features.Prices;
 
 namespace API.Infrastructure.Classes {
 
@@ -30,6 +31,8 @@ namespace API.Infrastructure.Classes {
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ReservationBerth> ReservationBerths { get; set; }
         public DbSet<ReservationCaptain> ReservationCaptains { get; set; }
+        // Prices
+        public DbSet<Price> Prices { get; set; }
         // The rest
         public DbSet<Token> Tokens { get; set; }
         public DbSet<EmailQueue> EmailQueues { get; set; }
@@ -42,6 +45,7 @@ namespace API.Infrastructure.Classes {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
 
         private static void ApplyConfigurations(ModelBuilder modelBuilder) {
+            modelBuilder.ApplyConfiguration(new PriceConfig());
             modelBuilder.ApplyConfiguration(new UserConfig());
         }
 

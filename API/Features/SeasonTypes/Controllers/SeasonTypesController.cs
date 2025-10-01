@@ -54,7 +54,7 @@ namespace API.Features.SeasonTypes {
         public ResponseWithBody Post([FromBody] SeasonTypeWriteDto seasonType) {
             var x = validation.IsValid(null, seasonType);
             if (x == 200) {
-                var z = repo.Create((SeasonType)repo.AttachMetadataToPostDto(SeasonTypeMappings.DtoToDomail(seasonType)));
+                var z = repo.Create((SeasonType)repo.AttachMetadataToPutDto(SeasonTypeMappings.DtoToDomail(seasonType)));
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),
@@ -76,7 +76,7 @@ namespace API.Features.SeasonTypes {
             if (x != null) {
                 var z = validation.IsValid(x, seasonType);
                 if (z == 200) {
-                    var i = repo.Update((SeasonType)repo.AttachMetadataToPostDto(SeasonTypeMappings.DtoToDomail(seasonType)));
+                    var i = repo.Update((SeasonType)repo.AttachMetadataToPutDto(SeasonTypeMappings.DtoToDomail(seasonType)));
                     return new ResponseWithBody {
                         Code = 200,
                         Icon = Icons.Success.ToString(),

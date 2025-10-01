@@ -54,7 +54,7 @@ namespace API.Features.BoatUsages {
         public ResponseWithBody Post([FromBody] BoatUsageWriteDto boatUsage) {
             var x = validation.IsValid(null, boatUsage);
             if (x == 200) {
-                var z = repo.Create((BoatUsage)repo.AttachMetadataToPostDto(BoatUsageMappings.DtoToDomail(boatUsage)));
+                var z = repo.Create((BoatUsage)repo.AttachMetadataToPutDto(BoatUsageMappings.DtoToDomail(boatUsage)));
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),
@@ -76,7 +76,7 @@ namespace API.Features.BoatUsages {
             if (x != null) {
                 var z = validation.IsValid(x, boatUsage);
                 if (z == 200) {
-                    var i = repo.Update((BoatUsage)repo.AttachMetadataToPostDto(BoatUsageMappings.DtoToDomail(boatUsage)));
+                    var i = repo.Update((BoatUsage)repo.AttachMetadataToPutDto(BoatUsageMappings.DtoToDomail(boatUsage)));
                     return new ResponseWithBody {
                         Code = 200,
                         Icon = Icons.Success.ToString(),
