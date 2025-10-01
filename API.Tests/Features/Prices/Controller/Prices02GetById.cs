@@ -1,29 +1,28 @@
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using Cases;
 using Infrastructure;
 using Responses;
 using Xunit;
 
-namespace SeasonTypes {
+namespace Prices {
 
     [Collection("Sequence")]
-    public class SeasonTypes06Delete : IClassFixture<AppSettingsFixture> {
+    public class Prices02GetGetById : IClassFixture<AppSettingsFixture> {
 
         #region variables
 
         private readonly AppSettingsFixture _appSettingsFixture;
         private readonly HttpClient _httpClient;
         private readonly TestHostFixture _testHostFixture = new();
-        private readonly string _actionVerb = "delete";
+        private readonly string _actionVerb = "get";
         private readonly string _baseUrl;
-        private readonly string _url = "/seasonTypes/3";
-        private readonly string _inUseUrl = "/seasonTypes/1";
-        private readonly string _notFoundUrl = "/seasonTypes/9999";
+        private readonly string _url = "/prices/getById/1";
+        private readonly string _notFoundUrl = "/prices/getById//9999";
 
         #endregion
 
-        public SeasonTypes06Delete(AppSettingsFixture appsettings) {
+        public Prices02GetGetById(AppSettingsFixture appsettings) {
             _appSettingsFixture = appsettings;
             _baseUrl = _appSettingsFixture.Configuration.GetSection("TestingEnvironment").GetSection("BaseUrl").Value;
             _httpClient = _testHostFixture.Client;
@@ -46,8 +45,8 @@ namespace SeasonTypes {
         }
 
         [Fact]
-        public async Task Simple_Users_Can_Not_Delete() {
-            await Forbidden.Action(_httpClient, _baseUrl, _url, _actionVerb, "simpleuser", Helpers.SimpleUserPassword(), null);
+        public async Task Simple_Users_Can_Get_By_Id() {
+            await RecordFound.Action(_httpClient, _baseUrl, _url, "simpleuser", Helpers.SimpleUserPassword());
         }
 
         [Fact]
@@ -56,13 +55,8 @@ namespace SeasonTypes {
         }
 
         [Fact]
-        public async Task Admins_Can_Not_Delete_In_Use() {
-            await RecordInUse.Action(_httpClient, _baseUrl, _inUseUrl, "john", Helpers.AdminPassword());
-        }
-
-        [Fact]
-        public async Task Admins_Can_Delete_Not_In_Use() {
-            await RecordDeleted.Action(_httpClient, _baseUrl, _url, "john", Helpers.AdminPassword());
+        public async Task Admins_Can_Get_By_Id() {
+            await RecordFound.Action(_httpClient, _baseUrl, _url, "john", Helpers.AdminPassword());
         }
 
     }

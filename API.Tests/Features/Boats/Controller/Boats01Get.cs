@@ -2,7 +2,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using API.Features.Boats;
 using API.Features.Boats.Admin;
 using Cases;
 using Infrastructure;

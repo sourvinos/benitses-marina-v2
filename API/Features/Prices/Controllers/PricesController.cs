@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using API.Infrastructure.Extensions;
 using API.Infrastructure.Helpers;
 using API.Infrastructure.Responses;
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -75,9 +74,9 @@ namespace API.Features.Prices {
         [HttpPost]
         [Authorize(Roles = "admin")]
         [ServiceFilter(typeof(ModelValidationAttribute))]
-        public ResponseWithBody Post([FromBody] PriceWriteDto price) {
-            var x = priceValidation.IsValid(null, price);
-            if (x == 200) {
+        public async Task<ResponseWithBody> PostAsync([FromBody] PriceWriteDto price) {
+            var x = priceValidation.IsValidAsync(null, price);
+            if (await x == 200) {
                 var z = priceRepo.Create((Price)priceRepo.AttachMetadataToPutDto(PriceMappingDtoPostToDomain.Post(price)));
                 return new ResponseWithBody {
                     Code = 200,
@@ -87,7 +86,7 @@ namespace API.Features.Prices {
                 };
             } else {
                 throw new CustomException() {
-                    ResponseCode = x
+                    ResponseCode = await x
                 };
             }
         }
@@ -98,8 +97,8 @@ namespace API.Features.Prices {
         public async Task<ResponseWithBody> PutAsync([FromBody] PriceWriteDto price) {
             var x = await priceRepo.GetByIdAsync(price.Id, false);
             if (x != null) {
-                var z = priceValidation.IsValid(x, price);
-                if (z == 200) {
+                var z = priceValidation.IsValidAsync(x, price);
+                if (await z == 200) {
                     var i = priceRepo.Update((Price)priceRepo.AttachMetadataToPutDto(x, PriceMappingDtoPutToDomain.Put(x, price)));
                     return new ResponseWithBody {
                         Code = 200,
@@ -109,7 +108,7 @@ namespace API.Features.Prices {
                     };
                 } else {
                     throw new CustomException() {
-                        ResponseCode = z
+                        ResponseCode = await z
                     };
                 }
             } else {
@@ -121,14 +120,14 @@ namespace API.Features.Prices {
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "admin")]
-        public async Task<Response> Delete([FromRoute] int id) {
+        public async Task<ResponseWithBody> Delete([FromRoute] int id) {
             var x = await priceRepo.GetByIdAsync(id, false);
             if (x != null) {
                 priceRepo.Delete(x);
-                return new Response {
+                return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),
-                    Id = x.Id.ToString(),
+                    Body = x,
                     Message = ApiMessages.OK()
                 };
             } else {

@@ -55,15 +55,15 @@ namespace PeriodTypes {
             await RecordNotFound.Action(_httpClient, _baseUrl, _notFoundUrl, "john", Helpers.AdminPassword());
         }
 
-        // [Fact]
-        // public async Task Admins_Can_Not_Delete_In_Use() {
-        //     await RecordInUse.Action(_httpClient, _baseUrl, _inUseUrl, "john", Helpers.AdminPassword());
-        // }
+        [Fact]
+        public async Task Admins_Can_Not_Delete_In_Use() {
+            await RecordInUse.Action(_httpClient, _baseUrl, _inUseUrl, "john", Helpers.AdminPassword());
+        }
 
-        // [Fact]
-        // public async Task Admins_Can_Delete_Not_In_Use() {
-        //     await RecordDeleted.Action(_httpClient, _baseUrl, _url, "john", Helpers.AdminPassword());
-        // }
+        [Fact]
+        public async Task Admins_Can_Delete_Not_In_Use() {
+            await RecordDeleted.Action(_httpClient, _baseUrl, _url, "john", Helpers.AdminPassword());
+        }
 
     }
 

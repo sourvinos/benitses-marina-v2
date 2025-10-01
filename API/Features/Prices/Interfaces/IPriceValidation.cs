@@ -1,10 +1,11 @@
+using System.Threading.Tasks;
 using API.Infrastructure.Interfaces;
 
 namespace API.Features.Prices {
 
     public interface IPriceValidation : IRepository<Price> {
 
-        int IsValid(Price x, PriceWriteDto price);
+        Task<int> IsValidAsync(Price x, PriceWriteDto price);
 
     }
 

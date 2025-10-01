@@ -5,10 +5,10 @@ using Infrastructure;
 using Responses;
 using Xunit;
 
-namespace SeasonTypes {
+namespace Prices {
 
     [Collection("Sequence")]
-    public class SeasonTypes06Delete : IClassFixture<AppSettingsFixture> {
+    public class Prices06Delete : IClassFixture<AppSettingsFixture> {
 
         #region variables
 
@@ -17,13 +17,13 @@ namespace SeasonTypes {
         private readonly TestHostFixture _testHostFixture = new();
         private readonly string _actionVerb = "delete";
         private readonly string _baseUrl;
-        private readonly string _url = "/seasonTypes/3";
-        private readonly string _inUseUrl = "/seasonTypes/1";
-        private readonly string _notFoundUrl = "/seasonTypes/9999";
+        private readonly string _url = "/prices/4";
+        private readonly string _inUseUrl = "/prices/getById/1";
+        private readonly string _notFoundUrl = "/prices/getById/9999";
 
         #endregion
 
-        public SeasonTypes06Delete(AppSettingsFixture appsettings) {
+        public Prices06Delete(AppSettingsFixture appsettings) {
             _appSettingsFixture = appsettings;
             _baseUrl = _appSettingsFixture.Configuration.GetSection("TestingEnvironment").GetSection("BaseUrl").Value;
             _httpClient = _testHostFixture.Client;
@@ -56,12 +56,7 @@ namespace SeasonTypes {
         }
 
         [Fact]
-        public async Task Admins_Can_Not_Delete_In_Use() {
-            await RecordInUse.Action(_httpClient, _baseUrl, _inUseUrl, "john", Helpers.AdminPassword());
-        }
-
-        [Fact]
-        public async Task Admins_Can_Delete_Not_In_Use() {
+        public async Task Admins_Can_Delete() {
             await RecordDeleted.Action(_httpClient, _baseUrl, _url, "john", Helpers.AdminPassword());
         }
 
