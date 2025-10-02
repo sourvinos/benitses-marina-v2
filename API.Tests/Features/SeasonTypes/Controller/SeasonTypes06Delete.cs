@@ -17,7 +17,7 @@ namespace SeasonTypes {
         private readonly TestHostFixture _testHostFixture = new();
         private readonly string _actionVerb = "delete";
         private readonly string _baseUrl;
-        private readonly string _url = "/seasonTypes/3";
+        private readonly string _url = "/seasonTypes/4";
         private readonly string _inUseUrl = "/seasonTypes/1";
         private readonly string _notFoundUrl = "/seasonTypes/9999";
 

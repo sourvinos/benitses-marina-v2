@@ -47,6 +47,14 @@ namespace API.Infrastructure.Implementations {
             return entity;
         }
 
+        public T SoftDelete(T entity) {
+            using var transaction = context.Database.BeginTransaction();
+            context.Set<T>().Update(entity);
+            context.SaveChanges();
+            DisposeOrCommit(transaction);
+            return entity;
+        }
+
         public void Delete(T entity) {
             using var transaction = context.Database.BeginTransaction();
             try {
@@ -59,10 +67,6 @@ namespace API.Infrastructure.Implementations {
                     ResponseCode = 491
                 };
             }
-        }
-
-        public void DeleteRange(IEnumerable<T> entities) {
-            context.RemoveRange(entities);
         }
 
         private void DisposeOrCommit(IDbContextTransaction transaction) {

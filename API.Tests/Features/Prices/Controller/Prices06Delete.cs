@@ -18,7 +18,6 @@ namespace Prices {
         private readonly string _actionVerb = "delete";
         private readonly string _baseUrl;
         private readonly string _url = "/prices/4";
-        private readonly string _inUseUrl = "/prices/getById/1";
         private readonly string _notFoundUrl = "/prices/getById/9999";
 
         #endregion

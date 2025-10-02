@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Infrastructure.Extensions;
 using API.Infrastructure.Helpers;
@@ -94,6 +95,26 @@ namespace API.Features.Reservations {
                         ResponseCode = await z
                     };
                 }
+            } else {
+                throw new CustomException() {
+                    ResponseCode = 404
+                };
+            }
+        }
+
+        [HttpPut("[action]/{reservationId}")]
+        [Authorize(Roles = "admin")]
+        public async Task<ResponseWithBody> SoftDelete(string reservationId) {
+            var x = await repo.GetByIdAsync(reservationId, false);
+            if (x != null) {
+                x.IsDeleted = true;
+                var i = repo.SoftDelete(x);
+                return new ResponseWithBody {
+                    Code = 200,
+                    Icon = Icons.Success.ToString(),
+                    Body = i,
+                    Message = ApiMessages.OK()
+                };
             } else {
                 throw new CustomException() {
                     ResponseCode = 404

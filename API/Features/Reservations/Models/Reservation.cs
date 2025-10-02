@@ -18,6 +18,7 @@ namespace API.Features.Reservations {
         public bool IsPassingBy { get; set; }
         public bool IsDocked { get; set; }
         public bool IsDryDock { get; set; }
+        public bool IsDeleted { get; set; }
         public string PostAt { get; set; }
         public string PostUser { get; set; }
         public string PutAt { get; set; }

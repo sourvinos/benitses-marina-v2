@@ -82,8 +82,8 @@ namespace API.Infrastructure.Account {
             return Identity.GetConnectedUserId(httpContextAccessor);
         }
 
-        [Authorize]
         [HttpGet("[action]")]
+        [Authorize]
         public bool IsConnectedUserAdmin() {
             return Identity.IsUserAdmin(httpContextAccessor);
         }

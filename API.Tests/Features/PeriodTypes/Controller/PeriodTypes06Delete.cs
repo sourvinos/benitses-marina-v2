@@ -17,7 +17,7 @@ namespace PeriodTypes {
         private readonly TestHostFixture _testHostFixture = new();
         private readonly string _actionVerb = "delete";
         private readonly string _baseUrl;
-        private readonly string _url = "/periodTypes/3";
+        private readonly string _url = "/periodTypes/4";
         private readonly string _inUseUrl = "/periodTypes/1";
         private readonly string _notFoundUrl = "/periodTypes/9999";
 

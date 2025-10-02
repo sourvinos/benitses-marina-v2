@@ -22,7 +22,8 @@ namespace API.Features.Reservations {
                 .AsNoTracking()
                 .Include(x => x.Boat).ThenInclude(x => x.HullType)
                 .Include(x => x.Captain)
-                .Include(x => x.Berths).ThenInclude(x => x.Berth);
+                .Include(x => x.Berths).ThenInclude(x => x.Berth)
+                .Where(x => !x.IsDeleted);
             return ReservationDomainToListVM.Read(reservations);
         }
 
@@ -31,7 +32,7 @@ namespace API.Features.Reservations {
                 .AsNoTracking()
                 .Include(x => x.Boat).ThenInclude(x => x.HullType)
                 .Include(x => x.Berths).ThenInclude(x => x.Berth)
-                .Where(x => x.FromDate == Convert.ToDateTime(date));
+                .Where(x => !x.IsDeleted && x.FromDate == Convert.ToDateTime(date));
             return ReservationDomainToListVM.Read(reservations);
         }
 
@@ -40,7 +41,7 @@ namespace API.Features.Reservations {
                 .AsNoTracking()
                 .Include(x => x.Boat).ThenInclude(x => x.HullType)
                 .Include(x => x.Berths).ThenInclude(x => x.Berth)
-                .Where(x => x.ToDate == Convert.ToDateTime(date));
+                .Where(x => !x.IsDeleted && x.ToDate == Convert.ToDateTime(date));
             return ReservationDomainToListVM.Read(reservations);
         }
 
