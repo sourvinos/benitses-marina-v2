@@ -108,7 +108,7 @@ namespace API.Features.Reservations {
             var x = await repo.GetByIdAsync(reservationId, false);
             if (x != null) {
                 x.IsDeleted = true;
-                var i = repo.SoftDelete(x);
+                var i = repo.Update(x);
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),
