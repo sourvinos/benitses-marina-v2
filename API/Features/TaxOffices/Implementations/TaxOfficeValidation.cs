@@ -9,15 +9,15 @@ namespace API.Features.TaxOffices {
 
     public class TaxOfficeValidation(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> settings, UserManager<UserExtended> userManager) : Repository<TaxOffice>(appDbContext, httpContext, settings, userManager), ITaxOfficeValidation {
 
-        public int IsValid(TaxOffice z, TaxOfficeWriteDto Boat) {
+        public int IsValid(TaxOffice z, TaxOfficeWriteDto taxOffice) {
             return true switch {
-                var x when x == IsAlreadyUpdated(z, Boat) => 415,
+                var x when x == IsAlreadyUpdated(z, taxOffice) => 415,
                 _ => 200,
             };
         }
 
-        private static bool IsAlreadyUpdated(TaxOffice z, TaxOfficeWriteDto Boat) {
-            return z != null && z.PutAt != Boat.PutAt;
+        private static bool IsAlreadyUpdated(TaxOffice z, TaxOfficeWriteDto taxOffice) {
+            return z != null && z.PutAt != taxOffice.PutAt;
         }
 
     }

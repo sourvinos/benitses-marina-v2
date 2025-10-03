@@ -12,6 +12,7 @@ using API.Features.PeriodTypes;
 using API.Features.SeasonTypes;
 using API.Features.Prices;
 using API.Features.TaxOffices;
+using API.Features.Nationalities;
 
 namespace API.Infrastructure.Extensions {
 
@@ -30,6 +31,9 @@ namespace API.Infrastructure.Extensions {
 
             services.AddTransient<IHullTypeRepository, HullTypeRepository>();
             services.AddTransient<IHullTypeValidation, HullTypeValidation>();
+
+            services.AddTransient<INationalityRepository, NationalityRepository>();
+            services.AddTransient<INationalityValidation, NationalityValidation>();
 
             services.AddTransient<IPeriodTypeRepository, PeriodTypeRepository>();
             services.AddTransient<IPeriodTypeValidation, PeriodTypeValidation>();

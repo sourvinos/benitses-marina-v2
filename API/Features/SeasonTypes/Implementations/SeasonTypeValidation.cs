@@ -9,15 +9,15 @@ namespace API.Features.SeasonTypes {
 
     public class SeasonTypeValidation(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> settings, UserManager<UserExtended> userManager) : Repository<SeasonType>(appDbContext, httpContext, settings, userManager), ISeasonTypeValidation {
 
-        public int IsValid(SeasonType z, SeasonTypeWriteDto boat) {
+        public int IsValid(SeasonType z, SeasonTypeWriteDto seasonType) {
             return true switch {
-                var x when x == IsAlreadyUpdated(z, boat) => 415,
+                var x when x == IsAlreadyUpdated(z, seasonType) => 415,
                 _ => 200,
             };
         }
 
-        private static bool IsAlreadyUpdated(SeasonType z, SeasonTypeWriteDto boat) {
-            return z != null && z.PutAt != boat.PutAt;
+        private static bool IsAlreadyUpdated(SeasonType z, SeasonTypeWriteDto seasonType) {
+            return z != null && z.PutAt != seasonType.PutAt;
         }
 
     }

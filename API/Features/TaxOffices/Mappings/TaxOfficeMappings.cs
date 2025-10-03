@@ -21,27 +21,27 @@ namespace API.Features.TaxOffices {
             })];
         }
 
-        public static TaxOfficeReadDto DomainToDto(TaxOffice hullType) {
+        public static TaxOfficeReadDto DomainToDto(TaxOffice taxOffice) {
             return new TaxOfficeReadDto {
-                Id = hullType.Id,
-                Description = hullType.Description,
-                IsActive = hullType.IsActive,
-                PostAt = hullType.PostAt,
-                PostUser = hullType.PostUser,
-                PutAt = hullType.PutAt,
-                PutUser = hullType.PutUser
+                Id = taxOffice.Id,
+                Description = taxOffice.Description,
+                IsActive = taxOffice.IsActive,
+                PostAt = taxOffice.PostAt,
+                PostUser = taxOffice.PostUser,
+                PutAt = taxOffice.PutAt,
+                PutUser = taxOffice.PutUser
             };
         }
 
-        public static TaxOffice DtoToDomail(TaxOfficeWriteDto hullType) {
+        public static TaxOffice DtoToDomail(TaxOfficeWriteDto taxOffice) {
             return new TaxOffice {
-                Id = hullType.Id,
-                Description = hullType.Description.Trim(),
-                IsActive = hullType.IsActive,
-                PostAt = hullType.PostAt,
-                PostUser = hullType.PostUser,
-                PutAt = hullType.PutAt,
-                PutUser = hullType.PutUser
+                Id = taxOffice.Id,
+                Description = taxOffice.Description.Trim(),
+                IsActive = taxOffice.IsActive,
+                PostAt = taxOffice.PostAt,
+                PostUser = taxOffice.PostUser,
+                PutAt = taxOffice.PutAt,
+                PutUser = taxOffice.PutUser
             };
         }
 

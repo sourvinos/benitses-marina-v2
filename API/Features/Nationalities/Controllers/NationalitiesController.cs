@@ -6,27 +6,27 @@ using API.Infrastructure.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Features.TaxOffices {
+namespace API.Features.Nationalities {
 
     [Route("api/[controller]")]
-    public class TaxOfficesController(ITaxOfficeRepository repo, ITaxOfficeValidation validation) : ControllerBase {
+    public class NationalitiesController(INationalityRepository repo, INationalityValidation validation) : ControllerBase {
 
         #region variables
 
-        private readonly ITaxOfficeRepository repo = repo;
-        private readonly ITaxOfficeValidation validation = validation;
+        private readonly INationalityRepository repo = repo;
+        private readonly INationalityValidation validation = validation;
 
         #endregion
 
         [HttpGet]
         [Authorize(Roles = "admin")]
-        public IEnumerable<TaxOfficeListVM> Get() {
+        public IEnumerable<NationalityListVM> Get() {
             return repo.Get();
         }
 
         [HttpGet("[action]")]
         [Authorize(Roles = "user, admin")]
-        public IEnumerable<TaxOfficeBrowserListVM> GetForBrowser() {
+        public IEnumerable<NationalityBrowserListVM> GetForBrowser() {
             return repo.GetForBrowser();
         }
 
@@ -38,7 +38,7 @@ namespace API.Features.TaxOffices {
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Info.ToString(),
-                    Body = TaxOfficeMappings.DomainToDto(x),
+                    Body = NationalityMappings.DomainToDto(x),
                     Message = ApiMessages.OK()
                 };
             } else {
@@ -51,10 +51,10 @@ namespace API.Features.TaxOffices {
         [HttpPost]
         [Authorize(Roles = "admin")]
         [ServiceFilter(typeof(ModelValidationAttribute))]
-        public ResponseWithBody Post([FromBody] TaxOfficeWriteDto taxOffice) {
-            var x = validation.IsValid(null, taxOffice);
+        public ResponseWithBody Post([FromBody] NationalityWriteDto nationality) {
+            var x = validation.IsValid(null, nationality);
             if (x == 200) {
-                var z = repo.Create((TaxOffice)repo.AttachMetadataToPutDto(TaxOfficeMappings.DtoToDomail(taxOffice)));
+                var z = repo.Create((Nationality)repo.AttachMetadataToPutDto(NationalityMappings.DtoToDomail(nationality)));
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),
@@ -71,12 +71,12 @@ namespace API.Features.TaxOffices {
         [HttpPut]
         [Authorize(Roles = "admin")]
         [ServiceFilter(typeof(ModelValidationAttribute))]
-        public async Task<ResponseWithBody> Put([FromBody] TaxOfficeWriteDto taxOffice) {
-            var x = await repo.GetByIdAsync(taxOffice.Id);
+        public async Task<ResponseWithBody> Put([FromBody] NationalityWriteDto nationality) {
+            var x = await repo.GetByIdAsync(nationality.Id);
             if (x != null) {
-                var z = validation.IsValid(x, taxOffice);
+                var z = validation.IsValid(x, nationality);
                 if (z == 200) {
-                    var i = repo.Update((TaxOffice)repo.AttachMetadataToPutDto(TaxOfficeMappings.DtoToDomail(taxOffice)));
+                    var i = repo.Update((Nationality)repo.AttachMetadataToPutDto(NationalityMappings.DtoToDomail(nationality)));
                     return new ResponseWithBody {
                         Code = 200,
                         Icon = Icons.Success.ToString(),

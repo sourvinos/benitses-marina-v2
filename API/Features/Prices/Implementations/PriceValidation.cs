@@ -33,10 +33,10 @@ namespace API.Features.Prices {
                 : await context.PeriodTypes.AsNoTracking().FirstOrDefaultAsync(x => x.Id == price.PeriodTypeId) != null;
         }
 
-        private async Task<bool> IsValidSeasonTypeId(PriceWriteDto boat) {
-            return boat.Id == 0
-                ? await context.SeasonTypes.AsNoTracking().FirstOrDefaultAsync(x => x.Id == boat.SeasonTypeId && x.IsActive) != null
-                : await context.SeasonTypes.AsNoTracking().FirstOrDefaultAsync(x => x.Id == boat.SeasonTypeId) != null;
+        private async Task<bool> IsValidSeasonTypeId(PriceWriteDto periodType) {
+            return periodType.Id == 0
+                ? await context.SeasonTypes.AsNoTracking().FirstOrDefaultAsync(x => x.Id == periodType.SeasonTypeId && x.IsActive) != null
+                : await context.SeasonTypes.AsNoTracking().FirstOrDefaultAsync(x => x.Id == periodType.SeasonTypeId) != null;
         }
 
         private static bool IsAlreadyUpdated(Price z, PriceWriteDto price) {

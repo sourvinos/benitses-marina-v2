@@ -13,6 +13,7 @@ using API.Features.PeriodTypes;
 using API.Features.SeasonTypes;
 using API.Features.Prices;
 using API.Features.TaxOffices;
+using API.Features.Nationalities;
 
 namespace API.Infrastructure.Classes {
 
@@ -20,6 +21,7 @@ namespace API.Infrastructure.Classes {
 
         // FK Tables
         public DbSet<Berth> Berths { get; set; }
+        public DbSet<Nationality> Nationalities { get; set; }
         public DbSet<PeriodType> PeriodTypes { get; set; }
         public DbSet<SeasonType> SeasonTypes { get; set; }
         public DbSet<TaxOffice> TaxOffices { get; set; }
