@@ -12,6 +12,7 @@ using API.Features.Boats.Admin;
 using API.Features.PeriodTypes;
 using API.Features.SeasonTypes;
 using API.Features.Prices;
+using API.Features.TaxOffices;
 
 namespace API.Infrastructure.Classes {
 
@@ -21,6 +22,7 @@ namespace API.Infrastructure.Classes {
         public DbSet<Berth> Berths { get; set; }
         public DbSet<PeriodType> PeriodTypes { get; set; }
         public DbSet<SeasonType> SeasonTypes { get; set; }
+        public DbSet<TaxOffice> TaxOffices { get; set; }
         // Boats
         public DbSet<Boat> Boats { get; set; }
         public DbSet<BoatFishingLicence> BoatFishingLicences { get; set; }
