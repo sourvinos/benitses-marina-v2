@@ -1,29 +1,30 @@
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using Responses;
 using Cases;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
 using Infrastructure;
-using Responses;
 using Xunit;
+using API.Features.Customers.Admin;
 
-namespace Nationalities {
+namespace Customers {
 
     [Collection("Sequence")]
-    public class Nationalities06Delete : IClassFixture<AppSettingsFixture> {
+    public class Customers01Get : IClassFixture<AppSettingsFixture> {
 
         #region variables
 
         private readonly AppSettingsFixture _appSettingsFixture;
         private readonly HttpClient _httpClient;
         private readonly TestHostFixture _testHostFixture = new();
-        private readonly string _actionVerb = "delete";
+        private readonly string _actionVerb = "get";
         private readonly string _baseUrl;
-        private readonly string _url = "/nationalities/4";
-        private readonly string _inUseUrl = "/nationalities/243";
-        private readonly string _notFoundUrl = "/nationalities/9999";
+        private readonly string _url = "/customers";
 
         #endregion
 
-        public Nationalities06Delete(AppSettingsFixture appsettings) {
+        public Customers01Get(AppSettingsFixture appsettings) {
             _appSettingsFixture = appsettings;
             _baseUrl = _appSettingsFixture.Configuration.GetSection("TestingEnvironment").GetSection("BaseUrl").Value;
             _httpClient = _testHostFixture.Client;
@@ -46,23 +47,15 @@ namespace Nationalities {
         }
 
         [Fact]
-        public async Task Simple_Users_Can_Not_Delete() {
+        public async Task Simple_Users_Can_Not_List() {
             await Forbidden.Action(_httpClient, _baseUrl, _url, _actionVerb, "simpleuser", Helpers.SimpleUserPassword(), null);
         }
 
         [Fact]
-        public async Task Admins_Not_Found_When_Not_Exists() {
-            await RecordNotFound.Action(_httpClient, _baseUrl, _notFoundUrl, "john", Helpers.AdminPassword());
-        }
-
-        [Fact]
-        public async Task Admins_Can_Not_Delete_In_Use() {
-            await RecordInUse.Action(_httpClient, _baseUrl, _inUseUrl, "john", Helpers.AdminPassword());
-        }
-
-        [Fact]
-        public async Task Admins_Can_Delete_Not_In_Use() {
-            await RecordDeleted.Action(_httpClient, _baseUrl, _url, "john", Helpers.AdminPassword());
+        public async Task Admins_Can_List() {
+            var actionResponse = await List.Action(_httpClient, _baseUrl, _url, "john", Helpers.AdminPassword());
+            var records = JsonSerializer.Deserialize<List<CustomerListVM>>(await actionResponse.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            Assert.Equal(9, records.Count);
         }
 
     }

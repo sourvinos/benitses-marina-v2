@@ -18,7 +18,7 @@ namespace TaxOffices {
         private readonly string _actionVerb = "delete";
         private readonly string _baseUrl;
         private readonly string _url = "/taxOffices/3";
-        private readonly string _inUseUrl = "/taxOffices/1";
+        private readonly string _inUseUrl = "/taxOffices/133";
         private readonly string _notFoundUrl = "/taxOffices/9999";
 
         #endregion

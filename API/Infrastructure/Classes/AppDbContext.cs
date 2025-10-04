@@ -14,15 +14,18 @@ using API.Features.SeasonTypes;
 using API.Features.Prices;
 using API.Features.TaxOffices;
 using API.Features.Nationalities;
+using API.Features.Customers.Admin;
 
 namespace API.Infrastructure.Classes {
 
     public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<IdentityUser>(options) {
 
-        // FK Tables
+        // Tables
         public DbSet<Berth> Berths { get; set; }
+        public DbSet<Customer> Customers { get; set; }
         public DbSet<Nationality> Nationalities { get; set; }
         public DbSet<PeriodType> PeriodTypes { get; set; }
+        public DbSet<Price> Prices { get; set; }
         public DbSet<SeasonType> SeasonTypes { get; set; }
         public DbSet<TaxOffice> TaxOffices { get; set; }
         // Boats
@@ -35,8 +38,6 @@ namespace API.Infrastructure.Classes {
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ReservationBerth> ReservationBerths { get; set; }
         public DbSet<ReservationCaptain> ReservationCaptains { get; set; }
-        // Prices
-        public DbSet<Price> Prices { get; set; }
         // The rest
         public DbSet<Token> Tokens { get; set; }
         public DbSet<EmailQueue> EmailQueues { get; set; }

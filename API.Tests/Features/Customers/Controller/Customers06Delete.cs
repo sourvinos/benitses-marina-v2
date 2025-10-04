@@ -5,10 +5,10 @@ using Infrastructure;
 using Responses;
 using Xunit;
 
-namespace Nationalities {
+namespace Customers {
 
     [Collection("Sequence")]
-    public class Nationalities06Delete : IClassFixture<AppSettingsFixture> {
+    public class Customers06Delete : IClassFixture<AppSettingsFixture> {
 
         #region variables
 
@@ -17,13 +17,13 @@ namespace Nationalities {
         private readonly TestHostFixture _testHostFixture = new();
         private readonly string _actionVerb = "delete";
         private readonly string _baseUrl;
-        private readonly string _url = "/nationalities/4";
-        private readonly string _inUseUrl = "/nationalities/243";
-        private readonly string _notFoundUrl = "/nationalities/9999";
+        private readonly string _url = "/customers/9";
+        private readonly string _inUseUrl = "/customers/2";
+        private readonly string _notFoundUrl = "/customers/9999";
 
         #endregion
 
-        public Nationalities06Delete(AppSettingsFixture appsettings) {
+        public Customers06Delete(AppSettingsFixture appsettings) {
             _appSettingsFixture = appsettings;
             _baseUrl = _appSettingsFixture.Configuration.GetSection("TestingEnvironment").GetSection("BaseUrl").Value;
             _httpClient = _testHostFixture.Client;
@@ -55,7 +55,7 @@ namespace Nationalities {
             await RecordNotFound.Action(_httpClient, _baseUrl, _notFoundUrl, "john", Helpers.AdminPassword());
         }
 
-        [Fact]
+        [Fact(Skip = "Awaiting for sales")]
         public async Task Admins_Can_Not_Delete_In_Use() {
             await RecordInUse.Action(_httpClient, _baseUrl, _inUseUrl, "john", Helpers.AdminPassword());
         }

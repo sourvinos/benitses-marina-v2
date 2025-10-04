@@ -24,13 +24,15 @@ namespace API.Infrastructure.Helpers {
 
         #region Specific messages
 
-        public static string InvalidBoatUsage() { return "The boat usage does not exist or is inactive"; }
-        public static string InvalidHullType() { return "The hull type does not exist or is inactive"; }
         public static string InvalidBerth() { return "A berth does not exist or is inactive"; }
+        public static string InvalidBoat() { return "The boat does not exist or is inactive"; }
+        public static string InvalidBoatUsage() { return "The boat usage does not exist or is inactive"; }
+        public static string InvalidDays() { return "The days or the departure day are not correct"; }
+        public static string InvalidHullType() { return "The hull type does not exist or is inactive"; }
+        public static string InvalidNationality() { return "The nationality does not exist or is inactive"; }
         public static string InvalidPeriodType() { return "The period does not exist or is inactive"; }
         public static string InvalidSeasonType() { return "The season does not exist or is inactive"; }
-        public static string InvalidBoat() { return "The boat does not exist or is inactive"; }
-        public static string InvalidDays() { return "The days or the departure day are not correct"; }
+        public static string InvalidTaxOffice() { return "The tax office does not exist or is inactive"; }
 
         #endregion
 

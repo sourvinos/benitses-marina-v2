@@ -13,6 +13,7 @@ using API.Features.SeasonTypes;
 using API.Features.Prices;
 using API.Features.TaxOffices;
 using API.Features.Nationalities;
+using API.Features.Customers.Admin;
 
 namespace API.Infrastructure.Extensions {
 
@@ -28,6 +29,9 @@ namespace API.Infrastructure.Extensions {
 
             services.AddTransient<IBoatUsageRepository, BoatUsageRepository>();
             services.AddTransient<IBoatUsageValidation, BoatUsageValidation>();
+
+            services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<ICustomerValidation, CustomerValidation>();
 
             services.AddTransient<IHullTypeRepository, HullTypeRepository>();
             services.AddTransient<IHullTypeValidation, HullTypeValidation>();

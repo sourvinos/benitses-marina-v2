@@ -82,6 +82,8 @@ namespace API.Infrastructure.Middleware {
                 454 => ApiMessages.InvalidBerth(),
                 455 => ApiMessages.InvalidPeriodType(),
                 456 => ApiMessages.InvalidSeasonType(),
+                457 => ApiMessages.InvalidNationality(),
+                458 => ApiMessages.InvalidTaxOffice(),
                 491 => ApiMessages.RecordInUse(),
                 490 => ApiMessages.NotOwnRecord(),
                 492 => ApiMessages.InvalidNewUser(),
