@@ -2,16 +2,16 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using API.Features.Prices;
+using API.Features.DocumentTypes;
 using Cases;
 using Infrastructure;
 using Responses;
 using Xunit;
 
-namespace Prices {
+namespace DocumentTypes {
 
     [Collection("Sequence")]
-    public class Prices01Get : IClassFixture<AppSettingsFixture> {
+    public class DocumentTypes02GetForBrowser : IClassFixture<AppSettingsFixture> {
 
         #region variables
 
@@ -20,11 +20,11 @@ namespace Prices {
         private readonly TestHostFixture _testHostFixture = new();
         private readonly string _actionVerb = "get";
         private readonly string _baseUrl;
-        private readonly string _url = "/prices";
+        private readonly string _url = "/documentTypes/getForBrowser";
 
         #endregion
 
-        public Prices01Get(AppSettingsFixture appsettings) {
+        public DocumentTypes02GetForBrowser(AppSettingsFixture appsettings) {
             _appSettingsFixture = appsettings;
             _baseUrl = _appSettingsFixture.Configuration.GetSection("TestingEnvironment").GetSection("BaseUrl").Value;
             _httpClient = _testHostFixture.Client;
@@ -46,11 +46,12 @@ namespace Prices {
             await InvalidCredentials.Action(_httpClient, _baseUrl, _url, _actionVerb, login.Username, login.Password, null);
         }
 
-        [Fact]
-        public async Task Admins_Can_List() {
-            var actionResponse = await List.Action(_httpClient, _baseUrl, _url, "john", Helpers.AdminPassword());
-            var records = JsonSerializer.Deserialize<List<PriceListVM>>(await actionResponse.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-            Assert.Equal(384, records.Count);
+        [Theory]
+        [ClassData(typeof(ActiveUsersCanLogin))]
+        public async Task Active_Users_Can_Get_For_Browser(Login login) {
+            var actionResponse = await List.Action(_httpClient, _baseUrl, _url, login.Username, login.Password);
+            var records = JsonSerializer.Deserialize<List<DocumentTypeBrowserListVM>>(await actionResponse.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            Assert.Equal(3, records.Count);
         }
 
     }

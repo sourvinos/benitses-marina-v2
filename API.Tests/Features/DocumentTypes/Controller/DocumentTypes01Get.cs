@@ -1,17 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using Responses;
+using Cases;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using API.Features.Prices;
-using Cases;
 using Infrastructure;
-using Responses;
 using Xunit;
+using API.Features.DocumentTypes;
 
-namespace Prices {
+namespace DocumentTypes {
 
     [Collection("Sequence")]
-    public class Prices01Get : IClassFixture<AppSettingsFixture> {
+    public class DocumentTypes01Get : IClassFixture<AppSettingsFixture> {
 
         #region variables
 
@@ -20,11 +20,11 @@ namespace Prices {
         private readonly TestHostFixture _testHostFixture = new();
         private readonly string _actionVerb = "get";
         private readonly string _baseUrl;
-        private readonly string _url = "/prices";
+        private readonly string _url = "/documentTypes";
 
         #endregion
 
-        public Prices01Get(AppSettingsFixture appsettings) {
+        public DocumentTypes01Get(AppSettingsFixture appsettings) {
             _appSettingsFixture = appsettings;
             _baseUrl = _appSettingsFixture.Configuration.GetSection("TestingEnvironment").GetSection("BaseUrl").Value;
             _httpClient = _testHostFixture.Client;
@@ -47,10 +47,15 @@ namespace Prices {
         }
 
         [Fact]
+        public async Task Simple_Users_Can_Not_List() {
+            await Forbidden.Action(_httpClient, _baseUrl, _url, _actionVerb, "simpleuser", Helpers.SimpleUserPassword(), null);
+        }
+
+        [Fact]
         public async Task Admins_Can_List() {
             var actionResponse = await List.Action(_httpClient, _baseUrl, _url, "john", Helpers.AdminPassword());
-            var records = JsonSerializer.Deserialize<List<PriceListVM>>(await actionResponse.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-            Assert.Equal(384, records.Count);
+            var records = JsonSerializer.Deserialize<List<DocumentTypeListVM>>(await actionResponse.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            Assert.Equal(3, records.Count);
         }
 
     }

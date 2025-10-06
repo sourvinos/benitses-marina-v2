@@ -14,6 +14,7 @@ using API.Features.Prices;
 using API.Features.TaxOffices;
 using API.Features.Nationalities;
 using API.Features.Customers.Admin;
+using API.Features.DocumentTypes;
 
 namespace API.Infrastructure.Extensions {
 
@@ -44,6 +45,9 @@ namespace API.Infrastructure.Extensions {
 
             services.AddTransient<IPriceRepository, PriceRepository>();
             services.AddTransient<IPriceValidation, PriceValidation>();
+
+            services.AddTransient<IDocumentTypeRepository, DocumentTypeRepository>();
+            services.AddTransient<IDocumentTypeValidation, DocumentTypeValidation>();
 
             services.AddTransient<ITaxOfficeRepository, TaxOfficeRepository>();
             services.AddTransient<ITaxOfficeValidation, TaxOfficeValidation>();

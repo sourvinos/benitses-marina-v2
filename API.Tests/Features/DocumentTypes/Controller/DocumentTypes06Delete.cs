@@ -1,30 +1,29 @@
-﻿using System.Collections.Generic;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
-using API.Features.Prices;
 using Cases;
 using Infrastructure;
 using Responses;
 using Xunit;
 
-namespace Prices {
+namespace DocumentTypes {
 
     [Collection("Sequence")]
-    public class Prices01Get : IClassFixture<AppSettingsFixture> {
+    public class DocumentTypes06Delete : IClassFixture<AppSettingsFixture> {
 
         #region variables
 
         private readonly AppSettingsFixture _appSettingsFixture;
         private readonly HttpClient _httpClient;
         private readonly TestHostFixture _testHostFixture = new();
-        private readonly string _actionVerb = "get";
+        private readonly string _actionVerb = "delete";
         private readonly string _baseUrl;
-        private readonly string _url = "/prices";
+        private readonly string _url = "/documentTypes/3";
+        private readonly string _inUseUrl = "/documentTypes/1";
+        private readonly string _notFoundUrl = "/documentTypes/9999";
 
         #endregion
 
-        public Prices01Get(AppSettingsFixture appsettings) {
+        public DocumentTypes06Delete(AppSettingsFixture appsettings) {
             _appSettingsFixture = appsettings;
             _baseUrl = _appSettingsFixture.Configuration.GetSection("TestingEnvironment").GetSection("BaseUrl").Value;
             _httpClient = _testHostFixture.Client;
@@ -47,10 +46,23 @@ namespace Prices {
         }
 
         [Fact]
-        public async Task Admins_Can_List() {
-            var actionResponse = await List.Action(_httpClient, _baseUrl, _url, "john", Helpers.AdminPassword());
-            var records = JsonSerializer.Deserialize<List<PriceListVM>>(await actionResponse.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-            Assert.Equal(384, records.Count);
+        public async Task Simple_Users_Can_Not_Delete() {
+            await Forbidden.Action(_httpClient, _baseUrl, _url, _actionVerb, "simpleuser", Helpers.SimpleUserPassword(), null);
+        }
+
+        [Fact]
+        public async Task Admins_Not_Found_When_Not_Exists() {
+            await RecordNotFound.Action(_httpClient, _baseUrl, _notFoundUrl, "john", Helpers.AdminPassword());
+        }
+
+        [Fact(Skip = "Awaiting for sales")]
+        public async Task Admins_Can_Not_Delete_In_Use() {
+            await RecordInUse.Action(_httpClient, _baseUrl, _inUseUrl, "john", Helpers.AdminPassword());
+        }
+
+        [Fact]
+        public async Task Admins_Can_Delete_Not_In_Use() {
+            await RecordDeleted.Action(_httpClient, _baseUrl, _url, "john", Helpers.AdminPassword());
         }
 
     }

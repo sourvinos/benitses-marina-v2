@@ -15,6 +15,7 @@ using API.Features.Prices;
 using API.Features.TaxOffices;
 using API.Features.Nationalities;
 using API.Features.Customers.Admin;
+using API.Features.DocumentTypes;
 
 namespace API.Infrastructure.Classes {
 
@@ -23,6 +24,7 @@ namespace API.Infrastructure.Classes {
         // Tables
         public DbSet<Berth> Berths { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<DocumentType> DocumentTypes { get; set; }
         public DbSet<Nationality> Nationalities { get; set; }
         public DbSet<PeriodType> PeriodTypes { get; set; }
         public DbSet<Price> Prices { get; set; }
@@ -38,6 +40,7 @@ namespace API.Infrastructure.Classes {
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ReservationBerth> ReservationBerths { get; set; }
         public DbSet<ReservationCaptain> ReservationCaptains { get; set; }
+        // Sales
         // The rest
         public DbSet<Token> Tokens { get; set; }
         public DbSet<EmailQueue> EmailQueues { get; set; }
