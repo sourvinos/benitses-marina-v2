@@ -13,16 +13,16 @@ namespace API.Features.BoatUsages {
             })];
         }
 
-        public static IEnumerable<BoatUsageBrowserVM> DomainToBrowserListVM(IQueryable<BoatUsage> boatUsages) {
-            return [.. boatUsages.Select(x => new BoatUsageBrowserVM {
+        public static IEnumerable<BoatUsageBrowserListVM> DomainToBrowserListVM(IQueryable<BoatUsage> boatUsages) {
+            return [.. boatUsages.Select(x => new BoatUsageBrowserListVM {
                 Id = x.Id,
                 Description = x.Description,
                 IsActive = x.IsActive,
             })];
         }
 
-        public static BoatUsageBrowserVM DomainToBrowserVM(BoatUsage boatUsage) {
-            return new BoatUsageBrowserVM {
+        public static BoatUsageBrowserListVM DomainToBrowserListVM(BoatUsage boatUsage) {
+            return new BoatUsageBrowserListVM {
                 Id = boatUsage.Id,
                 Description = boatUsage.Description,
                 IsActive = boatUsage.IsActive,

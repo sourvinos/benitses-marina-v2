@@ -21,7 +21,7 @@ namespace API.Features.SeasonTypes {
             })];
         }
 
-        public static SeasonTypeBrowserListVM DomainToBrowserVM(SeasonType seasonType) {
+        public static SeasonTypeBrowserListVM DomainToBrowserListVM(SeasonType seasonType) {
             return new SeasonTypeBrowserListVM {
                 Id = seasonType.Id,
                 Description = seasonType.Description,

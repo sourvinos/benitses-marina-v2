@@ -7,8 +7,7 @@ namespace API.Features.BoatUsages {
     public interface IBoatUsageRepository : IRepository<BoatUsage> {
 
         IEnumerable<BoatUsageListVM> Get();
-        IEnumerable<BoatUsageBrowserVM> GetForBrowser();
-        Task<BoatUsageBrowserVM> GetByIdForBrowserAsync(int id);
+        IEnumerable<BoatUsageBrowserListVM> GetForBrowser();
         Task<BoatUsage> GetByIdAsync(int id);
 
     }

@@ -13,8 +13,8 @@ namespace API.Features.Berths {
             })];
         }
 
-        public static IEnumerable<BerthBrowserVM> DomainToBrowserListVM(IQueryable<Berth> berth) {
-            return [.. berth.Select(x => new BerthBrowserVM {
+        public static IEnumerable<BerthBrowserListVM> DomainToBrowserListVM(IQueryable<Berth> berth) {
+            return [.. berth.Select(x => new BerthBrowserListVM {
                 Id = x.Id,
                 Description = x.Description,
                 IsActive = x.IsActive,

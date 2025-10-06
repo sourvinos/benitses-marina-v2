@@ -7,7 +7,7 @@ namespace API.Features.Prices {
     public interface IPriceRepository : IRepository<Price> {
 
         IEnumerable<PriceListVM> Get();
-        IEnumerable<PriceListBrowserVM> GetForBrowser();
+        IEnumerable<PriceBrowserListVM> GetForBrowser();
         Task<Price> GetByIdAsync(int id, bool includeTables);
         Task<Price> GetByCodeAsync(string code);
 

@@ -1,6 +1,6 @@
 namespace API.Features.Berths {
 
-    public class BerthBrowserVM {
+    public class BerthBrowserListVM {
 
         public int Id { get; set; }
         public string Description { get; set; }

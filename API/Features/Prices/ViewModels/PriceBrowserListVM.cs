@@ -1,6 +1,6 @@
 namespace API.Features.Prices {
 
-    public class PriceListBrowserVM {
+    public class PriceBrowserListVM {
 
         public int Id { get; set; }
         public string Code { get; set; }

@@ -13,8 +13,8 @@ namespace API.Features.HullTypes {
             })];
         }
 
-        public static IEnumerable<HullTypeBrowserVM> DomainToBrowserListVM(IQueryable<HullType> hullTypes) {
-            return [.. hullTypes.Select(x => new HullTypeBrowserVM {
+        public static IEnumerable<HullTypeBrowserListVM> DomainToBrowserListVM(IQueryable<HullType> hullTypes) {
+            return [.. hullTypes.Select(x => new HullTypeBrowserListVM {
                 Id = x.Id,
                 Description = x.Description,
                 IsActive = x.IsActive,

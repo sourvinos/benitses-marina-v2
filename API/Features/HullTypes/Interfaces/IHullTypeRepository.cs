@@ -7,7 +7,7 @@ namespace API.Features.HullTypes {
     public interface IHullTypeRepository : IRepository<HullType> {
 
         IEnumerable<HullTypeListVM> Get();
-        IEnumerable<HullTypeBrowserVM> GetForBrowser();
+        IEnumerable<HullTypeBrowserListVM> GetForBrowser();
         Task<HullType> GetByIdAsync(int id);
 
     }

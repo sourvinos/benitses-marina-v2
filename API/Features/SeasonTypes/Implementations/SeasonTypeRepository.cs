@@ -27,13 +27,6 @@ namespace API.Features.SeasonTypes {
             return SeasonTypeMappings.DomainToBrowserListVM(seasonTypes);
         }
 
-        public async Task<SeasonTypeBrowserListVM> GetByIdForBrowserAsync(int id) {
-            var seasonType = await context.SeasonTypes
-                .AsNoTracking()
-                .SingleOrDefaultAsync(x => x.Id == id);
-            return SeasonTypeMappings.DomainToBrowserVM(seasonType);
-        }
-
         public async Task<SeasonType> GetByIdAsync(int id) {
             return await context.SeasonTypes
                 .AsNoTracking()

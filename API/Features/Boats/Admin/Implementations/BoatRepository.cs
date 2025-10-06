@@ -22,7 +22,7 @@ namespace API.Features.Boats.Admin {
             return BoatMappingDomainToListVM.DomainToListVM(boats);
         }
 
-        public IEnumerable<BoatBrowserVM> GetForBrowser() {
+        public IEnumerable<BoatBrowserListVM> GetForBrowser() {
             var boats = context.Boats
                 .AsNoTracking()
                 .OrderBy(x => x.Description);

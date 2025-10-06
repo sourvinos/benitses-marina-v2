@@ -20,7 +20,7 @@ namespace API.Features.HullTypes {
             return HullTypeMappings.DomainToListVM(hullTypes);
         }
 
-        public IEnumerable<HullTypeBrowserVM> GetForBrowser() {
+        public IEnumerable<HullTypeBrowserListVM> GetForBrowser() {
             var hullTypes = context.HullTypes
                 .AsNoTracking()
                 .OrderBy(x => x.Description);

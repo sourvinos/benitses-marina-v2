@@ -1,6 +1,6 @@
 namespace API.Features.BoatUsages {
 
-    public class BoatUsageBrowserVM {
+    public class BoatUsageBrowserListVM {
 
         public int Id { get; set; }
         public string Description { get; set; }

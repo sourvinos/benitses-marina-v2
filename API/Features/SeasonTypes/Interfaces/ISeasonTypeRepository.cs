@@ -8,7 +8,6 @@ namespace API.Features.SeasonTypes {
 
         IEnumerable<SeasonTypeListVM> Get();
         IEnumerable<SeasonTypeBrowserListVM> GetForBrowser();
-        Task<SeasonTypeBrowserListVM> GetByIdForBrowserAsync(int id);
         Task<SeasonType> GetByIdAsync(int id);
 
     }

@@ -20,7 +20,7 @@ namespace API.Features.Berths {
             return BerthMappings.DomainToListVM(berths);
         }
 
-        public IEnumerable<BerthBrowserVM> GetForBrowser() {
+        public IEnumerable<BerthBrowserListVM> GetForBrowser() {
             var berths = context.Berths
                 .AsNoTracking()
                 .OrderBy(x => x.Description);

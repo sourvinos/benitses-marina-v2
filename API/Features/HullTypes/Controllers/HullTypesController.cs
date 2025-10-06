@@ -26,7 +26,7 @@ namespace API.Features.HullTypes {
 
         [HttpGet("[action]")]
         [Authorize(Roles = "user, admin")]
-        public IEnumerable<HullTypeBrowserVM> GetForBrowser() {
+        public IEnumerable<HullTypeBrowserListVM> GetForBrowser() {
             return repo.GetForBrowser();
         }
 

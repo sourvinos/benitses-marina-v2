@@ -6,8 +6,8 @@ namespace API.Features.Boats.Admin {
 
     public static class BoatMappingDomainToBrowserListVM {
 
-        public static IEnumerable<BoatBrowserVM> DomainToBrowserListVM(IQueryable<Boat> boats) {
-            return [.. boats.Select(x => new BoatBrowserVM {
+        public static IEnumerable<BoatBrowserListVM> DomainToBrowserListVM(IQueryable<Boat> boats) {
+            return [.. boats.Select(x => new BoatBrowserListVM {
                 Id = x.Id,
                 Description = x.Description,
                 Loa = x.Loa,

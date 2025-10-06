@@ -20,18 +20,11 @@ namespace API.Features.BoatUsages {
             return BoatUsageMappings.DomainToListVM(boatUsages);
         }
 
-        public IEnumerable<BoatUsageBrowserVM> GetForBrowser() {
+        public IEnumerable<BoatUsageBrowserListVM> GetForBrowser() {
             var boatUsages = context.BoatUsages
                 .AsNoTracking()
                 .OrderBy(x => x.Description);
             return BoatUsageMappings.DomainToBrowserListVM(boatUsages);
-        }
-
-        public async Task<BoatUsageBrowserVM> GetByIdForBrowserAsync(int id) {
-            var boatUsage = await context.BoatUsages
-                .AsNoTracking()
-                .SingleOrDefaultAsync(x => x.Id == id);
-            return BoatUsageMappings.DomainToBrowserVM(boatUsage);
         }
 
         public async Task<BoatUsage> GetByIdAsync(int id) {

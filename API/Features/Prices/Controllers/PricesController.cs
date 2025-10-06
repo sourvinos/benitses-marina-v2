@@ -31,7 +31,7 @@ namespace API.Features.Prices {
 
         [HttpGet("[action]")]
         [Authorize(Roles = "user, admin")]
-        public IEnumerable<PriceListBrowserVM> GetForBrowser() {
+        public IEnumerable<PriceBrowserListVM> GetForBrowser() {
             return priceRepo.GetForBrowser();
         }
 

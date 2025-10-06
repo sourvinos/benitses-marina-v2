@@ -7,7 +7,7 @@ namespace API.Features.Boats.Admin {
     public interface IBoatRepository : IRepository<Boat> {
 
         IEnumerable<BoatListVM> Get();
-        IEnumerable<BoatBrowserVM> GetForBrowser();
+        IEnumerable<BoatBrowserListVM> GetForBrowser();
         Task<Boat> GetByIdAsync(int id, bool includeTables);
 
     }

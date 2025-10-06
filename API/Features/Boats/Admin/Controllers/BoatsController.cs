@@ -26,7 +26,7 @@ namespace API.Features.Boats.Admin {
 
         [HttpGet("[action]")]
         [Authorize(Roles = "user, admin")]
-        public IEnumerable<BoatBrowserVM> GetForBrowser() {
+        public IEnumerable<BoatBrowserListVM> GetForBrowser() {
             return repo.GetForBrowser();
         }
 

@@ -8,7 +8,6 @@ namespace API.Features.PeriodTypes {
 
         IEnumerable<PeriodTypeListVM> Get();
         IEnumerable<PeriodTypeBrowserListVM> GetForBrowser();
-        Task<PeriodTypeBrowserListVM> GetByIdForBrowserAsync(int id);
         Task<PeriodType> GetByIdAsync(int id);
 
     }

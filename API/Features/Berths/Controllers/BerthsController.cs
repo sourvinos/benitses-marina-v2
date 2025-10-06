@@ -26,7 +26,7 @@ namespace API.Features.Berths {
 
         [HttpGet("[action]")]
         [Authorize(Roles = "user, admin")]
-        public IEnumerable<BerthBrowserVM> GetForBrowser() {
+        public IEnumerable<BerthBrowserListVM> GetForBrowser() {
             return repo.GetForBrowser();
         }
 

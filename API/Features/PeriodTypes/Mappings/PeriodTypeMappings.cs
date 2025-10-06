@@ -21,7 +21,7 @@ namespace API.Features.PeriodTypes {
             })];
         }
 
-        public static PeriodTypeBrowserListVM DomainToBrowserVM(PeriodType periodType) {
+        public static PeriodTypeBrowserListVM DomainToBrowserListVM(PeriodType periodType) {
             return new PeriodTypeBrowserListVM {
                 Id = periodType.Id,
                 Description = periodType.Description,

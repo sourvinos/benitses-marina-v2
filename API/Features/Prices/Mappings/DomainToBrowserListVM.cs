@@ -6,8 +6,8 @@ namespace API.Features.Prices {
 
     public static class PriceMappingDomainToBrowserListVM {
 
-        public static IEnumerable<PriceListBrowserVM> Get(IQueryable<Price> prices) {
-            return [.. prices.Select(x => new PriceListBrowserVM {
+        public static IEnumerable<PriceBrowserListVM> Get(IQueryable<Price> prices) {
+            return [.. prices.Select(x => new PriceBrowserListVM {
                 Id = x.Id,
                 Code = x.Code,
                 Description = x.Description,

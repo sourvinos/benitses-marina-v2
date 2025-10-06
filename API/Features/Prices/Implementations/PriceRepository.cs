@@ -23,7 +23,7 @@ namespace API.Features.Prices {
             return PriceMappingDomainToListVM.Get(prices);
         }
 
-        public IEnumerable<PriceListBrowserVM> GetForBrowser() {
+        public IEnumerable<PriceBrowserListVM> GetForBrowser() {
             var prices = context.Prices
                 .AsNoTracking()
                 .Include(x => x.HullType)

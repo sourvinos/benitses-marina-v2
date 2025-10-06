@@ -27,13 +27,6 @@ namespace API.Features.PeriodTypes {
             return PeriodTypeMappings.DomainToBrowserListVM(periodTypes);
         }
 
-        public async Task<PeriodTypeBrowserListVM> GetByIdForBrowserAsync(int id) {
-            var periodType = await context.PeriodTypes
-                .AsNoTracking()
-                .SingleOrDefaultAsync(x => x.Id == id);
-            return PeriodTypeMappings.DomainToBrowserVM(periodType);
-        }
-
         public async Task<PeriodType> GetByIdAsync(int id) {
             return await context.PeriodTypes
                 .AsNoTracking()
