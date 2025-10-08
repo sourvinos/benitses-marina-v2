@@ -17,6 +17,7 @@ using API.Features.Nationalities;
 using API.Features.Customers.Admin;
 using API.Features.DocumentTypes;
 using API.Features.PaymentMethods;
+using API.Features.Sales;
 
 namespace API.Infrastructure.Classes {
 
@@ -43,6 +44,7 @@ namespace API.Infrastructure.Classes {
         public DbSet<ReservationBerth> ReservationBerths { get; set; }
         public DbSet<ReservationCaptain> ReservationCaptains { get; set; }
         // Sales
+        public DbSet<Sale> Sales { get; set; }
         // The rest
         public DbSet<Token> Tokens { get; set; }
         public DbSet<EmailQueue> EmailQueues { get; set; }
@@ -56,6 +58,7 @@ namespace API.Infrastructure.Classes {
 
         private static void ApplyConfigurations(ModelBuilder modelBuilder) {
             modelBuilder.ApplyConfiguration(new PriceConfig());
+            modelBuilder.ApplyConfiguration(new SaleConfig());
             modelBuilder.ApplyConfiguration(new UserConfig());
         }
 

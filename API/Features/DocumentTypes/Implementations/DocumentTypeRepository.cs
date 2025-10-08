@@ -33,14 +33,6 @@ namespace API.Features.DocumentTypes {
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
 
-        public static IEnumerable<DocumentTypeBrowserListVM> DomainToBrowserListVM(IQueryable<DocumentType> documentTypes) {
-            return [.. documentTypes.Select(x => new DocumentTypeBrowserListVM {
-                Id = x.Id,
-                Description = x.Description,
-                IsActive = x.IsActive,
-            })];
-        }
-
         public static DocumentTypeReadDto DomainToDto(DocumentType documentType) {
             return new DocumentTypeReadDto {
                 Id = documentType.Id,

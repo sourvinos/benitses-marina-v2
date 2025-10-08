@@ -16,6 +16,7 @@ using API.Features.Nationalities;
 using API.Features.Customers.Admin;
 using API.Features.DocumentTypes;
 using API.Features.PaymentMethods;
+using API.Features.Sales;
 
 namespace API.Infrastructure.Extensions {
 
@@ -55,6 +56,9 @@ namespace API.Infrastructure.Extensions {
 
             services.AddTransient<ITaxOfficeRepository, TaxOfficeRepository>();
             services.AddTransient<ITaxOfficeValidation, TaxOfficeValidation>();
+
+            services.AddTransient<ISaleRepository, SaleRepository>();
+            services.AddTransient<ISaleValidation, SaleValidation>();
 
             services.AddTransient<ISeasonTypeRepository, SeasonTypeRepository>();
             services.AddTransient<ISeasonTypeValidation, SeasonTypeValidation>();
