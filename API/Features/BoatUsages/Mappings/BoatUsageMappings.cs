@@ -20,7 +20,7 @@ namespace API.Features.BoatUsages {
                 IsActive = x.IsActive,
             })];
         }
-
+ 
         public static BoatUsageBrowserListVM DomainToBrowserListVM(BoatUsage boatUsage) {
             return new BoatUsageBrowserListVM {
                 Id = boatUsage.Id,

@@ -16,6 +16,7 @@ using API.Features.TaxOffices;
 using API.Features.Nationalities;
 using API.Features.Customers.Admin;
 using API.Features.DocumentTypes;
+using API.Features.PaymentMethods;
 
 namespace API.Infrastructure.Classes {
 
@@ -26,6 +27,7 @@ namespace API.Infrastructure.Classes {
         public DbSet<Customer> Customers { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }
         public DbSet<Nationality> Nationalities { get; set; }
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<PeriodType> PeriodTypes { get; set; }
         public DbSet<Price> Prices { get; set; }
         public DbSet<SeasonType> SeasonTypes { get; set; }
