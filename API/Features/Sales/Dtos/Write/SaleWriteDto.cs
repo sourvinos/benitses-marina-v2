@@ -8,7 +8,6 @@ namespace API.Features.Sales {
 
         public Guid SaleId { get; set; }
         public Guid ReservationId { get; set; }
-        public string Date { get; set; }
         public int InvoiceNo { get; set; }
         public int CustomerId { get; set; }
         public int DocumentTypeId { get; set; }

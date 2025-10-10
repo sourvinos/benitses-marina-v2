@@ -14,7 +14,6 @@ namespace API.Features.Sales {
         public decimal DiscountAmount { get; set; }
         public decimal NetAmountPostDiscount { get; set; }
         public decimal VatPercent { get; set; }
-        public decimal VatAmount { get; set; }
 
     }
 

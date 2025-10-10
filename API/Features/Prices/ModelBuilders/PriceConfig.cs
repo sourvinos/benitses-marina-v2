@@ -6,7 +6,6 @@ namespace API.Features.Prices {
     internal class PriceConfig : IEntityTypeConfiguration<Price> {
 
         public void Configure(EntityTypeBuilder<Price> entity) {
-            entity.Property(x => x.VatAmount).HasComputedColumnSql("((`NetAmount` * (`VatPercent` / 100)))", stored: false);
             entity.Property(x => x.GrossAmount).HasComputedColumnSql("(((`NetAmount` * (`VatPercent` / 100)) + `NetAmount`))", stored: false);
         }
 

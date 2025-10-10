@@ -4,7 +4,7 @@ namespace API.Features.Boats.Admin {
 
     public class BoatValidator : AbstractValidator<BoatWriteDto> {
 
-        public BoatValidator() {
+        public BoatValidator() {    
             RuleFor(x => x.Description).NotEmpty().MaximumLength(128);
             RuleFor(x => x.Flag).NotNull().MaximumLength(128);
             RuleFor(x => x.Loa).NotEmpty().GreaterThanOrEqualTo(0).LessThan(99);

@@ -23,7 +23,8 @@ namespace API.Infrastructure.Classes {
 
     public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<IdentityUser>(options) {
 
-        // Tables
+        #region DbSets
+
         public DbSet<Berth> Berths { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }
@@ -33,22 +34,20 @@ namespace API.Infrastructure.Classes {
         public DbSet<Price> Prices { get; set; }
         public DbSet<SeasonType> SeasonTypes { get; set; }
         public DbSet<TaxOffice> TaxOffices { get; set; }
-        // Boats
         public DbSet<Boat> Boats { get; set; }
         public DbSet<BoatFishingLicence> BoatFishingLicences { get; set; }
         public DbSet<BoatInsurance> BoatInsurances { get; set; }
         public DbSet<BoatUsage> BoatUsages { get; set; }
         public DbSet<HullType> HullTypes { get; set; }
-        // Reservations
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ReservationBerth> ReservationBerths { get; set; }
         public DbSet<ReservationCaptain> ReservationCaptains { get; set; }
-        // Sales
         public DbSet<Sale> Sales { get; set; }
         public DbSet<SaleItem> SaleItems { get; set; }
-        // The rest
         public DbSet<Token> Tokens { get; set; }
         public DbSet<EmailQueue> EmailQueues { get; set; }
+
+        #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);
@@ -58,9 +57,9 @@ namespace API.Infrastructure.Classes {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
 
         private static void ApplyConfigurations(ModelBuilder modelBuilder) {
-            modelBuilder.ApplyConfiguration(new PriceConfig());
+             modelBuilder.ApplyConfiguration(new PriceConfig());
             modelBuilder.ApplyConfiguration(new SaleConfig());
-            modelBuilder.ApplyConfiguration(new SaleItemConfig());
+            // modelBuilder.ApplyConfiguration(new SaleItemConfig());
             modelBuilder.ApplyConfiguration(new UserConfig());
         }
 

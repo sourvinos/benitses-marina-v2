@@ -52,7 +52,7 @@ namespace API.Features.Berths {
         [Authorize(Roles = "admin")]
         [ServiceFilter(typeof(ModelValidationAttribute))]
         public ResponseWithBody Post([FromBody] BerthWriteDto berth) {
-            var x = validation.IsValid(null, berth);
+            var x = validation.IsValidAsync(null, berth).Result;
             if (x == 200) {
                 var z = repo.Create((Berth)repo.AttachMetadataToPutDto(BerthMappings.DtoToDomail(berth)));
                 return new ResponseWithBody {
@@ -74,7 +74,7 @@ namespace API.Features.Berths {
         public async Task<ResponseWithBody> Put([FromBody] BerthWriteDto berth) {
             var x = await repo.GetByIdAsync(berth.Id);
             if (x != null) {
-                var z = validation.IsValid(x, berth);
+                var z = validation.IsValidAsync(x, berth).Result;
                 if (z == 200) {
                     var i = repo.Update((Berth)repo.AttachMetadataToPutDto(BerthMappings.DtoToDomail(berth)));
                     return new ResponseWithBody {

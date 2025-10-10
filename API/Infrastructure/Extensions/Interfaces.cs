@@ -17,6 +17,7 @@ using API.Features.Customers.Admin;
 using API.Features.DocumentTypes;
 using API.Features.PaymentMethods;
 using API.Features.Sales;
+using API.Features.Berths;
 
 namespace API.Infrastructure.Extensions {
 
@@ -25,6 +26,9 @@ namespace API.Infrastructure.Extensions {
         public static void AddInterfaces(IServiceCollection services) {
 
             services.AddScoped<Token>();
+
+            services.AddTransient<IBerthRepository, BerthRepository>();
+            services.AddTransient<IBerthValidation, BerthValidation>();
 
             services.AddTransient<IBoatRepository, BoatRepository>();
             services.AddTransient<IBoatValidation, BoatValidation>();

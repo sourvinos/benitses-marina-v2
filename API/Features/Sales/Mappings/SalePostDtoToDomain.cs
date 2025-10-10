@@ -7,9 +7,8 @@ namespace API.Features.Sales {
 
         public static Sale Write(SaleWriteDto sale) {
             return new Sale {
-                SaleId = sale.SaleId,
                 ReservationId = sale.ReservationId,
-                Date = DateHelpers.StringToDate(sale.Date),
+                Date = DateHelpers.GetLocalDateTime(),
                 InvoiceNo = sale.InvoiceNo,
                 CustomerId = sale.CustomerId,
                 DocumentTypeId = sale.DocumentTypeId,
@@ -17,8 +16,6 @@ namespace API.Features.Sales {
                 NetAmount = sale.NetAmount,
                 VatAmount = sale.VatAmount,
                 Items = [.. sale.Items.Select(x => new SaleItem {
-                    Id = x.Id,
-                    SaleId = x.SaleId,
                     ItemId = x.ItemId,
                     Qty = x.Qty,
                     UnitPrice = x.UnitPrice,
@@ -26,8 +23,7 @@ namespace API.Features.Sales {
                     DiscountPercent = x.DiscountPercent,
                     DiscountAmount = x.DiscountAmount,
                     NetAmountPostDiscount = x.NetAmountPostDiscount,
-                    VatPercent = x.VatPercent,
-                    VatAmount = x.VatAmount
+                    VatPercent = x.VatPercent
                 })],
                 PostAt = sale.PostAt,
                 PostUser = sale.PostUser,

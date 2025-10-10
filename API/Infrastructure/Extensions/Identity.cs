@@ -32,7 +32,7 @@ namespace API.Infrastructure.Extensions {
                 });
         }
 
-        public static string GetConnectedUserId(IHttpContextAccessor httpContextAccessor) {
+            public static string GetConnectedUserId(IHttpContextAccessor httpContextAccessor) {
             return httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
         }
 
