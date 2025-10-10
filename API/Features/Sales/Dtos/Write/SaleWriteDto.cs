@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using API.Infrastructure.Interfaces;
 
 namespace API.Features.Sales {
@@ -14,8 +15,8 @@ namespace API.Features.Sales {
         public int PaymentMethodId { get; set; }
         public decimal NetAmount { get; set; }
         public decimal VatAmount { get; set; }
-        public decimal GrossAmount { get; set; }
         public string Remarks { get; set; }
+        public List<SaleItemWriteDto> Items { get; set; } = [];
         public bool IsEmailPending { get; set; }
         public bool IsEmailSent { get; set; }
         public bool IsCancelled { get; set; }

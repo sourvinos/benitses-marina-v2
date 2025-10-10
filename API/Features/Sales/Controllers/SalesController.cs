@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using API.Infrastructure.Extensions;
 using API.Infrastructure.Helpers;
 using API.Infrastructure.Responses;
 using Microsoft.AspNetCore.Authorization;
@@ -37,6 +38,26 @@ namespace API.Features.Sales {
             } else {
                 throw new CustomException() {
                     ResponseCode = 404
+                };
+            }
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        [ServiceFilter(typeof(ModelValidationAttribute))]
+        public async Task<ResponseWithBody> PostAsync([FromBody] SaleWriteDto sale) {
+            var x = validation.IsValidAsync(null, sale);
+            if (await x == 200) {
+                var z = repo.Create((Sale)repo.AttachMetadataToPutDto(SalePostDtoToDomain.Write(sale)));
+                return new ResponseWithBody {
+                    Code = 200,
+                    Icon = Icons.Success.ToString(),
+                    Body = z,
+                    Message = ApiMessages.OK()
+                };
+            } else {
+                throw new CustomException() {
+                    ResponseCode = await x
                 };
             }
         }
