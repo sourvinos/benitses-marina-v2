@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using API.Features.Customers.Admin;
 using API.Features.DocumentTypes;
 using API.Features.PaymentMethods;
@@ -8,7 +9,7 @@ namespace API.Features.Sales {
 
     public class Sale : IMetadata {
 
-        public Guid InvoiceId { get; set; }
+        public Guid SaleId { get; set; }
         public Guid ReservationId { get; set; }
         public DateTime Date { get; set; }
         public int InvoiceNo { get; set; }
@@ -21,10 +22,11 @@ namespace API.Features.Sales {
         public decimal NetAmount { get; set; }
         public decimal VatAmount { get; set; }
         public decimal GrossAmount { get; set; }
-        public string Remarks { get; set; }
+        public List<SaleItem> Items { get; set; }
         public bool IsEmailPending { get; set; }
         public bool IsEmailSent { get; set; }
         public bool IsCancelled { get; set; }
+        public string Remarks { get; set; }
         public string PostAt { get; set; }
         public string PostUser { get; set; }
         public string PutAt { get; set; }

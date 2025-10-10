@@ -6,8 +6,8 @@ namespace API.Features.Sales {
     internal class SaleConfig : IEntityTypeConfiguration<Sale> {
 
         public void Configure(EntityTypeBuilder<Sale> entity) {
-            entity.HasKey("InvoiceId");
-            entity.Property(x => x.InvoiceId).IsFixedLength().HasMaxLength(36).IsRequired(true);
+            entity.HasKey("SaleId");
+            entity.Property(x => x.SaleId).IsFixedLength().HasMaxLength(36).IsRequired(true);
         }
 
     }

@@ -45,6 +45,7 @@ namespace API.Infrastructure.Classes {
         public DbSet<ReservationCaptain> ReservationCaptains { get; set; }
         // Sales
         public DbSet<Sale> Sales { get; set; }
+        public DbSet<SaleItem> SaleItems { get; set; }
         // The rest
         public DbSet<Token> Tokens { get; set; }
         public DbSet<EmailQueue> EmailQueues { get; set; }
@@ -59,6 +60,7 @@ namespace API.Infrastructure.Classes {
         private static void ApplyConfigurations(ModelBuilder modelBuilder) {
             modelBuilder.ApplyConfiguration(new PriceConfig());
             modelBuilder.ApplyConfiguration(new SaleConfig());
+            modelBuilder.ApplyConfiguration(new SaleItemConfig());
             modelBuilder.ApplyConfiguration(new UserConfig());
         }
 

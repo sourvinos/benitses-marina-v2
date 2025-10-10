@@ -5,7 +5,7 @@ namespace API.Features.Sales {
 
     public class SaleListVM {
 
-        public Guid InvoiceId { get; set; }
+        public Guid SaleId { get; set; }
         public Guid ReservationId { get; set; }
         public string Date { get; set; }
         public SimpleEntity Customer { get; set; }

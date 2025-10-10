@@ -20,7 +20,7 @@ namespace API.Features.Sales {
         }
 
         private async Task<bool> IsValidCustomerId(SaleWriteDto sale) {
-            return sale.InvoiceId.ToString() != ""
+            return sale.SaleId.ToString() != ""
                 ? await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == sale.CustomerId && x.IsActive) != null
                 : await context.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == sale.CustomerId) != null;
         }

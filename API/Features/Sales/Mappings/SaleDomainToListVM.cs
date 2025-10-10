@@ -9,7 +9,7 @@ namespace API.Features.Sales {
 
         public static IEnumerable<SaleListVM> Read(IQueryable<Sale> sales) {
             return [.. sales.Select(x => new SaleListVM {
-                InvoiceId = x.InvoiceId,
+                SaleId = x.SaleId,
                 ReservationId = x.ReservationId,
                 Date = DateHelpers.DateToISOString(x.Date),
                 Customer = new SimpleEntity {
