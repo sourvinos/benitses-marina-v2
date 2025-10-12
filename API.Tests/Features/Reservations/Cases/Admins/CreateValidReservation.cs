@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using API.Infrastructure.Helpers;
 
 namespace Reservations {
 
@@ -16,12 +15,13 @@ namespace Reservations {
             return [
                 new TestReservation {
                     BoatId = 1,
-                    FromDate = DateHelpers.StringToDate("2025-01-01"),
-                    ToDate = DateHelpers.StringToDate("2025-01-10"),
+                    FromDate = "2025-01-01",
+                    ToDate = "2025-01-10",
                     Days = 9,
-                    IsPassingBy = true,
                     IsDocked = true,
                     IsDryDock = false,
+                    IsPassingBy = true,
+                    IsDeleted = false,
                     Berths = [
                         new TestReservationBerth { BerthId = 1 },
                         new TestReservationBerth { BerthId = 2 }
@@ -33,7 +33,7 @@ namespace Reservations {
                         TaxOffice = "TAX OFFICE",
                         Phones = "PHONES",
                         Email = "email@server.com"
-                     }
+                    }
                 }
             ];
         }

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using API.Infrastructure.Helpers;
 
 namespace Reservations {
 
@@ -11,11 +10,11 @@ namespace Reservations {
 
         public IEnumerator<object[]> GetEnumerator() {
             yield return Berth_First_Must_Exist();
-            // yield return Berth_Middle_Must_Exist();
-            // yield return Berth_Last_Must_Exist();
-            // yield return Boat_Must_Exist();
-            // yield return Reservation_Must_Not_Be_Already_Updated();
-            // yield return Incorrect_Days();
+            yield return Berth_Middle_Must_Exist();
+            yield return Berth_Last_Must_Exist();
+            yield return Boat_Must_Exist();
+            yield return Reservation_Must_Not_Be_Already_Updated();
+            yield return Incorrect_Days();
         }
 
         private static object[] Berth_First_Must_Exist() {
@@ -24,8 +23,8 @@ namespace Reservations {
                     StatusCode = 454,
                     ReservationId = Guid.Parse("08ddf478-3633-41ce-8dd9-d7abb2f9be3c"),
                     BoatId = 1,
-                    FromDate = DateHelpers.StringToDate("2025-01-01"),
-                    ToDate = DateHelpers.StringToDate("2025-01-10"),
+                    FromDate = "2025-01-01",
+                    ToDate = "2025-01-10",
                     Days = 9,
                     IsPassingBy = true,
                     IsDocked = true,
@@ -53,8 +52,8 @@ namespace Reservations {
                     StatusCode = 454,
                     ReservationId = Guid.Parse("08ddf478-3633-41ce-8dd9-d7abb2f9be3c"),
                     BoatId = 1,
-                    FromDate = DateHelpers.StringToDate("2025-01-01"),
-                    ToDate = DateHelpers.StringToDate("2025-01-10"),
+                    FromDate = "2025-01-01",
+                    ToDate = "2025-01-10",
                     Days = 9,
                     IsPassingBy = true,
                     IsDocked = true,
@@ -83,8 +82,8 @@ namespace Reservations {
                     StatusCode = 454,
                     ReservationId = Guid.Parse("08ddf478-3633-41ce-8dd9-d7abb2f9be3c"),
                     BoatId = 1,
-                    FromDate = DateHelpers.StringToDate("2025-01-01"),
-                    ToDate = DateHelpers.StringToDate("2025-01-10"),
+                    FromDate = "2025-01-01",
+                    ToDate = "2025-01-10",
                     Days = 9,
                     IsPassingBy = true,
                     IsDocked = true,
@@ -113,8 +112,8 @@ namespace Reservations {
                     StatusCode = 452,
                     ReservationId = Guid.Parse("08ddf478-3633-41ce-8dd9-d7abb2f9be3c"),
                     BoatId = 999,
-                    FromDate = DateHelpers.StringToDate("2025-01-01"),
-                    ToDate = DateHelpers.StringToDate("2025-01-10"),
+                    FromDate = "2025-01-01",
+                    ToDate = "2025-01-10",
                     Days = 9,
                     IsPassingBy = true,
                     IsDocked = true,
@@ -142,8 +141,8 @@ namespace Reservations {
                     StatusCode = 415,
                     ReservationId = Guid.Parse("08ddf478-3633-41ce-8dd9-d7abb2f9be3c"),
                     BoatId = 1,
-                    FromDate = DateHelpers.StringToDate("2025-01-01"),
-                    ToDate = DateHelpers.StringToDate("2025-01-10"),
+                    FromDate = "2025-01-01",
+                    ToDate = "2025-01-10",
                     Days = 9,
                     IsPassingBy = true,
                     IsDocked = true,
@@ -171,8 +170,8 @@ namespace Reservations {
                     StatusCode = 453,
                     ReservationId = Guid.Parse("08ddf478-3633-41ce-8dd9-d7abb2f9be3c"),
                     BoatId = 1,
-                    FromDate = DateHelpers.StringToDate("2025-01-01"),
-                    ToDate = DateHelpers.StringToDate("2025-01-02"),
+                    FromDate = "2025-01-01",
+                    ToDate = "2025-01-10",
                     Days = 3,
                     IsPassingBy = true,
                     IsDocked = true,

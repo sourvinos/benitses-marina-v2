@@ -15,9 +15,9 @@ namespace API.Features.Reservations {
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
         public int Days { get; set; }
-        public bool IsPassingBy { get; set; }
         public bool IsDocked { get; set; }
         public bool IsDryDock { get; set; }
+        public bool IsPassingBy { get; set; }
         public bool IsDeleted { get; set; }
         public string PostAt { get; set; }
         public string PostUser { get; set; }

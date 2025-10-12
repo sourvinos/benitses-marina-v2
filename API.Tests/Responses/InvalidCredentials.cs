@@ -29,9 +29,9 @@ namespace Responses {
                 case "put":
                     actionResponse = await httpClient.PutAsync(baseUrl + url, new StringContent(System.Text.Json.JsonSerializer.Serialize(record), Encoding.UTF8, MediaTypeNames.Application.Json));
                     break;
-                case "patch":
-                    actionResponse = await httpClient.PatchAsync(baseUrl + url, new StringContent(System.Text.Json.JsonSerializer.Serialize(record), Encoding.UTF8, MediaTypeNames.Application.Json));
-                    break;
+                // case "patch":
+                //     actionResponse = await httpClient.PatchAsync(baseUrl + url, new StringContent(System.Text.Json.JsonSerializer.Serialize(record), Encoding.UTF8, MediaTypeNames.Application.Json));
+                //     break;
                 case "delete":
                     actionResponse = await httpClient.DeleteAsync(baseUrl + url);
                     break;

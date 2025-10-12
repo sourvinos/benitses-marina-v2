@@ -7,10 +7,10 @@ namespace Infrastructure {
         public AppSettingsFixture AppSettingsFixture;
         public string BaseUrl;
 
-        public BaseFixture(AppSettingsFixture appSettings) {
-            AppSettingsFixture = appSettings;
-            BaseUrl = AppSettingsFixture.Configuration.GetSection("TestingEnvironment").GetSection("BaseUrl").Value;
-        }
+        // public BaseFixture(AppSettingsFixture appSettings) {
+        //     AppSettingsFixture = appSettings;
+        //     BaseUrl = AppSettingsFixture.Configuration.GetSection("TestingEnvironment").GetSection("BaseUrl").Value;
+        // }
 
     }
 

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using API.Infrastructure.Helpers;
 
 namespace Reservations {
 
@@ -18,12 +17,13 @@ namespace Reservations {
                 new TestReservation {
                     ReservationId = Guid.Parse("08ddf478-3633-41ce-8dd9-d7abb2f9be3c"),
                     BoatId = 1,
-                    FromDate = DateHelpers.StringToDate("2025-01-01"),
-                    ToDate = DateHelpers.StringToDate("2025-01-12"),
+                    FromDate = "2025-01-01",
+                    ToDate = "2025-01-12",
                     Days = 11,
-                    IsPassingBy = true,
                     IsDocked = true,
                     IsDryDock = false,
+                    IsPassingBy = true,
+                    IsDeleted = false,
                     Berths = [
                         new() { Id = 6, ReservationId = Guid.Parse("08ddf478-3633-41ce-8dd9-d7abb2f9be3c"), BerthId = 2 },
                         new() { Id = 7, ReservationId = Guid.Parse("08ddf478-3633-41ce-8dd9-d7abb2f9be3c"), BerthId = 1 }

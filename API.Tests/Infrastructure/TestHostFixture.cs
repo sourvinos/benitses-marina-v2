@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Infrastructure {
 
-    public class TestHostFixture : IDisposable {
+    public class TestHostFixture {
 
         public HttpClient Client;
         public IServiceProvider ServiceProvider;
@@ -25,9 +25,9 @@ namespace Infrastructure {
             Client = host.GetTestClient();
         }
 
-        public void Dispose() {
-            GC.SuppressFinalize(this);
-        }
+        // public void Dispose() {
+        //     GC.SuppressFinalize(this);
+        // }
 
     }
 
