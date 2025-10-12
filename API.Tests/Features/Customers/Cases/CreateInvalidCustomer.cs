@@ -19,14 +19,10 @@ namespace Customers {
             return [
                 new TestCustomer {
                     StatusCode = 457,
-                    NationalityId = 9999,
+                    NationalityId = 999,
                     TaxOfficeId = 1,
-                    Description = Helpers.CreateRandomString(128),
-                    FullDescription = Helpers.CreateRandomString(512),
-                    VatNumber = Helpers.CreateRandomString(36),
-                    Branch = 0,
-                    PostalCode = Helpers.CreateRandomString(10),
-                    City = Helpers.CreateRandomString(128)
+                    VatPercentId = 1,
+                    Description = Helpers.CreateRandomString(128)
                 }
             ];
         }
@@ -37,12 +33,8 @@ namespace Customers {
                     StatusCode = 457,
                     NationalityId = 212,
                     TaxOfficeId = 1,
-                    Description = Helpers.CreateRandomString(128),
-                    FullDescription = Helpers.CreateRandomString(512),
-                    VatNumber = Helpers.CreateRandomString(36),
-                    Branch = 0,
-                    PostalCode = Helpers.CreateRandomString(10),
-                    City = Helpers.CreateRandomString(128)
+                    VatPercentId = 1,
+                    Description = Helpers.CreateRandomString(128)
                 }
             ];
         }
@@ -53,12 +45,8 @@ namespace Customers {
                     StatusCode = 458,
                     NationalityId = 1,
                     TaxOfficeId = 999,
-                    Description = Helpers.CreateRandomString(128),
-                    FullDescription = Helpers.CreateRandomString(512),
-                    VatNumber = Helpers.CreateRandomString(36),
-                    Branch = 0,
-                    PostalCode = Helpers.CreateRandomString(10),
-                    City = Helpers.CreateRandomString(128)
+                    VatPercentId = 1,
+                    Description = Helpers.CreateRandomString(128)
                 }
             ];
         }
@@ -68,13 +56,9 @@ namespace Customers {
                 new TestCustomer {
                     StatusCode = 458,
                     NationalityId = 1,
-                    TaxOfficeId = 147,
-                    Description = Helpers.CreateRandomString(128),
-                    FullDescription = Helpers.CreateRandomString(512),
-                    VatNumber = Helpers.CreateRandomString(36),
-                    Branch = 0,
-                    PostalCode = Helpers.CreateRandomString(10),
-                    City = Helpers.CreateRandomString(128)
+                    TaxOfficeId = 999,
+                    VatPercentId = 1,
+                    Description = Helpers.CreateRandomString(128)
                 }
             ];
         }

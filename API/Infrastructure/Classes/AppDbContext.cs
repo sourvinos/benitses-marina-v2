@@ -57,9 +57,9 @@ namespace API.Infrastructure.Classes {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
 
         private static void ApplyConfigurations(ModelBuilder modelBuilder) {
-             modelBuilder.ApplyConfiguration(new PriceConfig());
+            modelBuilder.ApplyConfiguration(new PriceConfig());
             modelBuilder.ApplyConfiguration(new SaleConfig());
-            // modelBuilder.ApplyConfiguration(new SaleItemConfig());
+            modelBuilder.ApplyConfiguration(new SaleItemConfig());
             modelBuilder.ApplyConfiguration(new UserConfig());
         }
 

@@ -18,12 +18,8 @@ namespace Customers {
                     Id = 1,
                     NationalityId = 1,
                     TaxOfficeId = 1,
+                    VatPercentId = 1,
                     Description = Helpers.CreateRandomString(128),
-                    FullDescription = Helpers.CreateRandomString(512),
-                    VatNumber = Helpers.CreateRandomString(36),
-                    Branch = 0,
-                    PostalCode = Helpers.CreateRandomString(10),
-                    City = Helpers.CreateRandomString(128),
                     PutAt = "2025-02-07 09:19:25"
                 }
             ];

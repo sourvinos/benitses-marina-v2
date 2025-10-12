@@ -50,7 +50,7 @@ namespace Customers {
         [Theory]
         [ClassData(typeof(UpdateValidCustomer))]
         public async Task Simple_Users_Can_Not_Update(TestCustomer record) {
-            await Forbidden.Action(_httpClient, _baseUrl, _url, _actionVerb, "simpleuser", "A#ba439de-446e-4eef-8c4b-833f1b3e18aa", record);
+            await Forbidden.Action(_httpClient, _baseUrl, _url, _actionVerb, "simpleuser", Helpers.SimpleUserPassword(), record);
         }
 
         [Fact]
@@ -61,7 +61,7 @@ namespace Customers {
         [Theory]
         [ClassData(typeof(UpdateInvalidCustomer))]
         public async Task Admins_Can_Not_Update_When_Invalid(TestCustomer record) {
-            var actionResponse = await RecordInvalidNotSaved.Action(_httpClient, _baseUrl, _url, _actionVerb, "john", "A#ba439de-446e-4eef-8c4b-833f1b3e18aa", record);
+            var actionResponse = await RecordInvalidNotSaved.Action(_httpClient, _baseUrl, _url, _actionVerb, "john",Helpers.AdminPassword(), record);
             Assert.Equal((HttpStatusCode)record.StatusCode, actionResponse.StatusCode);
         }
 

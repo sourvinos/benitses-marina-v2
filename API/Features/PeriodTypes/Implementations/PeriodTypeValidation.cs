@@ -12,14 +12,9 @@ namespace API.Features.PeriodTypes {
 
         public async Task<int> IsValidAsync(PeriodType z, PeriodTypeWriteDto periodType) {
             return true switch {
-                var x when x == !await IsValidActive(periodType) => 402,
                 var x when x == IsAlreadyUpdated(z, periodType) => 415,
                 _ => 200,
             };
-        }
-
-        private static async Task<bool> IsValidActive(PeriodTypeWriteDto periodType) {
-            return periodType.IsActive;
         }
 
         private static bool IsAlreadyUpdated(PeriodType z, PeriodTypeWriteDto periodType) {

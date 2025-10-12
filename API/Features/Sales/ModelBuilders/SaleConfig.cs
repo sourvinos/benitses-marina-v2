@@ -7,7 +7,6 @@ namespace API.Features.Sales {
 
         public void Configure(EntityTypeBuilder<Sale> entity) {
             entity.HasKey("SaleId");
-            entity.Property(x => x.SaleId).IsFixedLength().HasMaxLength(36).IsRequired(true);
             entity.Property(x => x.GrossAmount).HasComputedColumnSql("(`NetAmount` + `VatAmount`)", stored: false);
             entity.Property(x => x.Remarks).HasDefaultValue("");
         }

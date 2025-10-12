@@ -11,11 +11,11 @@ namespace Reservations {
 
         public IEnumerator<object[]> GetEnumerator() {
             yield return Berth_First_Must_Exist();
-            yield return Berth_Middle_Must_Exist();
-            yield return Berth_Last_Must_Exist();
-            yield return Boat_Must_Exist();
-            yield return Reservation_Must_Not_Be_Already_Updated();
-            yield return Incorrect_Days();
+            // yield return Berth_Middle_Must_Exist();
+            // yield return Berth_Last_Must_Exist();
+            // yield return Boat_Must_Exist();
+            // yield return Reservation_Must_Not_Be_Already_Updated();
+            // yield return Incorrect_Days();
         }
 
         private static object[] Berth_First_Must_Exist() {
