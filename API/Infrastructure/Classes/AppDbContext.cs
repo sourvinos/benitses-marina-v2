@@ -11,7 +11,7 @@ using API.Features.Berths;
 using API.Features.Boats.Admin;
 using API.Features.PeriodTypes;
 using API.Features.SeasonTypes;
-using API.Features.Prices;
+using API.Features.Items;
 using API.Features.TaxOffices;
 using API.Features.Nationalities;
 using API.Features.Customers.Admin;
@@ -31,7 +31,7 @@ namespace API.Infrastructure.Classes {
         public DbSet<Nationality> Nationalities { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<PeriodType> PeriodTypes { get; set; }
-        public DbSet<Price> Prices { get; set; }
+        public DbSet<Item> Items { get; set; }
         public DbSet<SeasonType> SeasonTypes { get; set; }
         public DbSet<TaxOffice> TaxOffices { get; set; }
         public DbSet<Boat> Boats { get; set; }
@@ -57,7 +57,7 @@ namespace API.Infrastructure.Classes {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
 
         private static void ApplyConfigurations(ModelBuilder modelBuilder) {
-            modelBuilder.ApplyConfiguration(new PriceConfig());
+            modelBuilder.ApplyConfiguration(new ItemConfig());
             modelBuilder.ApplyConfiguration(new SaleConfig());
             modelBuilder.ApplyConfiguration(new SaleItemConfig());
             modelBuilder.ApplyConfiguration(new UserConfig());

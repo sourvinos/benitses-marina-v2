@@ -7,7 +7,7 @@ using API.Features.HullTypes;
 using API.Features.Nationalities;
 using API.Features.PaymentMethods;
 using API.Features.PeriodTypes;
-using API.Features.Prices;
+using API.Features.Items;
 using API.Features.Reservations;
 using API.Features.Sales;
 using API.Features.SeasonTypes;
@@ -29,7 +29,7 @@ namespace API.Infrastructure.Extensions {
             services.AddTransient<IValidator<NationalityWriteDto>, NationalityValidator>();
             services.AddTransient<IValidator<PaymentMethodWriteDto>, PaymentMethodValidator>();
             services.AddTransient<IValidator<PeriodTypeWriteDto>, PeriodTypeValidator>();
-            services.AddTransient<IValidator<PriceWriteDto>, PriceValidator>();
+            services.AddTransient<IValidator<ItemWriteDto>, ItemValidator>();
             services.AddTransient<IValidator<ReservationWriteDto>, ReservationValidator>();
             services.AddTransient<IValidator<SaleWriteDto>, SaleValidator>();
             services.AddTransient<IValidator<SeasonTypeWriteDto>, SeasonTypeValidator>();

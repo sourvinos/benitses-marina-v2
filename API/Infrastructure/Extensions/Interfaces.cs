@@ -10,7 +10,7 @@ using API.Features.Boats.Admin;
 using API.Features.Boats.Insurances;
 using API.Features.PeriodTypes;
 using API.Features.SeasonTypes;
-using API.Features.Prices;
+using API.Features.Items;
 using API.Features.TaxOffices;
 using API.Features.Nationalities;
 using API.Features.Customers.Admin;
@@ -52,8 +52,8 @@ namespace API.Infrastructure.Extensions {
             services.AddTransient<IPeriodTypeRepository, PeriodTypeRepository>();
             services.AddTransient<IPeriodTypeValidation, PeriodTypeValidation>();
 
-            services.AddTransient<IPriceRepository, PriceRepository>();
-            services.AddTransient<IPriceValidation, PriceValidation>();
+            services.AddTransient<IItemRepository, ItemRepository>();
+            services.AddTransient<IItemValidation, ItemValidation>();
 
             services.AddTransient<IDocumentTypeRepository, DocumentTypeRepository>();
             services.AddTransient<IDocumentTypeValidation, DocumentTypeValidation>();

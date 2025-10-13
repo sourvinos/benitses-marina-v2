@@ -8,7 +8,7 @@ namespace API.Features.Sales {
         public Guid SaleId { get; set; }
         public int ItemId { get; set; }
         public decimal Qty { get; set; }
-        public decimal UnitPrice { get; set; }
+        public decimal UnitItem { get; set; }
         public decimal NetAmountPreDiscount { get; set; }
         public decimal DiscountPercent { get; set; }
         public decimal DiscountAmount { get; set; }

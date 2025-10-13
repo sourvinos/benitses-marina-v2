@@ -52,7 +52,7 @@ namespace API.Features.PeriodTypes {
         [Authorize(Roles = "admin")]
         [ServiceFilter(typeof(ModelValidationAttribute))]
         public ResponseWithBody Post([FromBody] PeriodTypeWriteDto periodType) {
-            var x = validation.IsValidAsync(null, periodType).Result;
+            var x = validation.IsValid(null, periodType);
             if (x == 200) {
                 var z = repo.Create((PeriodType)repo.AttachMetadataToPutDto(PeriodTypeMappings.DtoToDomail(periodType)));
                 return new ResponseWithBody {
@@ -74,7 +74,7 @@ namespace API.Features.PeriodTypes {
         public async Task<ResponseWithBody> Put([FromBody] PeriodTypeWriteDto periodType) {
             var x = await repo.GetByIdAsync(periodType.Id);
             if (x != null) {
-                var z = validation.IsValidAsync(x, periodType).Result;
+                var z = validation.IsValid(x, periodType);
                 if (z == 200) {
                     var i = repo.Update((PeriodType)repo.AttachMetadataToPutDto(PeriodTypeMappings.DtoToDomail(periodType)));
                     return new ResponseWithBody {

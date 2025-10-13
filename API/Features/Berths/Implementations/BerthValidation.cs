@@ -4,13 +4,12 @@ using API.Infrastructure.Implementations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using System.Threading.Tasks;
 
 namespace API.Features.Berths {
 
     public class BerthValidation(AppDbContext appDbContext, IHttpContextAccessor httpContext, IOptions<TestingEnvironment> settings, UserManager<UserExtended> userManager) : Repository<Berth>(appDbContext, httpContext, settings, userManager), IBerthValidation {
 
-        public async Task<int> IsValidAsync(Berth z, BerthWriteDto berth) {
+        public int IsValid(Berth z, BerthWriteDto berth) {
             return true switch {
                 var x when x == IsAlreadyUpdated(z, berth) => 415,
                 _ => 200,

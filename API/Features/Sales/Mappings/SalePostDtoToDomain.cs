@@ -18,7 +18,7 @@ namespace API.Features.Sales {
                 Items = [.. sale.Items.Select(x => new SaleItem {
                     ItemId = x.ItemId,
                     Qty = x.Qty,
-                    UnitPrice = x.UnitPrice,
+                    UnitItem = x.UnitItem,
                     NetAmountPreDiscount = x.NetAmountPreDiscount,
                     DiscountPercent = x.DiscountPercent,
                     DiscountAmount = x.DiscountAmount,
