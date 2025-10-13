@@ -27,6 +27,9 @@ namespace API.Infrastructure.Helpers {
         public static string InvalidBerth() { return "A berth does not exist or is inactive"; }
         public static string InvalidBoat() { return "The boat does not exist or is inactive"; }
         public static string InvalidBoatUsage() { return "The boat usage does not exist or is inactive"; }
+        public static string InvalidCustomer() { return "The customer does not exist or is inactive"; }
+        public static string InvalidDocumentType() { return "The document type does not exist or is inactive"; }
+        public static string InvalidPaymentMethod() { return "The payment method does not exist or is inactive"; }
         public static string InvalidDays() { return "The days or the departure day are not correct"; }
         public static string InvalidHullType() { return "The hull type does not exist or is inactive"; }
         public static string InvalidNationality() { return "The nationality does not exist or is inactive"; }

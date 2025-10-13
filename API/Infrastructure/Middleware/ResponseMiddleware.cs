@@ -84,8 +84,11 @@ namespace API.Infrastructure.Middleware {
                 456 => ApiMessages.InvalidSeasonType(),
                 457 => ApiMessages.InvalidNationality(),
                 458 => ApiMessages.InvalidTaxOffice(),
-                491 => ApiMessages.RecordInUse(),
+                459 => ApiMessages.InvalidCustomer(),
+                460 => ApiMessages.InvalidDocumentType(),
+                461 => ApiMessages.InvalidPaymentMethod(),
                 490 => ApiMessages.NotOwnRecord(),
+                491 => ApiMessages.RecordInUse(),
                 492 => ApiMessages.InvalidNewUser(),
                 _ => ApiMessages.UnknownError(),
             };

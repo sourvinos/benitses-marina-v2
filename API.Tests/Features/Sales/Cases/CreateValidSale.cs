@@ -1,0 +1,41 @@
+using System.Collections;
+using System.Collections.Generic;
+using API.Features.Sales;
+
+namespace Sales {
+
+    public class CreateValidSale : IEnumerable<object[]> {
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public IEnumerator<object[]> GetEnumerator() {
+            yield return Create_Valid_Sale();
+        }
+
+        private static object[] Create_Valid_Sale() {
+            return [
+                new TestSale {
+                    Date = "2025-01-01",
+                    InvoiceNo = 3,
+                    CustomerId = 1,
+                    DocumentTypeId = 1,
+                    PaymentMethodId = 1,
+                    NetAmount = 50,
+                    VatAmount = 12,
+                    Items = [
+                        new TestSaleItem {
+                            ItemId = 1,
+                            Qty = 1,
+                            UnitItem = 10,
+                            DiscountPercent = 0,
+                            DiscountAmount = 0,
+                            VatPercent = 24
+                         }
+                    ]
+                }
+            ];
+        }
+
+    }
+
+}

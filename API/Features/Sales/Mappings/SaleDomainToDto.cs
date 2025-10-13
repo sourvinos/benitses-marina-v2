@@ -34,7 +34,7 @@ namespace API.Features.Sales {
                         Description = x.Item.Description
                     },
                     Qty = x.Qty,
-                    UnitItem = x.UnitItem,
+                    UnitPrice = x.UnitPrice,
                     NetAmountPreDiscount = x.NetAmountPreDiscount,
                     DiscountPercent = x.DiscountPercent,
                     DiscountAmount = x.DiscountAmount,
