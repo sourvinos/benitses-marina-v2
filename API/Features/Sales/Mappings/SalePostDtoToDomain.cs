@@ -13,8 +13,8 @@ namespace API.Features.Sales {
                 CustomerId = sale.CustomerId,
                 DocumentTypeId = sale.DocumentTypeId,
                 PaymentMethodId = sale.PaymentMethodId,
-                NetAmount = sale.NetAmount,
-                VatAmount = sale.VatAmount,
+                NetAmount = sale.Items.Sum(x => x.Qty * x.UnitPrice - x.DiscountAmount),
+                VatAmount = sale.Items.Sum(x => (x.Qty * x.UnitPrice - x.DiscountAmount) * (x.VatPercent / 100)),
                 Items = [.. sale.Items.Select(x => new SaleItem {
                     ItemId = x.ItemId,
                     Qty = x.Qty,

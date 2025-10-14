@@ -12,8 +12,6 @@ namespace API.Features.Sales {
         public int CustomerId { get; set; }
         public int DocumentTypeId { get; set; }
         public int PaymentMethodId { get; set; }
-        public decimal NetAmount { get; set; }
-        public decimal VatAmount { get; set; }
         public string Remarks { get; set; }
         public List<SaleItemWriteDto> Items { get; set; } = [];
         public bool IsEmailPending { get; set; }

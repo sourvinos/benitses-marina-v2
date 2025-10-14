@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace API.Features.Sales {
 
@@ -16,6 +17,7 @@ namespace API.Features.Sales {
                 var x when x == !await IsValidCustomerId(sale) => 459,
                 var x when x == !await IsValidDocumentTypeId(sale) => 460,
                 var x when x == !await IsValidPaymentMethodId(sale) => 461,
+                var x when x == IsInvalidDiscount(sale) => 462,
                 var x when x == IsAlreadyUpdated(z, sale) => 415,
                 _ => 200,
             };
@@ -37,6 +39,10 @@ namespace API.Features.Sales {
             return sale.SaleId.ToString() != ""
                 ? await context.PaymentMethods.AsNoTracking().FirstOrDefaultAsync(x => x.Id == sale.PaymentMethodId && x.IsActive) != null
                 : await context.PaymentMethods.AsNoTracking().FirstOrDefaultAsync(x => x.Id == sale.PaymentMethodId) != null;
+        }
+
+        private static bool IsInvalidDiscount(SaleWriteDto sale) {
+            return sale.Items.Select(x => x.DiscountPercent != 0 && x.DiscountAmount != 0).Any(x => x == true);
         }
 
         private static bool IsAlreadyUpdated(Sale z, SaleWriteDto sale) {

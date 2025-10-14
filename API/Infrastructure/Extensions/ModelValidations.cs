@@ -9,7 +9,6 @@ using API.Features.PaymentMethods;
 using API.Features.PeriodTypes;
 using API.Features.Items;
 using API.Features.Reservations;
-using API.Features.Sales;
 using API.Features.SeasonTypes;
 using API.Features.TaxOffices;
 using FluentValidation;
@@ -31,7 +30,6 @@ namespace API.Infrastructure.Extensions {
             services.AddTransient<IValidator<PeriodTypeWriteDto>, PeriodTypeValidator>();
             services.AddTransient<IValidator<ItemWriteDto>, ItemValidator>();
             services.AddTransient<IValidator<ReservationWriteDto>, ReservationValidator>();
-            services.AddTransient<IValidator<SaleWriteDto>, SaleValidator>();
             services.AddTransient<IValidator<SeasonTypeWriteDto>, SeasonTypeValidator>();
             services.AddTransient<IValidator<TaxOfficeWriteDto>, TaxOfficeValidator>();
         }

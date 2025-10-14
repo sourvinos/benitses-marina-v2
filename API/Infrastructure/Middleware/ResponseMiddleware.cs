@@ -87,6 +87,7 @@ namespace API.Infrastructure.Middleware {
                 459 => ApiMessages.InvalidCustomer(),
                 460 => ApiMessages.InvalidDocumentType(),
                 461 => ApiMessages.InvalidPaymentMethod(),
+                462 => ApiMessages.InvalidDiscounts(),
                 490 => ApiMessages.NotOwnRecord(),
                 491 => ApiMessages.RecordInUse(),
                 492 => ApiMessages.InvalidNewUser(),
