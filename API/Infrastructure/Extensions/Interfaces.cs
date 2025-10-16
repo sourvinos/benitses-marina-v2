@@ -18,6 +18,7 @@ using API.Features.DocumentTypes;
 using API.Features.PaymentMethods;
 using API.Features.Sales;
 using API.Features.Berths;
+using API.Features.DryDocks;
 
 namespace API.Infrastructure.Extensions {
 
@@ -39,6 +40,9 @@ namespace API.Infrastructure.Extensions {
 
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<ICustomerValidation, CustomerValidation>();
+
+            services.AddTransient<IDryDockRepository, DryDockRepository>();
+            services.AddTransient<IDryDockValidation, DryDockValidation>();
 
             services.AddTransient<IHullTypeRepository, HullTypeRepository>();
             services.AddTransient<IHullTypeValidation, HullTypeValidation>();

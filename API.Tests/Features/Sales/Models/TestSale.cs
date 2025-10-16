@@ -21,9 +21,6 @@ namespace API.Features.Sales {
         public Customer Customer { get; set; }
         public DocumentType DocumentType { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
-        public decimal NetAmount { get; set; }
-        public decimal VatAmount { get; set; }
-        public decimal GrossAmount { get; set; }
         public List<TestSaleItem> Items { get; set; }
         public bool IsEmailPending { get; set; }
         public bool IsEmailSent { get; set; }

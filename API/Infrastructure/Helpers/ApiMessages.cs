@@ -31,6 +31,7 @@ namespace API.Infrastructure.Helpers {
         public static string InvalidDocumentType() { return "The document type does not exist or is inactive"; }
         public static string InvalidPaymentMethod() { return "The payment method does not exist or is inactive"; }
         public static string InvalidDiscounts() { return "Items should only have discount percent or discount amount"; }
+        public static string InvalidDryDockStatus() { return "The status does not exist or is inactive"; }
         public static string InvalidDays() { return "The days or the departure day are not correct"; }
         public static string InvalidHullType() { return "The hull type does not exist or is inactive"; }
         public static string InvalidNationality() { return "The nationality does not exist or is inactive"; }
