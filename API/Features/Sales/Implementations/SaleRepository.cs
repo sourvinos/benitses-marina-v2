@@ -23,7 +23,7 @@ namespace API.Features.Sales {
                 .Include(x => x.Customer)
                 .Include(x => x.DocumentType)
                 .Include(x => x.PaymentMethod);
-            return SaleDomainToListVM.Read(sales);
+            return SaleReadToList.Read(sales);
         }
 
         public async Task<Sale> GetByIdAsync(string saleId, bool includeTables) {

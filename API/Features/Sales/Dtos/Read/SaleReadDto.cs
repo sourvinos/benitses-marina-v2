@@ -7,6 +7,7 @@ namespace API.Features.Sales {
     public class SaleReadDto : IMetadata {
 
         public string SaleId { get; set; }
+        public int DiscriminatorId { get; set; }
         public string Date { get; set; }
         public SimpleEntity Customer { get; set; }
         public SimpleEntity DocumentType { get; set; }

@@ -10,7 +10,7 @@ namespace API.Features.Sales {
     public class Sale : IMetadata {
 
         public Guid SaleId { get; set; }
-        public Guid ReservationId { get; set; }
+        public int DiscriminatorId { get; set; }
         public DateTime Date { get; set; }
         public int InvoiceNo { get; set; }
         public int CustomerId { get; set; }

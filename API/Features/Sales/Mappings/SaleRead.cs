@@ -4,11 +4,12 @@ using API.Infrastructure.Helpers;
 
 namespace API.Features.Sales {
 
-    public static class SaleDomainToDto {
+    public static class SaleRead {
 
         public static SaleReadDto Read(Sale sale) {
             return new SaleReadDto {
                 SaleId = sale.SaleId.ToString(),
+                DiscriminatorId = sale.DiscriminatorId,
                 Date = DateHelpers.DateToISOString(sale.Date),
                 Customer = new SimpleEntity {
                     Id = sale.Customer.Id,

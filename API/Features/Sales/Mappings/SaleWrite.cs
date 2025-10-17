@@ -3,11 +3,11 @@ using API.Infrastructure.Helpers;
 
 namespace API.Features.Sales {
 
-    public static class SalePostDtoToDomain {
+    public static class SaleWrite {
 
         public static Sale Write(SaleWriteDto sale) {
             return new Sale {
-                ReservationId = sale.ReservationId,
+                DiscriminatorId = sale.DiscriminatorId,
                 Date = DateHelpers.GetLocalDateTime(),
                 InvoiceNo = sale.InvoiceNo,
                 CustomerId = sale.CustomerId,

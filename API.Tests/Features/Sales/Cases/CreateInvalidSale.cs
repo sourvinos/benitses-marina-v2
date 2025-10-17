@@ -20,6 +20,7 @@ namespace Sales {
                 new TestSale {
                     StatusCode = 459,
                     Date = "2025-01-01",
+                    DiscriminatorId = 1,
                     InvoiceNo = 3,
                     CustomerId = 9999,
                     DocumentTypeId = 1,
@@ -43,6 +44,7 @@ namespace Sales {
                 new TestSale {
                     StatusCode = 460,
                     Date = "2025-01-01",
+                    DiscriminatorId = 1,
                     InvoiceNo = 3,
                     CustomerId = 1,
                     DocumentTypeId = 999,

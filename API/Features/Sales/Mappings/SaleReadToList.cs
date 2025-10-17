@@ -5,12 +5,12 @@ using API.Infrastructure.Helpers;
 
 namespace API.Features.Sales {
 
-    public static class SaleDomainToListVM {
+    public static class SaleReadToList {
 
         public static IEnumerable<SaleListVM> Read(IQueryable<Sale> sales) {
             return [.. sales.Select(x => new SaleListVM {
                 SaleId = x.SaleId,
-                ReservationId = x.ReservationId,
+                DiscriminatorId = x.DiscriminatorId,
                 Date = DateHelpers.DateToISOString(x.Date),
                 Customer = new SimpleEntity {
                     Id = x.Customer.Id,

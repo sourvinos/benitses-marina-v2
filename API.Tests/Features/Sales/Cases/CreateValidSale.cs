@@ -18,6 +18,7 @@ namespace Sales {
             return [
                 new TestSale {
                     Date = "2025-01-01",
+                    DiscriminatorId = 1,
                     InvoiceNo = 3,
                     CustomerId = 1,
                     DocumentTypeId = 1,
@@ -40,6 +41,7 @@ namespace Sales {
             return [
                 new TestSale {
                     Date = "2025-01-01",
+                    DiscriminatorId = 1,
                     InvoiceNo = 3,
                     CustomerId = 1,
                     DocumentTypeId = 1,
