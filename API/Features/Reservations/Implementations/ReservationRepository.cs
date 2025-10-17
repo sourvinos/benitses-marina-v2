@@ -24,7 +24,7 @@ namespace API.Features.Reservations {
                 .Include(x => x.Captain)
                 .Include(x => x.Berths).ThenInclude(x => x.Berth)
                 .Where(x => !x.IsDeleted);
-            return ReservationDomainToListVM.Read(reservations);
+            return ReservationMappingReadToList.Read(reservations);
         }
 
         public IEnumerable<ReservationListVM> GetArrivals(string date) {
@@ -33,7 +33,7 @@ namespace API.Features.Reservations {
                 .Include(x => x.Boat).ThenInclude(x => x.HullType)
                 .Include(x => x.Berths).ThenInclude(x => x.Berth)
                 .Where(x => !x.IsDeleted && x.FromDate == Convert.ToDateTime(date));
-            return ReservationDomainToListVM.Read(reservations);
+            return ReservationMappingReadToList.Read(reservations);
         }
 
         public IEnumerable<ReservationListVM> GetDepartures(string date) {
@@ -42,7 +42,7 @@ namespace API.Features.Reservations {
                 .Include(x => x.Boat).ThenInclude(x => x.HullType)
                 .Include(x => x.Berths).ThenInclude(x => x.Berth)
                 .Where(x => !x.IsDeleted && x.ToDate == Convert.ToDateTime(date));
-            return ReservationDomainToListVM.Read(reservations);
+            return ReservationMappingReadToList.Read(reservations);
         }
 
         public async Task<Reservation> GetByIdAsync(string reservationId, bool includeTables) {

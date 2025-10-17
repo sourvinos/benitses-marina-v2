@@ -32,7 +32,7 @@ namespace API.Features.Sales {
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Info.ToString(),
-                    Body = SaleRead.Read(x),
+                    Body = SaleMappingRead.Read(x),
                     Message = ApiMessages.OK()
                 };
             } else {
@@ -48,7 +48,7 @@ namespace API.Features.Sales {
         public async Task<ResponseWithBody> PostAsync([FromBody] SaleWriteDto sale) {
             var x = validation.IsValidAsync(null, sale);
             if (await x == 200) {
-                var z = repo.Create((Sale)repo.AttachMetadataToPutDto(SaleWrite.Write(sale)));
+                var z = repo.Create((Sale)repo.AttachMetadataToPutDto(SaleMappingWrite.Write(sale)));
                 return new ResponseWithBody {
                     Code = 200,
                     Icon = Icons.Success.ToString(),

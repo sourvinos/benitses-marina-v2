@@ -3,7 +3,7 @@ using API.Infrastructure.Helpers;
 
 namespace API.Features.Reservations {
 
-    public static class ReservationPostDtoToDomain {
+    public static class ReservationMappingPost {
 
         public static Reservation Write(ReservationWriteDto reservation) {
             return new Reservation {

@@ -4,7 +4,7 @@ using API.Infrastructure.Helpers;
 
 namespace API.Features.Sales {
 
-    public static class SaleRead {
+    public static class SaleMappingRead {
 
         public static SaleReadDto Read(Sale sale) {
             return new SaleReadDto {

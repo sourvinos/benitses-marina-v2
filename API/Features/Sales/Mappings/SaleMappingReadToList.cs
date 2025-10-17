@@ -5,7 +5,7 @@ using API.Infrastructure.Helpers;
 
 namespace API.Features.Sales {
 
-    public static class SaleReadToList {
+    public static class SaleMappingReadToList {
 
         public static IEnumerable<SaleListVM> Read(IQueryable<Sale> sales) {
             return [.. sales.Select(x => new SaleListVM {

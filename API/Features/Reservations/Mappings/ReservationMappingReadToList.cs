@@ -5,7 +5,7 @@ using API.Infrastructure.Helpers;
 
 namespace API.Features.Reservations {
 
-    public static class ReservationDomainToListVM {
+    public static class ReservationMappingReadToList {
 
         public static IEnumerable<ReservationListVM> Read(IQueryable<Reservation> reservations) {
             return [.. reservations.Select(x => new ReservationListVM {

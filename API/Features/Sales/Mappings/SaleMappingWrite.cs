@@ -3,7 +3,7 @@ using API.Infrastructure.Helpers;
 
 namespace API.Features.Sales {
 
-    public static class SaleWrite {
+    public static class SaleMappingWrite {
 
         public static Sale Write(SaleWriteDto sale) {
             return new Sale {
