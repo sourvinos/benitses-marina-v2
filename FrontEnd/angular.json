@@ -18,14 +18,17 @@
                             "zone.js"
                         ],
                         "tsConfig": "tsconfig.app.json",
+                        "allowedCommonJsDependencies": [
+                            "crypto-js"
+                        ],
                         "assets": [
                             {
                                 "glob": "**/*",
-                                "input": "public"
+                                "input": "assets/images"
                             }
                         ],
                         "styles": [
-                            "src/styles.css"
+                            "src/assets/styles/custom/root.css"
                         ]
                     },
                     "configurations": {
