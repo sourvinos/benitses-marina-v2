@@ -7,7 +7,6 @@ namespace API.Features.Sales {
 
         public static Sale Write(SaleWriteDto sale) {
             return new Sale {
-                DiscriminatorId = sale.DiscriminatorId,
                 Date = DateHelpers.GetLocalDateTime(),
                 InvoiceNo = sale.InvoiceNo,
                 CustomerId = sale.CustomerId,

@@ -1,48 +1,45 @@
 {
-    "name": "front-end",
-    "version": "0.0.0",
+    "name": "benitsesmarina",
+    "version": "1.0.0",
     "scripts": {
         "ng": "ng",
         "start": "ng serve --hmr --host=127.0.0.1 --ssl --ssl-cert ssl\\localhost.crt --ssl-key ssl\\localhost.key",
-        "build": "ng build",
-        "watch": "ng build --watch --configuration development"
-    },
-    "prettier": {
-        "printWidth": 100,
-        "singleQuote": true,
-        "overrides": [
-            {
-                "files": "*.html",
-                "options": {
-                    "parser": "angular"
-                }
-            }
-        ]
+        "build": "ng build"
     },
     "private": true,
     "dependencies": {
-        "@angular/animations": "20.3.6",
-        "@angular/common": "20.3.6",
-        "@angular/compiler": "20.3.6",
-        "@angular/core": "20.3.6",
-        "@angular/forms": "20.3.6",
-        "@angular/platform-browser": "20.3.6",
-        "@angular/router": "20.3.6",
-        "@types/crypto-js": "4.2.2",
+        "@angular/animations": "17.3.10",
+        "@angular/common": "17.3.10",
+        "@angular/compiler": "17.3.10",
+        "@angular/core": "17.3.10",
+        "@angular/forms": "17.3.10",
+        "@angular/material": "17.3.10",
+        "@angular/material-moment-adapter": "17.3.10",
+        "@angular/platform-browser": "17.3.10",
+        "@angular/platform-browser-dynamic": "17.3.10",
+        "@angular/router": "17.3.10",
         "crypto-js": "4.2.0",
-        "rxjs": "7.8.2",
-        "tslib": "2.8.1",
-        "zone.js": "0.15.1"
+        "dexie": "4.0.8",
+        "file-saver": "2.0.5",
+        "guid-typescript": "1.0.9",
+        "jwt-decode": "4.0.0",
+        "ngx-currency": "17.0.0",
+        "pdfmake": "0.2.13",
+        "primeng": "17.18.11",
+        "rxjs": "7.8.1",
+        "stylelint": "16.9.0",
+        "tslib": "2.7.0",
+        "xlsx": "0.18.5",
+        "zone.js": "0.14.0"
     },
     "devDependencies": {
-        "@angular/build": "20.3.7",
-        "@angular/cli": "20.3.6",
-        "@angular/compiler-cli": "20.3.6",
-        "@eslint/js": "9.38.0",
-        "eslint": "9.38.0",
-        "globals": "16.4.0",
-        "jiti": "2.6.1",
-        "typescript": "5.9.3",
-        "typescript-eslint": "8.46.2"
+        "@angular-devkit/build-angular": "17.3.13",
+        "@angular-eslint/schematics": "17.5.3",
+        "@angular/cli": "17.3.10",
+        "@angular/compiler-cli": "17.3.10",
+        "@types/file-saver": "2.0.7",
+        "@types/pdfmake": "0.2.9",
+        "stylelint-config-standard": "36.0.1",
+        "typescript": "5.4.5"
     }
 }

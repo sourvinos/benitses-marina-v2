@@ -1,0 +1,10 @@
+#logo {
+    align-items: center;
+    cursor: pointer;
+    outline: 0;
+    display: flex;
+}
+
+#logo:hover {
+    cursor: pointer;
+}

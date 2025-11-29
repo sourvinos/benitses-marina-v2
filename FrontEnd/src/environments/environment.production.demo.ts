@@ -3,12 +3,10 @@
 export const environment = {
     apiUrl: 'https://appsourvinos.com/api',
     url: 'https://appsourvinos.com',
-    appName: 'Corfu Cruises',
+    appName: 'Benitses Marina',
     clientUrl: 'https://appsourvinos.com',
-    defaultLanguage: 'en-GB',
+    defaultLanguage: 'el-GR',
     featuresIconDirectory: 'assets/images/features/',
-    nationalitiesIconDirectory: 'assets/images/nationalities/',
-    portStopOrdersDirectory: 'assets/images/port-stop-orders/',
     cssUserSelect: 'auto',
     minWidth: 1280,
     login: {
@@ -18,6 +16,5 @@ export const environment = {
         noRobot: false
     },
     isDevelopment: false,
-    isProductionDemo: true,
-    isProductionLive: false
+    isProduction: true
 }

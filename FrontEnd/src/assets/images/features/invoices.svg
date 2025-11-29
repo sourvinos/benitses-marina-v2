@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   height="24"
+   width="24"
+   version="1.1"
+   id="Layer_1"
+   viewBox="0 0 8.7529501 8.75295"
+   xml:space="preserve"
+   sodipodi:docname="invoices.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs4" /><sodipodi:namedview
+   id="namedview4"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="true"
+   inkscape:deskcolor="#d1d1d1"
+   showgrid="false"
+   inkscape:zoom="33.625"
+   inkscape:cx="11.98513"
+   inkscape:cy="12"
+   inkscape:window-width="1920"
+   inkscape:window-height="1009"
+   inkscape:window-x="-8"
+   inkscape:window-y="-8"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="Layer_1" />
+<g
+   id="g5"
+   transform="scale(0.03200008,0.03)"><g
+     id="g4"
+     transform="translate(-9.118)">
+	<path
+   style="fill:#e4e7e7"
+   d="m 18.235,0 h 255.294 c 5.042,0 9.118,4.085 9.118,9.118 v 282.647 l -27.481,-27.353 -27.171,27.353 -27.444,-27.353 -27.499,27.353 -27.408,-27.353 -27.28,27.353 L 90.993,264.412 63.768,291.765 36.47,264.412 9.118,291.765 V 9.118 C 9.118,4.085 13.202,0 18.235,0 Z"
+   id="path1" />
+	<path
+   style="fill:#e2574c"
+   d="M 155,200.479 H 45.588 v 18.217 H 155 Z"
+   id="path2" />
+	<path
+   style="fill:#868686"
+   d="m 227.941,164.026 v 18.326 h 18.235 V 164.026 Z M 45.588,182.225 H 209.706 V 164.008 H 45.588 Z"
+   id="path3" />
+	<path
+   style="fill:#2494bc"
+   d="M 45.588,136.765 H 63.823 V 36.471 H 45.588 Z m 36.471,0 h 27.353 V 36.471 H 82.059 Z m 109.412,0 h 9.118 V 36.471 h -9.118 z M 218.824,36.471 v 100.294 h 27.353 V 36.471 Z M 155,136.765 h 18.235 V 36.471 H 155 Z m -27.353,0 h 9.118 V 36.471 h -9.118 z"
+   id="path4" />
+</g></g>
+</svg>

@@ -3,12 +3,10 @@
 export const environment = {
     apiUrl: 'https://localhost:5001/api',
     url: 'https://localhost:5001',
-    appName: 'Corfu Cruises',
+    appName: 'Benitses Marina',
     clientUrl: 'https://localhost:4200',
-    defaultLanguage: 'en-GB',
+    defaultLanguage: 'el-GR',
     featuresIconDirectory: 'assets/images/features/',
-    nationalitiesIconDirectory: 'assets/images/nationalities/',
-    portStopOrdersDirectory: 'assets/images/port-stop-orders/',
     cssUserSelect: 'none',
     minWidth: 1280,
     login: {
@@ -18,6 +16,5 @@ export const environment = {
         noRobot: true
     },
     isDevelopment: true,
-    isProductionDemo: false,
-    isProductionLive: false
+    isProduction: false
 }

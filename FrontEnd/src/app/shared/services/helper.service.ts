@@ -1,0 +1,275 @@
+import { FormGroup } from '@angular/forms'
+import { ElementRef, Injectable, Renderer2 } from '@angular/core'
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete'
+import { Observable, Subject, defer, finalize } from 'rxjs'
+import { Router } from '@angular/router'
+import { Table } from 'primeng/table'
+import { Title } from '@angular/platform-browser'
+// Custom
+import { DialogService } from './modal-dialog.service'
+import { MessageLabelService } from './message-label.service'
+import { SessionStorageService } from './session-storage.service'
+import { environment } from 'src/environments/environment'
+
+export function prepare<T>(callback: () => void): (source: Observable<T>) => Observable<T> {
+    return (source: Observable<T>): Observable<T> => defer(() => {
+        callback()
+        return source
+    })
+}
+
+export function indicate<T>(indicator: Subject<boolean>): (source: Observable<T>) => Observable<T> {
+    return (source: Observable<T>): Observable<T> => source.pipe(
+        prepare(() => indicator.next(true)),
+        finalize(() => indicator.next(false))
+    )
+}
+
+@Injectable({ providedIn: 'root' })
+
+export class HelperService {
+
+    //#region variables
+
+    private appName = environment.appName
+
+    //#endregion
+
+    constructor(private dialogService: DialogService, private messageLabelService: MessageLabelService, private router: Router, private sessionStorageService: SessionStorageService, private titleService: Title) { }
+
+    //#region public methods
+
+    public addTabIndexToInput(elementRef: ElementRef, renderer: Renderer2): void {
+        setTimeout(() => {
+            let z = 0;
+            elementRef.nativeElement.querySelectorAll('.tabable').forEach(
+                (x: { tabIndex: number; tagName: { [Symbol.match](string: string): RegExpMatchArray | null } }) => {
+                    x.tabIndex = -1;
+                    if ("INPUT".match(x.tagName)) {
+                        z = z + 1;
+                        renderer.setAttribute(x, "dataTabIndex", z.toString())
+                    }
+                }
+            )
+        }, 500)
+    }
+
+    public clearInvisibleFieldsAndRestoreVisibility(form: FormGroup<any>, fields: string[]): void {
+        setTimeout(() => {
+            this.clearInvisibleField(form, fields)
+            this.removeFieldInvisibility()
+        }, 1000)
+    }
+
+    public clearTableTextFilters(table: Table, inputs: string[]): void {
+        table.clear()
+        inputs.forEach(input => {
+            table.filter('', input, 'contains')
+        })
+        document.querySelectorAll<HTMLInputElement>('.p-inputtext, .mat-input-element').forEach(box => {
+            box.value = ''
+        })
+    }
+
+    public convertStringToLowerCase(value: string): string {
+        return value.toLowerCase()
+    }
+
+    public deepEqual(object1: any, object2: any): boolean {
+        if (object1 == undefined || object2 == undefined) {
+            return false
+        }
+        const keys1 = Object.keys(object1)
+        const keys2 = Object.keys(object2)
+        if (keys1.length !== keys2.length) {
+            return false
+        }
+        for (const key of keys1) {
+            const val1 = object1[key]
+            const val2 = object2[key]
+            const areObjects = this.isObject(val1) && this.isObject(val2)
+            if (
+                areObjects && !this.deepEqual(val1, val2) || !areObjects && val1 !== val2
+            ) {
+                return false
+            }
+        }
+        return true
+    }
+
+    public disableTableFilters(): void {
+        setTimeout(() => {
+            const checkboxes = document.querySelectorAll('.p-checkbox, .p-checkbox-box') as NodeListOf<HTMLElement>
+            checkboxes.forEach(x => {
+                x.classList.add('disabled')
+            })
+            const datePickers = document.querySelectorAll('.mat-datepicker-toggle, .mat-datepicker-toggle > .mat-button-base > .mat-button-wrapper') as NodeListOf<HTMLElement>
+            datePickers.forEach(x => {
+                x.classList.add('disabled')
+            })
+            const dropdown = document.querySelectorAll('.p-inputwrapper') as NodeListOf<HTMLElement>
+            dropdown.forEach(x => {
+                x.classList.add('disabled')
+            })
+            const textFilters = document.querySelectorAll('.p-inputtext')
+            textFilters.forEach(x => {
+                x.classList.add('disabled')
+            })
+        }, 500)
+    }
+
+    public doPostSaveFormTasks(message: string, iconType: string, returnUrl: string, closeForm: boolean): Promise<any> {
+        const promise = new Promise((resolve) => {
+            this.dialogService.open(message, iconType, ['ok']).subscribe(() => {
+                closeForm ? this.router.navigate([returnUrl]) : null
+                resolve(null)
+            })
+        })
+        return promise
+    }
+
+    public enableOrDisableAutoComplete(event: { key: string }): boolean {
+        return (event.key == 'Enter' || event.key == 'ArrowUp' || event.key == 'ArrowDown' || event.key == 'ArrowRight' || event.key == 'ArrowLeft') ? true : false
+    }
+
+    public enableTableFilters(): void {
+        setTimeout(() => {
+            const checkboxes = document.querySelectorAll('.p-checkbox, .p-checkbox-box') as NodeListOf<HTMLElement>
+            checkboxes.forEach(x => {
+                x.classList.remove('disabled')
+            })
+            const datePickers = document.querySelectorAll('.mat-datepicker-toggle, .mat-datepicker-toggle > .mat-button-base > .mat-button-wrapper') as NodeListOf<HTMLElement>
+            datePickers.forEach(x => {
+                x.classList.remove('disabled')
+            })
+            const dropdown = document.querySelectorAll('.p-inputwrapper') as NodeListOf<HTMLElement>
+            dropdown.forEach(x => {
+                x.classList.remove('disabled')
+            })
+            const textFilters = document.querySelectorAll('.p-inputtext')
+            textFilters.forEach(x => {
+                x.classList.remove('disabled')
+            })
+        }, 500)
+    }
+
+    public flattenObject(object: any): any {
+        const result = {}
+        for (const i in object) {
+            if ((typeof object[i]) === 'object' && !Array.isArray(object[i])) {
+                const temp = this.flattenObject(object[i])
+                for (const j in temp) {
+                    result[i + '.' + j] = temp[j]
+                }
+            }
+            else {
+                result[i] = object[i]
+            }
+        }
+        return result
+    }
+
+    public focusOnField(): void {
+        setTimeout(() => {
+            const input = Array.prototype.slice.apply(document.querySelectorAll('input[dataTabIndex]'))[0]
+            if (input != null && this.sessionStorageService.getItem('isFirstFieldFocused') == 'true') {
+                input.focus()
+                input.select()
+            }
+        }, 1000)
+    }
+
+    public getApplicationTitle(): any {
+        return this.appName
+    }
+
+    public getDistinctRecords(records: any[], object: string, orderField: string): any[] {
+        const distinctRecords = (Object.values(records.reduce(function (x, item) {
+            if (!x[item[object].id]) {
+                x[item[object].id] = item[object]
+            }
+            return x
+        }, {})))
+        distinctRecords.sort((a, b) => (a[orderField] > b[orderField]) ? 1 : -1)
+        return distinctRecords
+    }
+
+    public highlightRow(id: any): void {
+        const allRows = document.querySelectorAll('.p-highlight')
+        allRows.forEach(row => {
+            row.classList.remove('p-highlight')
+        })
+        if (id != undefined) {
+            const selectedRow = document.getElementById(id)
+            selectedRow.classList.add('p-highlight')
+        }
+    }
+
+    public highlightSavedRow(feature: string): void {
+        setTimeout(() => {
+            const x = document.getElementById(this.sessionStorageService.getItem(feature + '-' + 'id'))
+            if (x != null) {
+                x.classList.add('p-highlight')
+            }
+        }, 500)
+    }
+
+    public isNumberNegative(number: number): string {
+        return number < 0 ? "color-red" : ""
+    }
+
+    public openOrCloseAutocomplete(form: FormGroup<any>, element: any, trigger: MatAutocompleteTrigger): void {
+        trigger.panelOpen ? trigger.closePanel() : trigger.openPanel()
+    }
+
+    public scrollToSavedPosition(virtualElement: any, feature: string): void {
+        if (virtualElement != undefined) {
+            setTimeout(() => {
+                virtualElement.scrollTo({
+                    top: parseInt(this.sessionStorageService.getItem(feature + '-scrollTop')) || 0,
+                    left: 0,
+                    behavior: 'auto'
+                })
+            }, 500)
+        }
+    }
+
+    public setSidebarsTopMargin(margin: string): void {
+        const sidebars = document.getElementsByClassName('sidebar') as HTMLCollectionOf<HTMLElement>
+        for (let i = 0; i < sidebars.length; i++) {
+            sidebars[i].style.marginTop = margin + 'rem'
+        }
+    }
+
+    public setTabTitle(feature: string): void {
+        this.titleService.setTitle(environment.appName + ': ' + this.messageLabelService.getDescription(feature, 'header'))
+    }
+
+    //#endregion
+
+    //#region private methods
+
+    private clearInvisibleField(form: FormGroup<any>, fields: string[]): void {
+        fields.forEach(field => {
+            form.patchValue({
+                [field]: ''
+            })
+        })
+
+    }
+
+    private isObject(object: any): boolean {
+        return object != null && typeof object === 'object'
+    }
+
+    private removeFieldInvisibility(): void {
+        const elements = document.querySelectorAll('.invisible')
+        elements.forEach(element => {
+            element.classList.remove('invisible')
+        })
+    }
+
+    //#endregion
+
+}
+

@@ -9,7 +9,6 @@ namespace API.Features.Sales {
         public static SaleReadDto Read(Sale sale) {
             return new SaleReadDto {
                 SaleId = sale.SaleId.ToString(),
-                DiscriminatorId = sale.DiscriminatorId,
                 Date = DateHelpers.DateToISOString(sale.Date),
                 Customer = new SimpleEntity {
                     Id = sale.Customer.Id,

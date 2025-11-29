@@ -1,0 +1,87 @@
+:host {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+}
+
+#left {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 0 1rem 0 0;
+}
+
+#right {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 0 0 0 1rem;
+    width: 29rem;
+}
+
+#right #form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#header {
+    justify-content: center;
+    margin: 0 auto 2rem auto !important;
+}
+
+#right #form #text-logo {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto 1.25rem auto;
+}
+
+#right #form #text-logo #benitses-marina {
+    color: var(--color-logo-benitses);
+    font-size: 1.5rem !important;
+}
+
+
+#right #form #text-logo #maritime-project {
+    margin: 0.3125rem 0 0 0 !important;
+}
+
+#columns {
+    align-items: center;
+    display: flex;
+    padding: 0 1.5rem 0 1.5rem;
+}
+
+#columns .mat-mdc-checkbox {
+    width: 100%;
+}
+
+#forgot-password {
+    color: var(--color-text);
+    display: flex;
+    font-family: var(--font-family-asty);
+    font-size: 0.8rem;
+    font-weight: 100;
+    justify-content: flex-end;
+    text-align: end;
+    transition: color var(--theme-delay);
+    width: 100%;
+}
+
+#forgot-password:hover {
+    cursor: pointer;
+}
+
+#footer {
+    display: flex;
+    justify-content: center;
+    margin: 10rem 0 0 0;
+}
+
+@media only screen and (width <= 1280px) {
+    #left {
+        display: none;
+    }
+}
