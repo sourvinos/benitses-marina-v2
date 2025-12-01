@@ -16,7 +16,7 @@ import { MessageLabelService } from 'src/app/shared/services/message-label.servi
 @Component({
     selector: 'change-password-form',
     standalone: false,
-    styleUrls: ['../../../../../assets/styles/custom/forms.css', './change-password-form.component.css'],
+    styleUrls: ['../../../../../assets/styles/custom/forms.css'],
     templateUrl: './change-password-form.component.html'
 })
 
