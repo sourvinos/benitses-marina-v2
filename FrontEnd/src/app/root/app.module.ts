@@ -4,7 +4,6 @@ import { BrowserModule, Title } from '@angular/platform-browser'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { NgModule } from '@angular/core'
-import { registerLocaleData } from '@angular/common'
 // Modules
 import { AppRoutingModule } from './app.routing.module'
 import { LoginModule } from '../shared/components/login/classes/modules/login.module'
@@ -14,14 +13,10 @@ import { AppComponent } from './app.component'
 import { CardsMenuComponent } from '../shared/components/home/cards-menu.component'
 import { HomeComponent } from '../shared/components/home/home.component'
 import { LogoutComponent } from '../shared/components/logout/logout.component'
+import { ReservationsMenuComponent } from '../features/reservations/menu/reservations-menu.component'
 import { UserMenuComponent } from '../shared/components/user-menu/user-menu.component'
 // Services
 import { InterceptorService } from '../shared/services/interceptor.service'
-// Language
-import localeEl from '@angular/common/locales/el'
-import localeElExtra from '@angular/common/locales/extra/el'
-
-registerLocaleData(localeEl, 'el', localeElExtra);
 
 @NgModule({
     declarations: [
@@ -29,6 +24,7 @@ registerLocaleData(localeEl, 'el', localeElExtra);
         CardsMenuComponent,
         HomeComponent,
         LogoutComponent,
+        ReservationsMenuComponent,
         UserMenuComponent
     ],
     imports: [

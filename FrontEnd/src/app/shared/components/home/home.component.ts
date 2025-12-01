@@ -2,9 +2,7 @@ import { Component, VERSION } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Title } from '@angular/platform-browser'
 // Custom
-import { DateHelperService } from 'src/app/shared/services/date-helper.service'
 import { HelperService } from '../../services/helper.service'
-import { SessionStorageService } from 'src/app/shared/services/session-storage.service'
 
 @Component({
     selector: 'app-home',
@@ -23,7 +21,7 @@ export class HomeComponent {
 
     //#endregion
 
-    constructor(private formBuilder: FormBuilder, private dateHelperService: DateHelperService, private helperService: HelperService, private sessionStorageService: SessionStorageService, private titleService: Title) { }
+    constructor(private formBuilder: FormBuilder, private helperService: HelperService, private titleService: Title) { }
 
     //#region lifecyle hooks
 
@@ -60,7 +58,6 @@ export class HomeComponent {
     private showTopBarLogo(): void {
         document.getElementById('logo').style.visibility = 'visible'
     }
-
 
     //#endregion
 

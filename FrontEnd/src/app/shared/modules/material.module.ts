@@ -19,8 +19,6 @@ import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatSliderModule } from '@angular/material/slider'
 import { MatTabsModule } from '@angular/material/tabs'
 import { MatTooltipModule } from '@angular/material/tooltip'
-// Custom
-import { CustomDateAdapter } from '../adapters/custom-date-adapter'
 
 @NgModule({
     exports: [
@@ -45,7 +43,6 @@ import { CustomDateAdapter } from '../adapters/custom-date-adapter'
         MatTooltipModule
     ],
     providers: [
-        { provide: DateAdapter, useClass: CustomDateAdapter },
         { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS] },
         { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
         { provide: MAT_DATE_LOCALE, useValue: '' },

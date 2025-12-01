@@ -49,28 +49,6 @@ export class ValidationService {
         return pattern.test(control.value) ? null : { containsIllegalCharacters: true }
     }
 
-    static shouldBeEmptyPlusOrMinus(control: AbstractControl): { [key: string]: any } {
-        if (control.value == '') {
-            return null
-        } else {
-            const pattern = /[+-]/
-            return pattern.test(control.value) ? null : { shouldBeEmptyPlusOrMinus: true }
-        }
-    }
-
-    static shouldBePlusOrMinus(control: AbstractControl): { [key: string]: any } {
-        const pattern = /[+-]/
-        return pattern.test(control.value) ? null : { shouldBePlusOrMinus: true }
-    }
-
-    static requireAutocomplete(control: AbstractControl): any {
-        const selection: any = control.value
-        if (typeof selection === 'string') {
-            return { incorrect: true }
-        }
-        return null
-    }
-
 }
 
 export class ConfirmValidParentMatcher {

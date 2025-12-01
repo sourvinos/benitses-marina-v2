@@ -1,0 +1,40 @@
+.red {
+    color: #fb5e5e;
+    font-size: 0.6875rem !important
+}
+
+.small-icon {
+    font-size: 1rem;
+    padding: 0.25rem 0 0 0;
+}
+
+#knobs-and-table {
+    column-gap: 2rem;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+#knobs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: 0.5rem;
+}
+
+.knob {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.knob .label {
+    color: var(--color-text);
+    font-family: var(--font-family-asty);
+    font-size: 0.75rem;
+    font-weight: 300;
+    text-align: center;
+    transition: all var(--theme-delay);
+    width: 6.25rem;
+}

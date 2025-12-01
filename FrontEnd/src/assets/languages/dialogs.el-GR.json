@@ -47,10 +47,6 @@
                 "message": "Μόλις στείλαμε ένα email"
             },
             {
-                "id": "emailNotSent",
-                "message": "Η αποστολή του email δεν είναι δυνατή. Δοκιμάστε πάλι μετά από λίγη ώρα"
-            },
-            {
                 "id": "unableToResetPassword",
                 "message": "Ο νέος κωδικός δεν μπορεί να αποθηκευτεί. Μάλλον το link στο email που έχετε δεν ισχύει πλέον."
             },
@@ -77,26 +73,6 @@
             {
                 "id": "passwordCanBeChangedOnlyByAccountOwner",
                 "message": "Ο κωδικός μπορεί να αλλάξει μόνο από τον κάτοχο του λογαριασμού."
-            },
-            {
-                "id": "customerAadeDoesNotExist",
-                "message": "Η εγγραφή δεν βρέθηκε. Βεβαιωθείτε ότι ο ΑΦΜ είναι σωστός και ότι έχει έδρα την Ελλάδα."
-            },
-            {
-                "id": "customerVatNumberIsDuplicate",
-                "message": "Όλα εντάξει, αλλά ο ΑΦΜ υπάρχει ήδη. Ισως θα πρέπει να ελέγξετε το αρχείο σας."
-            },
-            {
-                "id": "noRecordsSelected",
-                "message": "Δεν έχετε επιλέξει εγγραφές."
-            },
-            {
-                "id": "customerDataIsInvalid",
-                "message": "Η τιμολόγηση δεν μπορεί να συνεχιστεί επειδή τα στοιχεία του πελάτη είναι ελλειπή ή λάθος."
-            },
-            {
-                "id": "policyEndDateMustBeInThePast",
-                "message": "Το ασφαλιστήριο συμβόλαιο είναι ακόμα έγκυρο."
             }
         ]
     }

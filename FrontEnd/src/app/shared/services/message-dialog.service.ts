@@ -50,19 +50,12 @@ export class MessageDialogService {
     public authenticationFailed(): string { return this.getDescription(this.feature, 'authenticationFailed') }
     public emailSent(): string { return this.getDescription(this.feature, 'emailSent') }
     public formIsDirty(): string { return this.getDescription(this.feature, 'formIsDirty') }
-    public emailNotSent(): string { return this.getDescription(this.feature, 'emailNotSent') }
     public unableToResetPassword(): string { return this.getDescription(this.feature, 'unableToResetPassword') }
     public passwordCanBeChangedOnlyByAccountOwner(): string { return this.getDescription(this.feature, 'passwordCanBeChangedOnlyByAccountOwner') }
     public noContactWithServer(): string { return this.getDescription(this.feature, 'noContactWithServer') }
     public success(): string { return this.getDescription(this.feature, 'success') }
-    public confirmDelete(): string { return this.getDescription(this.feature, 'warning') }
     public confirmDeleteDexieDB(): string { return this.getDescription(this.feature, 'confirmDeleteDexieDB') }
     public confirmLogout(): string { return this.getDescription(this.feature, 'confirmLogout') }
-    public supplierVatNumberIsDuplicate(): string { return this.getDescription(this.feature, 'supplierVatNumberIsDuplicate') }
-    public customerAadeDoesNotExist(): string { return this.getDescription(this.feature, 'customerAadeDoesNotExist') }
-    public customerVatNumberIsDuplicate(): string { return this.getDescription(this.feature, 'customerVatNumberIsDuplicate') }
-    public noRecordsSelected(): string { return this.getDescription(this.feature, 'noRecordsSelected') }
-    public policyEndDateMustBeInThePast(): string { return this.getDescription(this.feature, 'policyEndDateMustBeInThePast') }
 
     public filterResponse(error: any, feature = 'snackbarMessages'): string {
         let returnValue = ''
