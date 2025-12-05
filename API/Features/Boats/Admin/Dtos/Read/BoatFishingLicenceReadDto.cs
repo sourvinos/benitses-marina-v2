@@ -6,7 +6,7 @@ namespace API.Features.Boats.Admin {
         public int BoatId { get; set; }
         public string IssuingAuthority { get; set; }
         public string LicenceNo { get; set; }
-        public string? ExpireDate { get; set; }
+        public string ExpireDate { get; set; }
 
     }
 

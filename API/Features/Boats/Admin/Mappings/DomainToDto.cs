@@ -8,13 +8,13 @@ namespace API.Features.Boats.Admin {
         public static BoatReadDto DomainToDto(Boat boat) {
             return new BoatReadDto {
                 Id = boat.Id,
-                Type = new SimpleEntity {
-                    Id = boat.HullType.Id,
-                    Description = boat.HullType.Description,
-                },
-                Usage = new SimpleEntity {
+                BoatUsage = new SimpleEntity {
                     Id = boat.Usage.Id,
                     Description = boat.Usage.Description,
+                },
+                HullType = new SimpleEntity {
+                    Id = boat.HullType.Id,
+                    Description = boat.HullType.Description,
                 },
                 Insurance = new BoatInsuranceReadDto {
                     Id = boat.Insurance.Id,
@@ -22,6 +22,13 @@ namespace API.Features.Boats.Admin {
                     Company = boat.Insurance.Company,
                     ContractNo = boat.Insurance.ContractNo,
                     ExpireDate = boat.Insurance.ExpireDate != null ? DateHelpers.DateToISOString((System.DateTime)boat.Insurance.ExpireDate) : ""
+                },
+                FishingLicence = new BoatFishingLicenceReadDto {
+                    Id = boat.FishingLicence.Id,
+                    BoatId = 1,
+                    IssuingAuthority = boat.FishingLicence.IssuingAuthority,
+                    LicenceNo = boat.FishingLicence.LicenceNo,
+                    ExpireDate = boat.FishingLicence.ExpireDate != null ? DateHelpers.DateToISOString((System.DateTime)boat.FishingLicence.ExpireDate) : ""
                 },
                 Description = boat.Description,
                 Flag = boat.Flag,

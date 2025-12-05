@@ -4,10 +4,13 @@ import { Observable } from 'rxjs'
 import { Router } from '@angular/router'
 import { map } from 'rxjs/operators'
 // Custom
+import { BoatUsageHttpService } from 'src/app/features/boatUsages/classes/services/boatUsage-http.service'
 import { ChangePasswordViewModel } from 'src/app/features/users/classes/view-models/change-password-view-model'
 import { CryptoService } from './crypto.service'
+import { DexieService } from './dexie.service'
 import { DotNetVersion } from '../classes/dotnet-version'
 import { HttpDataService } from './http-data.service'
+import { HullTypeHttpService } from 'src/app/features/hullTypes/classes/services/hullType-http.service'
 import { ResetPasswordViewModel } from 'src/app/features/users/classes/view-models/reset-password-view-model'
 import { SessionStorageService } from './session-storage.service'
 import { TokenRequest } from '../classes/token-request'
@@ -26,7 +29,16 @@ export class AccountService extends HttpDataService {
 
     //#endregion
 
-    constructor(httpClient: HttpClient, private cryptoService: CryptoService, private ngZone: NgZone, private router: Router, private sessionStorageService: SessionStorageService) {
+    constructor(
+        httpClient: HttpClient,
+        private boatUsageHttpService: BoatUsageHttpService,
+        private cryptoService: CryptoService,
+        private dexieService: DexieService,
+        private hullTypeHttpService: HullTypeHttpService,
+        private ngZone: NgZone,
+        private router: Router,
+        private sessionStorageService: SessionStorageService
+    ) {
         super(httpClient, environment.apiUrl)
     }
 
@@ -111,7 +123,10 @@ export class AccountService extends HttpDataService {
         sessionStorage.setItem('refreshToken', response.refreshToken)
     }
 
-    private populateDexieFromAPI(): void { }
+    private populateDexieFromAPI(): void {
+        this.dexieService.populateTable('hullTypes', this.hullTypeHttpService)
+        this.dexieService.populateTable('boatUsages', this.boatUsageHttpService)
+    }
 
     private setDotNetVersion(response: any): void {
         DotNetVersion.version = response.dotNetVersion

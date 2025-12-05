@@ -11,11 +11,13 @@ import { ListResolved } from 'src/app/shared/classes/list-resolved'
 import { MessageDialogService } from 'src/app/shared/services/message-dialog.service'
 import { MessageLabelService } from 'src/app/shared/services/message-label.service'
 import { SessionStorageService } from 'src/app/shared/services/session-storage.service'
+import { BoatFormDialogComponent } from './boat-form-dialog.component'
+import { MatDialog } from '@angular/material/dialog'
 
 @Component({
     selector: 'boat-list',
     templateUrl: './boat-list.component.html',
-    styleUrls: ['../../../../../assets/styles/custom/lists.css', 'boat-list.component.css']
+    styleUrls: ['../../../../assets/styles/custom/lists.css', 'boat-list.component.css']
 })
 
 export class BoatListComponent {
@@ -36,7 +38,18 @@ export class BoatListComponent {
 
     //#endregion
 
-    constructor(private activatedRoute: ActivatedRoute, private cryptoService: CryptoService, private dialogService: DialogService, private emojiService: EmojiService, private helperService: HelperService, private messageDialogService: MessageDialogService, private messageLabelService: MessageLabelService, private router: Router, private sessionStorageService: SessionStorageService) { }
+    constructor(
+        private activatedRoute: ActivatedRoute,
+        private cryptoService: CryptoService,
+        private dialogService: DialogService,
+        private emojiService: EmojiService,
+        private helperService: HelperService,
+        private messageDialogService: MessageDialogService,
+        private messageLabelService: MessageLabelService,
+        private router: Router,
+        private sessionStorageService: SessionStorageService,
+        public dialog: MatDialog,
+    ) { }
 
     //#region lifecycle hooks
 
@@ -142,7 +155,12 @@ export class BoatListComponent {
     }
 
     private navigateToRecord(id: any): void {
-        this.router.navigate([this.url, id])
+        this.dialog.open(BoatFormDialogComponent, {
+            data: id,
+            panelClass: 'dialog',
+            height: '700px',
+            width: '900px'
+        })
     }
 
     private scrollToSavedPosition(): void {

@@ -13,7 +13,7 @@ import { AppComponent } from './app.component'
 import { CardsMenuComponent } from '../shared/components/home/cards-menu.component'
 import { HomeComponent } from '../shared/components/home/home.component'
 import { LogoutComponent } from '../shared/components/logout/logout.component'
-import { ReservationsMenuComponent } from '../features/reservations/menu/reservations-menu.component'
+import { ReservationsMenuComponent } from '../shared/components/reservations-menu/reservations-menu.component'
 import { UserMenuComponent } from '../shared/components/user-menu/user-menu.component'
 // Services
 import { InterceptorService } from '../shared/services/interceptor.service'

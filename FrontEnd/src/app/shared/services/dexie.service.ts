@@ -6,8 +6,11 @@ import { Injectable } from '@angular/core'
 export class DexieService extends Dexie {
 
     constructor() {
-        super('BenitsesMarinaDB')
-        this.version(1).stores({})
+        super('Benitses-Marina-v2')
+        this.version(1).stores({
+            hullTypes: 'id, description',
+            boatUsages: 'id, description',
+        })
         this.open()
     }
 

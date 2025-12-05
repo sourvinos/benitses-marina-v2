@@ -300,5 +300,98 @@
                 "description": "Νεα εγγραφη"
             }
         ]
+    },
+    {
+        "feature": "boatForm",
+        "labels": [
+            {
+                "id": "header",
+                "description": "Σκάφος"
+            },
+            {
+                "id": "tab1",
+                "description": "Γενικά"
+            },
+            {
+                "id": "tab2",
+                "description": "Ασφάλεια"
+            },
+            {
+                "id": "tab3",
+                "description": "Αδεια αλιείας"
+            },
+            {
+                "id": "description",
+                "description": "Περιγραφή"
+            },
+            {
+                "id": "hullType",
+                "description": "Τύπος"
+            },
+            {
+                "id": "boatUsage",
+                "description": "Χρήση"
+            },
+            {
+                "id": "loa",
+                "description": "Μήκος"
+            },
+            {
+                "id": "beam",
+                "description": "Πλάτος"
+            },
+            {
+                "id": "draft",
+                "description": "Βύθισμα"
+            },
+            {
+                "id": "flag",
+                "description": "Σημαία"
+            },
+            {
+                "id": "registryPort",
+                "description": "Λιμάνι νηολόγησης"
+            },
+            {
+                "id": "registryNo",
+                "description": "Νο νηολογίου"
+            },
+            {
+                "id": "insuranceCompany",
+                "description": "Ασφαλιστική εταιρία"
+            },
+            {
+                "id": "insuranceContractNo",
+                "description": "Νο συμβολαίου"
+            },
+            {
+                "id": "expireDate",
+                "description": "Ημερομηνία λήξης"
+            },
+            {
+                "id": "issuingAuthority",
+                "description": "Αρχή έκδοσης"
+            },
+            {
+                "id": "licenceNo",
+                "description": "Αρ. άδειας"
+            },
+            {
+                "id": "isAthenian",
+                "description": "Athenian"
+            },
+            {
+                "id": "isFishingBoat",
+                "description": "Αλιευτικό"
+            },
+            {
+                "id": "isActive",
+                "description": "Ενεργό"
+            },
+            {
+                "id": "saveButton",
+                "description": "Αποθηκευση"
+            }
+        ]
     }
 ]

@@ -19,7 +19,7 @@ import { environment } from 'src/environments/environment'
     selector: 'login-form',
     standalone: false,
     styleUrls: ['../../../../../assets/styles/custom/forms.css', './login-form.component.css'],
-    templateUrl: './login-form.component.html',
+    templateUrl: './login-form.component.html'
 })
 
 export class LoginFormComponent {

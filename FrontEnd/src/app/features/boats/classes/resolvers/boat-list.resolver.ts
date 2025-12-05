@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 // Custom
 import { BoatHttpService } from '../services/boat-http.service'
-import { ListResolved } from '../../../../../shared/classes/list-resolved'
+import { ListResolved } from '../../../../shared/classes/list-resolved'
 
 @Injectable({ providedIn: 'root' })
 
