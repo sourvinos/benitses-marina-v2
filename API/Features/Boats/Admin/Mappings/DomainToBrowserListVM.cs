@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using API.Infrastructure.Helpers;
+using API.Infrastructure.Classes;
 
 namespace API.Features.Boats.Admin {
 
@@ -10,6 +10,19 @@ namespace API.Features.Boats.Admin {
             return [.. boats.Select(x => new BoatBrowserListVM {
                 Id = x.Id,
                 Description = x.Description,
+                HullType = new SimpleEntity {
+                    Id = x.HullType.Id,
+                    Description = x.HullType.Description
+                },
+                Usage = new SimpleEntity {
+                    Id = x.Usage.Id,
+                    Description = x.Usage.Description
+                },
+                Insurance = new BoatBrowserListInsuranceVM {
+                    Company = x.Insurance.Company,
+                    ContractNo = x.Insurance.ContractNo,
+                    ExpireDate = x.Insurance.ExpireDate.ToString()
+                },
                 Loa = x.Loa,
                 Beam = x.Beam,
                 Draft = x.Draft,
@@ -17,7 +30,6 @@ namespace API.Features.Boats.Admin {
                 RegistryNo = x.RegistryNo,
                 IsAthenian = x.IsAthenian,
                 IsFishingBoat = x.IsFishingBoat,
-                IsInsuranceValid = x.Insurance.ExpireDate >= DateHelpers.GetLocalDateTime() || x.Insurance.ExpireDate != null,
                 IsActive = x.IsActive,
             })];
         }

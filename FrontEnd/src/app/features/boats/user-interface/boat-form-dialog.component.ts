@@ -1,4 +1,4 @@
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { AbstractControl, FormBuilder, Validators } from '@angular/forms'
 import { Component, ElementRef, Inject, Renderer2 } from '@angular/core'
 import { DateAdapter } from '@angular/material/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
@@ -32,8 +32,8 @@ export class BoatFormDialogComponent {
     form = this.formBuilder.group({
         id: 0,
         description: ['', [Validators.required]],
-        hullType: ['', [Validators.required, ValidationService.RequireAutocomplete]],
         boatUsage: ['', [Validators.required, ValidationService.RequireAutocomplete]],
+        hullType: ['', [Validators.required, ValidationService.RequireAutocomplete]],
         loa: ['', [Validators.required]],
         beam: ['', [Validators.required]],
         draft: ['', [Validators.required]],
@@ -145,6 +145,39 @@ export class BoatFormDialogComponent {
         this.helperService.addTabIndexToInput(this.elementRef, this.renderer)
     }
 
+    private flattenForm(): BoatWriteDto {
+        return {
+            id: this.form.value.id,
+            description: this.form.value.description,
+            boatUsageId: this.form.controls['boatUsage'].value['id'],
+            hullTypeId: this.form.controls['hullType'].value['id'],
+            insurance: {
+                id: this.form.value.insurance.id,
+                boatId: this.form.value.insurance.boatId,
+                company: this.form.value.insurance.company,
+                contractNo: this.form.value.insurance.contractNo,
+                expireDate: this.dateHelperService.formatDateToIso(new Date(this.form.value.insurance.expireDate))
+            },
+            fishingLicence: {
+                id: this.form.value.fishingLicence.id,
+                boatId: this.form.value.fishingLicence.boatId,
+                issuingAuthority: this.form.value.fishingLicence.issuingAuthority,
+                licenceNo: this.form.value.fishingLicence.licenceNo,
+                expireDate: this.dateHelperService.formatDateToIso(new Date(this.form.value.fishingLicence.expireDate))
+            },
+            flag: this.form.value.flag,
+            loa: this.form.value.loa,
+            beam: this.form.value.beam,
+            draft: this.form.value.draft,
+            registryPort: this.form.value.registryPort,
+            registryNo: this.form.value.registryNo,
+            isAthenian: this.form.value.isAthenian,
+            isFishingBoat: this.form.value.isFishingBoat,
+            isActive: this.form.value.isActive,
+            putAt: this.form.value.putAt
+        }
+    }
+
     private focusOnField(): void {
         this.helperService.focusOnField()
     }
@@ -155,15 +188,6 @@ export class BoatFormDialogComponent {
             return this[array].filter((element: { [x: string]: string; }) =>
                 element[field].toLowerCase().startsWith(filtervalue))
         }
-    }
-
-    private flattenForm(): BoatWriteDto {
-        return {
-            id: this.form.value.id,
-            description: this.form.value.description,
-            putAt: this.form.value.putAt
-        }
-        // return this.form.value
     }
 
     private populateDropdowns(): void {
@@ -179,9 +203,14 @@ export class BoatFormDialogComponent {
         })
     }
 
-    private saveRecord(invoice: BoatWriteDto): void {
-        this.boatHttpService.save(invoice).subscribe({
-            next: (response) => { },
+    private saveRecord(x: BoatWriteDto): void {
+        this.boatHttpService.save(x).subscribe({
+            next: (response) => {
+                console.log(response)
+                if (response.code == 200) {
+                    this.dialogRef.close()
+                }
+            },
             error: (errorFromInterceptor) => {
                 this.dialogService.open(this.messageDialogService.filterResponse(errorFromInterceptor), 'error', ['ok'])
             }
@@ -209,8 +238,8 @@ export class BoatFormDialogComponent {
                     expireDate: this.dateHelperService.formatDateToIso(new Date(response.body.insurance.expireDate)),
                 },
                 fishingLicence: {
-                    id: 0,
-                    boatId: 0,
+                    id: response.body.fishingLicence.id,
+                    boatId: response.body.fishingLicence.boatId,
                     issuingAuthority: response.body.fishingLicence.issuingAuthority,
                     licenceNo: response.body.fishingLicence.licenceNo,
                     expireDate: this.dateHelperService.formatDateToIso(new Date(response.body.fishingLicence.expireDate)),
@@ -238,12 +267,12 @@ export class BoatFormDialogComponent {
         return this.form.get('description')
     }
 
-    get hullType(): AbstractControl {
-        return this.form.get('hullType')
-    }
-
     get boatUsage(): AbstractControl {
         return this.form.get('boatUsage')
+    }
+
+    get hullType(): AbstractControl {
+        return this.form.get('hullType')
     }
 
     get loa(): AbstractControl {
@@ -287,7 +316,7 @@ export class BoatFormDialogComponent {
     }
 
     get licenceNo(): AbstractControl {
-        return this.form.get('fishingLicencelicenceNo')
+        return this.form.get('fishingLicence.licenceNo')
     }
 
     get fishingLicenceExpireDate(): AbstractControl {

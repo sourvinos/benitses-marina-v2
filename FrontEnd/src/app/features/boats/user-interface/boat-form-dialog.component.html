@@ -1,9 +1,7 @@
 <div id="dialog">
-
     <div id="dialog-header">
         <home-button-and-title [feature]="feature" [featureIcon]="featureIcon" [icon]="icon"></home-button-and-title>
     </div>
-
     <div id="dialog-content">
         <form [formGroup]="form" id="form">
             <mat-tab-group mat-stretch-tabs="false">
@@ -125,11 +123,9 @@
                         </div>
                     </div>
                 </mat-tab>
-
             </mat-tab-group>
         </form>
     </div>
-
     <div id="dialog-footer">
         <div id="align-right">
             <button (click)="onSave()" [disabled]="!form.valid" class="primary" mat-flat-button>
@@ -138,7 +134,6 @@
             </button>
         </div>
     </div>
-
 </div>
 
 <mat-autocomplete #hullTypes="matAutocomplete" autoActiveFirstOption [displayWith]="autocompleteFields.bind(this, 'description')">
