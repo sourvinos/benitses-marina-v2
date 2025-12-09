@@ -26,8 +26,8 @@
                 </ng-template>
                 <ng-template let-record pTemplate="body">
                     <tr (click)="highlightRow(record.id)" (dblclick)="editRecord(record.id)" [attr.id]=record.id style="height: 32px;">
-                        <td class="width-5"><span class="center no-left-padding no-overflow" style="font-size: 0.5rem; padding-top: 0 !important;">{{ getEmoji(record.isActive) }}</span></td>
-                        <td class="width-5"><span class="center no-left-padding no-overflow" style="font-size: 0.5rem; padding-top: 0 !important;">{{ getEmoji(record.isAdmin) }}</span></td>
+                        <td class="width-3"><span [ngClass]="colorizeIcon(record.isActive)" class="center material-symbols-outlined no-left-padding no-overflow" style="padding-top: 0 !important;">{{ getIcon(record.isActive,false) }}</span></td>
+                        <td class="width-3"><span [ngClass]="colorizeIcon(record.isAdmin)" class="center material-symbols-outlined no-left-padding no-overflow" style="padding-top: 0 !important;">{{ getIcon(record.isAdmin,false) }}</span></td>
                         <td class="width-16"><span>{{ record.username }}</span></td>
                         <td class="width-16"><span>{{ record.displayname }}</span></td>
                         <td class="width-16"><span>{{ record.email }}</span></td>

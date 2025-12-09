@@ -8,8 +8,9 @@ import { SessionStorageService } from 'src/app/shared/services/session-storage.s
 
 @Component({
     selector: 'reservations-menu',
-    templateUrl: './reservations-menu.component.html',
-    styleUrls: ['./reservations-menu.component.css']
+    standalone: false,
+    styleUrls: ['./reservations-menu.component.css'],
+    templateUrl: './reservations-menu.component.html'
 })
 
 export class ReservationsMenuComponent {

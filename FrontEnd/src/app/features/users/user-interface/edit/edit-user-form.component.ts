@@ -7,7 +7,6 @@ import { DexieService } from 'src/app/shared/services/dexie.service'
 import { DialogService } from 'src/app/shared/services/modal-dialog.service'
 import { EmailQueueDto } from 'src/app/shared/classes/email-queue-dto'
 import { EmailQueueHttpService } from 'src/app/shared/services/email-queue-http.service'
-import { EmojiService } from 'src/app/shared/services/emoji.service'
 import { FormResolved } from 'src/app/shared/classes/form-resolved'
 import { HelperService } from 'src/app/shared/services/helper.service'
 import { InputTabStopDirective } from 'src/app/shared/directives/input-tabstop.directive'
@@ -24,7 +23,7 @@ import { ValidationService } from '../../../../shared/services/validation.servic
     selector: 'edit-user-form',
     standalone: false,
     styleUrls: ['../../../../../assets/styles/custom/forms.css', './edit-user-form.component.css'],
-    templateUrl: './edit-user-form.component.html',
+    templateUrl: './edit-user-form.component.html'
 })
 
 export class EditUserFormComponent {
@@ -48,7 +47,7 @@ export class EditUserFormComponent {
 
     //#endregion
 
-    constructor(private activatedRoute: ActivatedRoute, private cryptoService: CryptoService, private dexieService: DexieService, private dialogService: DialogService, private emailQueueHttpService: EmailQueueHttpService, private emojiService: EmojiService, private formBuilder: FormBuilder, private helperService: HelperService, private messageDialogService: MessageDialogService, private messageHintService: MessageInputHintService, private messageLabelService: MessageLabelService, private router: Router, private sessionStorageService: SessionStorageService, private userService: UserService) { }
+    constructor(private activatedRoute: ActivatedRoute, private cryptoService: CryptoService, private dexieService: DexieService, private dialogService: DialogService, private emailQueueHttpService: EmailQueueHttpService, private formBuilder: FormBuilder, private helperService: HelperService, private messageDialogService: MessageDialogService, private messageHintService: MessageInputHintService, private messageLabelService: MessageLabelService, private router: Router, private sessionStorageService: SessionStorageService, private userService: UserService) { }
 
     //#region lifecycle hooks
 

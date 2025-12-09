@@ -27,13 +27,13 @@
                 </ng-template>
                 <ng-template let-record pTemplate="body">
                     <tr (click)="onHighlightRow(record.id)" (dblclick)="onEditRecord(record.id)" [attr.id]=record.id style="height: 32px;">
-                        <td class="width-3"><span class="center no-left-padding no-overflow" style="padding-top: 0 !important;">{{ getEmoji(record.isActive,false) }}</span></td>
+                        <td class="width-3"><span [ngClass]="colorizeIcon(record.isActive)" class="center material-symbols-outlined no-left-padding no-overflow" style="padding-top: 0 !important;">{{ getIcon(record.isActive,false) }}</span></td>
                         <td class="width-10"><span>{{ record.description }}</span></td>
                         <td class="width-10"><span>{{ record.registryNo }}</span></td>
                         <td class="width-3"><span class="center no-left-padding no-overflow">{{ record.loa }}</span></td>
                         <td class="width-3"><span class="center no-left-padding no-overflow">{{ record.beam }}</span></td>
-                        <td class="width-3"><span class="center no-left-padding no-overflow color-red" style="font-size: 0.75rem; padding-top: 0 !important;">{{ getEmoji(record.isAthenian,true) }}</span></td>
-                        <td class="width-3"><span class="center no-left-padding no-overflow color-red" style="font-size: 0.75rem; padding-top: 0 !important;">{{ getEmoji(record.isFishingBoat,true) }}</span></td>
+                        <td class="width-3"><span [ngClass]="colorizeIcon(record.isAthenian)" class="center material-symbols-outlined no-left-padding no-overflow color-green" style="font-size: 0.75rem; padding-top: 0 !important;">{{ getIcon(record.isAthenian,true) }}</span></td>
+                        <td class="width-3"><span [ngClass]="colorizeIcon(record.isFishingBoat)" class="center material-symbols-outlined no-left-padding no-overflow color-green" style="font-size: 0.75rem; padding-top: 0 !important;">{{ getIcon(record.isFishingBoat,true) }}</span></td>
                     </tr>
                 </ng-template>
 

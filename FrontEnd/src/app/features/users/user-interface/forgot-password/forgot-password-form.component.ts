@@ -4,7 +4,6 @@ import { Subject } from 'rxjs'
 // Custom
 import { EmailQueueDto } from 'src/app/shared/classes/email-queue-dto'
 import { EmailQueueHttpService } from 'src/app/shared/services/email-queue-http.service'
-import { EmojiService } from 'src/app/shared/services/emoji.service'
 import { HelperService } from 'src/app/shared/services/helper.service'
 import { InputTabStopDirective } from 'src/app/shared/directives/input-tabstop.directive'
 import { MessageDialogService } from 'src/app/shared/services/message-dialog.service'
@@ -34,7 +33,7 @@ export class ForgotPasswordFormComponent {
 
     //#endregion
 
-    constructor(private emailQueueHttpService: EmailQueueHttpService, private emojiService: EmojiService, private formBuilder: FormBuilder, private helperService: HelperService, private messageDialogService: MessageDialogService, private messageHintService: MessageInputHintService, private messageLabelService: MessageLabelService, private userService: UserService) { }
+    constructor(private emailQueueHttpService: EmailQueueHttpService, private formBuilder: FormBuilder, private helperService: HelperService, private messageDialogService: MessageDialogService, private messageHintService: MessageInputHintService, private messageLabelService: MessageLabelService, private userService: UserService) { }
 
     //#region lifecycle hooks
 
@@ -46,10 +45,6 @@ export class ForgotPasswordFormComponent {
     //#endregion
 
     //#region public methods
-
-    public getEmoji(emoji: string): string {
-        return this.emojiService.getEmoji(emoji)
-    }
 
     public getHint(id: string, minmax = 0): string {
         return this.messageHintService.getDescription(id, minmax)

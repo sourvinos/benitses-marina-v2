@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment'
     selector: 'home-button-and-title',
     standalone: false,
     styleUrls: ['./home-button-and-title.component.css'], 
-    templateUrl: './home-button-and-title.component.html',
+    templateUrl: './home-button-and-title.component.html'
 })
 
 export class HomeButtonAndTitleComponent {

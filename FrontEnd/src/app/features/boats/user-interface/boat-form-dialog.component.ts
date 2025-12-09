@@ -21,8 +21,9 @@ import { ValidationService } from 'src/app/shared/services/validation.service'
 
 @Component({
     selector: 'boat-form-dialog.component',
-    templateUrl: './boat-form-dialog.component.html',
-    styleUrls: ['./boat-form-dialog.component.css']
+    standalone: false,
+    styleUrls: ['./boat-form-dialog.component.css'],
+    templateUrl: './boat-form-dialog.component.html'
 })
 
 export class BoatFormDialogComponent {
@@ -34,9 +35,9 @@ export class BoatFormDialogComponent {
         description: ['', [Validators.required]],
         boatUsage: ['', [Validators.required, ValidationService.RequireAutocomplete]],
         hullType: ['', [Validators.required, ValidationService.RequireAutocomplete]],
-        loa: ['', [Validators.required]],
-        beam: ['', [Validators.required]],
-        draft: ['', [Validators.required]],
+        loa: ['', [Validators.required, Validators.maxLength(2)]],
+        beam: ['', [Validators.required, Validators.maxLength(2)]],
+        draft: ['', [Validators.required, Validators.maxLength(2)]],
         flag: ['', [Validators.required]],
         registryPort: ['', [Validators.required]],
         registryNo: ['', [Validators.required]],
@@ -71,6 +72,7 @@ export class BoatFormDialogComponent {
     public featureIcon = 'boat'
     public icon = 'arrow_back'
     public input: InputTabStopDirective
+    public isFormSaving = false
 
     //#endregion
 
@@ -130,7 +132,12 @@ export class BoatFormDialogComponent {
     }
 
     public onSave(): void {
-        this.saveRecord(this.flattenForm())
+        this.isFormSaving = true
+        this.saveRecord(this.flattenForm()).then((response) => {
+            this.form.patchValue({ putAt: response })
+            this.updateBrowserStorage()
+            this.dialogRef.close(this.form.value)
+        })
     }
 
     public openOrCloseAutoComplete(trigger: MatAutocompleteTrigger, element: any): void {
@@ -203,20 +210,6 @@ export class BoatFormDialogComponent {
         })
     }
 
-    private saveRecord(x: BoatWriteDto): void {
-        this.boatHttpService.save(x).subscribe({
-            next: (response) => {
-                console.log(response)
-                if (response.code == 200) {
-                    this.dialogRef.close()
-                }
-            },
-            error: (errorFromInterceptor) => {
-                this.dialogService.open(this.messageDialogService.filterResponse(errorFromInterceptor), 'error', ['ok'])
-            }
-        })
-    }
-
     private populateFields(): void {
         this.boatHttpService.getSingle(this.data).subscribe(response => {
             this.form.setValue({
@@ -255,8 +248,29 @@ export class BoatFormDialogComponent {
         })
     }
 
+    private saveRecord(x: BoatWriteDto): Promise<any> {
+        return new Promise((resolve) => {
+            this.boatHttpService.save(x).subscribe({
+                next: (response) => {
+                    if (response.code == 200) {
+                        this.dialogRef.close()
+                        resolve(response.id)
+                    }
+                },
+                error: (errorFromInterceptor) => {
+                    this.dialogService.open(this.messageDialogService.filterResponse(errorFromInterceptor), 'error', ['ok'])
+                    return false
+                }
+            })
+        })
+    }
+
     private setLocale(): void {
         this.dateAdapter.setLocale(this.localStorageService.getLanguage())
+    }
+
+    private updateBrowserStorage(): void {
+        this.dexieService.update('boats', this.form.value)
     }
 
     //#endregion

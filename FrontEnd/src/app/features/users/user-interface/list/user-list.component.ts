@@ -3,7 +3,6 @@ import { Component, ViewChild } from '@angular/core'
 import { Table } from 'primeng/table'
 // Custom
 import { DialogService } from 'src/app/shared/services/modal-dialog.service'
-import { EmojiService } from 'src/app/shared/services/emoji.service'
 import { HelperService } from 'src/app/shared/services/helper.service'
 import { ListResolved } from 'src/app/shared/classes/list-resolved'
 import { MessageDialogService } from 'src/app/shared/services/message-dialog.service'
@@ -20,7 +19,7 @@ import { UserListVM } from '../../classes/view-models/user-list-vm'
 
 export class UserListComponent {
 
-    //#region common #9
+    //#region common
 
     @ViewChild('table') table: Table
 
@@ -35,7 +34,7 @@ export class UserListComponent {
 
     //#endregion
 
-    constructor(private activatedRoute: ActivatedRoute, private dialogService: DialogService, private emojiService: EmojiService, private helperService: HelperService, private messageDialogService: MessageDialogService, private messageLabelService: MessageLabelService, private router: Router, private sessionStorageService: SessionStorageService) { }
+    constructor(private activatedRoute: ActivatedRoute, private dialogService: DialogService, private helperService: HelperService, private messageDialogService: MessageDialogService, private messageLabelService: MessageLabelService, private router: Router, private sessionStorageService: SessionStorageService) { }
 
     //#region lifecycle hooks
 
@@ -59,7 +58,11 @@ export class UserListComponent {
 
     //#endregion
 
-    //#region public common methods #7
+    //#region public methods
+
+    public colorizeIcon(active: boolean): string {
+        return active ? 'color-green' : 'color-red'
+    }
 
     public editRecord(id: number): void {
         this.storeScrollTop()
@@ -72,10 +75,8 @@ export class UserListComponent {
         this.recordsFilteredCount = event.filteredValue.length
     }
 
-    public getEmoji(anything: any): string {
-        return typeof anything == 'string'
-            ? this.emojiService.getEmoji(anything)
-            : anything ? this.emojiService.getEmoji('green-box') : this.emojiService.getEmoji('red-box')
+    public getIcon(isActive: boolean, onlyTrue: boolean): string {
+        return onlyTrue ? isActive ? 'check_circle' : '' : 'check_circle'
     }
 
     public getLabel(id: string): string {
@@ -96,7 +97,7 @@ export class UserListComponent {
 
     //#endregion
 
-    //#region private common list methods #13
+    //#region private methods
 
     private enableDisableFilters(): void {
         this.records.length == 0 ? this.helperService.disableTableFilters() : this.helperService.enableTableFilters()
@@ -164,20 +165,16 @@ export class UserListComponent {
         this.helperService.setTabTitle(this.feature)
     }
 
+    private storeReturnUrl(): void {
+        this.sessionStorageService.saveItem('returnUrl', '/users')
+    }
+
     private storeSelectedId(id: number): void {
         this.sessionStorageService.saveItem(this.feature + '-id', id.toString())
     }
 
     private storeScrollTop(): void {
         this.sessionStorageService.saveItem(this.feature + '-scrollTop', this.virtualElement.scrollTop)
-    }
-
-    //#endregion
-
-    //#region private specific list methods #1
-
-    private storeReturnUrl(): void {
-        this.sessionStorageService.saveItem('returnUrl', '/users')
     }
 
     //#endregion

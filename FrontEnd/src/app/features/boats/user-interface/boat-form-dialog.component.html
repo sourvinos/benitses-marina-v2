@@ -40,6 +40,7 @@
                             <mat-label>{{ getLabel('loa') }}</mat-label>
                             <input [inputTabStop]="input" class="tabable" formControlName="loa" matInput>
                             <mat-error *ngIf="loa.hasError('required')">{{ getHint("required") }}</mat-error>
+                            <mat-error *ngIf="loa.hasError('maxlength')">{{ getHint("maxLength", loa.errors.maxlength.requiredLength) }}</mat-error>
                         </mat-form-field>
                         <mat-form-field>
                             <mat-label>{{ getLabel('beam') }}</mat-label>
@@ -128,8 +129,8 @@
     </div>
     <div id="dialog-footer">
         <div id="align-right">
-            <button (click)="onSave()" [disabled]="!form.valid" class="primary" mat-flat-button>
-                <mat-icon *ngIf="!form.valid" class=" material-icons-outlined">lock</mat-icon>
+            <button (click)="onSave()" [disabled]="!form.valid || isFormSaving" class="primary" mat-flat-button>
+                <mat-icon *ngIf="!form.valid || isFormSaving" class=" material-icons-outlined">lock</mat-icon>
                 <span>{{ getLabel("saveButton") | uppercase }}</span>
             </button>
         </div>

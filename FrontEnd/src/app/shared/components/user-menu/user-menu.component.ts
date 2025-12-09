@@ -8,9 +8,9 @@ import { Menu } from '../../classes/menu'
 
 @Component({
     selector: 'user-menu',
-    templateUrl: './user-menu.component.html',
     standalone: false,
-    styleUrls: ['./user-menu.component.css']
+    styleUrls: ['./user-menu.component.css'],
+    templateUrl: './user-menu.component.html'
 })
 
 export class UserMenuComponent {

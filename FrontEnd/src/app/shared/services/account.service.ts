@@ -4,6 +4,7 @@ import { Observable } from 'rxjs'
 import { Router } from '@angular/router'
 import { map } from 'rxjs/operators'
 // Custom
+import { BoatHttpService } from 'src/app/features/boats/classes/services/boat-http.service'
 import { BoatUsageHttpService } from 'src/app/features/boatUsages/classes/services/boatUsage-http.service'
 import { ChangePasswordViewModel } from 'src/app/features/users/classes/view-models/change-password-view-model'
 import { CryptoService } from './crypto.service'
@@ -29,16 +30,7 @@ export class AccountService extends HttpDataService {
 
     //#endregion
 
-    constructor(
-        httpClient: HttpClient,
-        private boatUsageHttpService: BoatUsageHttpService,
-        private cryptoService: CryptoService,
-        private dexieService: DexieService,
-        private hullTypeHttpService: HullTypeHttpService,
-        private ngZone: NgZone,
-        private router: Router,
-        private sessionStorageService: SessionStorageService
-    ) {
+    constructor(httpClient: HttpClient, private boatHttpService: BoatHttpService, private boatUsageHttpService: BoatUsageHttpService, private cryptoService: CryptoService, private dexieService: DexieService, private hullTypeHttpService: HullTypeHttpService, private ngZone: NgZone, private router: Router, private sessionStorageService: SessionStorageService) {
         super(httpClient, environment.apiUrl)
     }
 
@@ -124,8 +116,9 @@ export class AccountService extends HttpDataService {
     }
 
     private populateDexieFromAPI(): void {
-        this.dexieService.populateTable('hullTypes', this.hullTypeHttpService)
         this.dexieService.populateTable('boatUsages', this.boatUsageHttpService)
+        this.dexieService.populateTable('boats', this.boatHttpService)
+        this.dexieService.populateTable('hullTypes', this.hullTypeHttpService)
     }
 
     private setDotNetVersion(response: any): void {

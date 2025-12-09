@@ -71,16 +71,16 @@ namespace API.Features.Boats.Admin {
         [HttpPut]
         [Authorize(Roles = "admin")]
         [ServiceFilter(typeof(ModelValidationAttribute))]
-        public async Task<ResponseWithBody> Put([FromBody] BoatWriteDto boat) {
+        public async Task<Response> Put([FromBody] BoatWriteDto boat) {
             var x = await repo.GetByIdAsync(boat.Id, true);
             if (x != null) {
                 var z = validation.IsValidAsync(x, boat).Result;
                 if (z == 200) {
                     var i = repo.Update((Boat)repo.AttachMetadataToPutDto(x, BoatMappingDtoPutToDomain.DtoPutToDomain(x, boat)));
-                    return new ResponseWithBody {
+                    return new Response {
                         Code = 200,
                         Icon = Icons.Success.ToString(),
-                        Body = i,
+                        Id = i.PutAt,
                         Message = ApiMessages.OK()
                     };
                 } else {

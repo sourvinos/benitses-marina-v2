@@ -2,22 +2,23 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { Component, ViewChild } from '@angular/core'
 import { Table } from 'primeng/table'
 // Custom
+import { BoatFormDialogComponent } from './boat-form-dialog.component'
 import { BoatListVM } from '../classes/view-models/boat-list-vm'
 import { CryptoService } from 'src/app/shared/services/crypto.service'
+import { DexieService } from 'src/app/shared/services/dexie.service'
 import { DialogService } from 'src/app/shared/services/modal-dialog.service'
-import { EmojiService } from 'src/app/shared/services/emoji.service'
 import { HelperService } from 'src/app/shared/services/helper.service'
 import { ListResolved } from 'src/app/shared/classes/list-resolved'
+import { MatDialog } from '@angular/material/dialog'
 import { MessageDialogService } from 'src/app/shared/services/message-dialog.service'
 import { MessageLabelService } from 'src/app/shared/services/message-label.service'
 import { SessionStorageService } from 'src/app/shared/services/session-storage.service'
-import { BoatFormDialogComponent } from './boat-form-dialog.component'
-import { MatDialog } from '@angular/material/dialog'
 
 @Component({
     selector: 'boat-list',
-    templateUrl: './boat-list.component.html',
-    styleUrls: ['../../../../assets/styles/custom/lists.css', 'boat-list.component.css']
+    standalone: false,
+    styleUrls: ['../../../../assets/styles/custom/lists.css', 'boat-list.component.css'],
+    templateUrl: './boat-list.component.html'
 })
 
 export class BoatListComponent {
@@ -38,18 +39,7 @@ export class BoatListComponent {
 
     //#endregion
 
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private cryptoService: CryptoService,
-        private dialogService: DialogService,
-        private emojiService: EmojiService,
-        private helperService: HelperService,
-        private messageDialogService: MessageDialogService,
-        private messageLabelService: MessageLabelService,
-        private router: Router,
-        private sessionStorageService: SessionStorageService,
-        public dialog: MatDialog,
-    ) { }
+    constructor(private activatedRoute: ActivatedRoute, private cryptoService: CryptoService, private dexieService: DexieService, private dialogService: DialogService, private helperService: HelperService, private messageDialogService: MessageDialogService, private messageLabelService: MessageLabelService, private router: Router, private sessionStorageService: SessionStorageService, public dialog: MatDialog) { }
 
     //#region lifecycle hooks
 
@@ -58,23 +48,20 @@ export class BoatListComponent {
         this.doVirtualTableTasks()
     }
 
-    ngAfterViewInit(): void {
-        setTimeout(() => {
-            this.getVirtualElement()
-            this.scrollToSavedPosition()
-            this.hightlightSavedRow()
-            this.enableDisableFilters()
-        }, 500)
+    ngOnDestroy(): void {
+        this.clearSessionStorage()
     }
 
     //#endregion
 
     //#region public methods
 
-    public getEmoji(anything: any, onlyTrue: boolean): string {
-        return typeof anything == 'string'
-            ? this.emojiService.getEmoji(anything)
-            : anything ? this.emojiService.getEmoji('green-box') : onlyTrue ? '' : this.emojiService.getEmoji('red-box')
+    public colorizeIcon(active: boolean): string {
+        return active ? 'color-green' : 'color-red'
+    }
+
+    public getIcon(isActive: boolean, onlyTrue: boolean): string {
+        return onlyTrue ? isActive ? 'check_circle' : '' : 'check_circle'
     }
 
     public getLabel(id: string): string {
@@ -115,16 +102,23 @@ export class BoatListComponent {
 
     //#region private methods
 
+    private clearSessionStorage() {
+        this.sessionStorageService.deleteItems([
+            { 'item': 'boatList-filters', 'when': 'always' },
+            { 'item': 'boatList-id', 'when': 'always' },
+            { 'item': 'boatList-scrollTop', 'when': 'always' }
+        ])
+    }
+
+    private doInitTableSort(): void {
+        this.table.multiSortMeta = [{ field: 'description', order: 1 }]
+    }
+    
     private doVirtualTableTasks(): void {
         setTimeout(() => {
             this.getVirtualElement()
-            this.scrollToSavedPosition()
-            this.hightlightSavedRow()
+            this.doInitTableSort()
         }, 500)
-    }
-
-    private enableDisableFilters(): void {
-        this.records.length == 0 ? this.helperService.disableTableFilters() : this.helperService.enableTableFilters()
     }
 
     private getVirtualElement(): void {
@@ -155,11 +149,20 @@ export class BoatListComponent {
     }
 
     private navigateToRecord(id: any): void {
-        this.dialog.open(BoatFormDialogComponent, {
+        const dialogRef = this.dialog.open(BoatFormDialogComponent, {
             data: id,
             panelClass: 'dialog',
             height: '700px',
             width: '900px'
+        })
+        dialogRef.afterClosed().subscribe((response) => {
+            if (response) {
+                this.dexieService.getAll('boats').then((response) => {
+                    this.records = response
+                    this.scrollToSavedPosition()
+                    this.hightlightSavedRow()
+                })
+            }
         })
     }
 

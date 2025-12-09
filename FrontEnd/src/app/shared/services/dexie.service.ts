@@ -8,8 +8,9 @@ export class DexieService extends Dexie {
     constructor() {
         super('Benitses-Marina-v2')
         this.version(1).stores({
-            hullTypes: 'id, description',
             boatUsages: 'id, description',
+            boats: 'id, description',
+            hullTypes: 'id, description',
         })
         this.open()
     }
@@ -34,6 +35,10 @@ export class DexieService extends Dexie {
                         .catch(Dexie.BulkError, () => { })
                 })
         })
+    }
+
+    public async getAll(table: string): Promise<any> {
+        return await this.table(table).toArray()
     }
 
     public async getById(table: string, id: number): Promise<any> {

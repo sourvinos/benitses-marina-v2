@@ -13,7 +13,7 @@ import { routeAnimation } from '../shared/animations/animations'
     selector: 'root',
     standalone: false,
     styleUrls: ['./app.component.css'],
-    templateUrl: './app.component.html',
+    templateUrl: './app.component.html'
 })
 
 export class AppComponent {
