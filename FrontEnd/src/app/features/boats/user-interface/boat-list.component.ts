@@ -91,7 +91,22 @@ export class BoatListComponent {
     }
 
     public onNewRecord(): void {
-        this.router.navigate([this.url + '/new'])
+        const dialogRef = this.dialog.open(BoatFormDialogComponent, {
+            data: null,
+            panelClass: 'dialog',
+            height: '700px',
+            width: '900px'
+        })
+        dialogRef.afterClosed().subscribe((response) => {
+            if (response) {
+                this.dexieService.getAll('boats').then((response) => {
+                    this.records = response
+                    this.scrollToSavedPosition()
+                    this.hightlightSavedRow()
+                })
+            }
+        })
+
     }
 
     public onResetTableFilters(): void {
@@ -113,12 +128,12 @@ export class BoatListComponent {
     private doInitTableSort(): void {
         this.table.multiSortMeta = [{ field: 'description', order: 1 }]
     }
-    
+
     private doVirtualTableTasks(): void {
         setTimeout(() => {
             this.getVirtualElement()
             this.doInitTableSort()
-        }, 500)
+        }, 1000)
     }
 
     private getVirtualElement(): void {

@@ -54,6 +54,12 @@ namespace API.Features.Boats.Admin {
         public ResponseWithBody Post([FromBody] BoatWriteDto boat) {
             var x = validation.IsValidAsync(null, boat).Result;
             if (x == 200) {
+                if (boat.Insurance.ExpireDate == "NaN-NaN-NaN") {
+                    boat.Insurance.ExpireDate = null;
+                }
+                if (boat.FishingLicence.ExpireDate == "NaN-NaN-NaN") {
+                    boat.FishingLicence.ExpireDate = null;
+                }
                 var z = repo.Create((Boat)repo.AttachMetadataToPutDto(BoatMappingDtoPostToDomain.DtoPostToDomain(boat)));
                 return new ResponseWithBody {
                     Code = 200,
@@ -76,6 +82,12 @@ namespace API.Features.Boats.Admin {
             if (x != null) {
                 var z = validation.IsValidAsync(x, boat).Result;
                 if (z == 200) {
+                    if (boat.Insurance.ExpireDate == "NaN-NaN-NaN") {
+                        boat.Insurance.ExpireDate = null;
+                    }
+                    if (boat.FishingLicence.ExpireDate == "NaN-NaN-NaN") {
+                        boat.FishingLicence.ExpireDate = null;
+                    }
                     var i = repo.Update((Boat)repo.AttachMetadataToPutDto(x, BoatMappingDtoPutToDomain.DtoPutToDomain(x, boat)));
                     return new Response {
                         Code = 200,

@@ -211,7 +211,7 @@ export class HelperService {
             if (x != null) {
                 x.classList.add('p-highlight')
             }
-        }, 500)
+        }, 1000)
     }
 
     public isNumberNegative(number: number): string {

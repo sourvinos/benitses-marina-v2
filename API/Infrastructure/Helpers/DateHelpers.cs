@@ -30,7 +30,10 @@ namespace API.Infrastructure.Helpers {
         }
 
         public static bool BeNullOrCorrectFormat(string date) {
-            return date == null || DateTime.TryParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
+            if (date == "NaN-NaN-NaN") {
+                date = null;
+            }
+            return date == null || date == "NaN-NaN-NaN" || DateTime.TryParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
         }
 
         public static DateTime GetLocalDateTime() {

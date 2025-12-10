@@ -18,6 +18,7 @@ import { MessageInputHintService } from 'src/app/shared/services/message-input-h
 import { MessageLabelService } from 'src/app/shared/services/message-label.service'
 import { SimpleEntity } from 'src/app/shared/classes/simple-entity'
 import { ValidationService } from 'src/app/shared/services/validation.service'
+import moment from 'moment'
 
 @Component({
     selector: 'boat-form-dialog.component',
@@ -134,9 +135,15 @@ export class BoatFormDialogComponent {
     public onSave(): void {
         this.isFormSaving = true
         this.saveRecord(this.flattenForm()).then((response) => {
-            this.form.patchValue({ putAt: response })
+            if (this.form.value.id != 0) {
+                this.form.patchValue({ putAt: response.id })
+            }
+            if (this.form.value.id == 0) {
+                this.form.patchValue({ id: response.body.id })
+            }
             this.updateBrowserStorage()
             this.dialogRef.close(this.form.value)
+            this.isFormSaving = false
         })
     }
 
@@ -228,14 +235,14 @@ export class BoatFormDialogComponent {
                     boatId: response.body.insurance.boatId,
                     company: response.body.insurance.company,
                     contractNo: response.body.insurance.contractNo,
-                    expireDate: this.dateHelperService.formatDateToIso(new Date(response.body.insurance.expireDate)),
+                    expireDate: response.body.insurance.expireDate ? this.dateHelperService.formatDateToIso(new Date(response.body.insurance.expireDate)) : '',
                 },
                 fishingLicence: {
                     id: response.body.fishingLicence.id,
                     boatId: response.body.fishingLicence.boatId,
                     issuingAuthority: response.body.fishingLicence.issuingAuthority,
                     licenceNo: response.body.fishingLicence.licenceNo,
-                    expireDate: this.dateHelperService.formatDateToIso(new Date(response.body.fishingLicence.expireDate)),
+                    expireDate: response.body.fishingLicence.expireDate ? this.dateHelperService.formatDateToIso(new Date(response.body.fishingLicence.expireDate)) : '',
                 },
                 isAthenian: response.body.isAthenian,
                 isFishingBoat: response.body.isFishingBoat,
@@ -254,7 +261,7 @@ export class BoatFormDialogComponent {
                 next: (response) => {
                     if (response.code == 200) {
                         this.dialogRef.close()
-                        resolve(response.id)
+                        resolve(response)
                     }
                 },
                 error: (errorFromInterceptor) => {
@@ -270,6 +277,8 @@ export class BoatFormDialogComponent {
     }
 
     private updateBrowserStorage(): void {
+        this.form.value.insurance.expireDate = moment(this.form.value.insurance.expireDate).format('YYYY-MM-DD')
+        this.form.value.fishingLicence.expireDate = moment(this.form.value.fishingLicence.expireDate).format('YYYY-MM-DD')
         this.dexieService.update('boats', this.form.value)
     }
 

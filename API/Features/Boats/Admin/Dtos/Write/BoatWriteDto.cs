@@ -1,4 +1,3 @@
-using API.Infrastructure.Classes;
 using API.Infrastructure.Interfaces;
 
 namespace API.Features.Boats.Admin {
