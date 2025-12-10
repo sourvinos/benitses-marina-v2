@@ -391,6 +391,10 @@
             {
                 "id": "saveButton",
                 "description": "Αποθηκευση"
+            },
+            {
+                "id": "deleteButton",
+                "description": "Διαγραφη"
             }
         ]
     }

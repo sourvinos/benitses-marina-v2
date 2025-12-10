@@ -1,14 +1,10 @@
-{{ form.value | json }}
-{{ this.form.valid }}
-{{ this.isFormSaving }}
-
 <div id="dialog">
     <div id="dialog-header">
         <home-button-and-title [feature]="feature" [featureIcon]="featureIcon" [icon]="icon"></home-button-and-title>
     </div>
     <div id="dialog-content">
         <form [formGroup]="form" id="form">
-            <mat-tab-group mat-stretch-tabs="false">
+            <mat-tab-group (focusChange)="tabFocusChange()" mat-stretch-tabs="false">
                 <mat-tab label="{{ getLabel('tab1') }}">
                     <div class="group-input-field">
                         <mat-form-field>
@@ -133,8 +129,12 @@
     </div>
     <div id="dialog-footer">
         <div id="align-right">
-            <button (click)="onSave()" [disabled]="!form.valid || isFormSaving" class="primary" mat-flat-button>
-                <mat-icon *ngIf="!form.valid || isFormSaving" class=" material-icons-outlined">lock</mat-icon>
+            <button *ngIf="form.value.id !== 0" (click)="onDelete()" [disabled]="!isAdmin() || getApiStatus()" class="delete" mat-flat-button>
+                <mat-icon *ngIf="!isAdmin() || getApiStatus()" class=" material-icons-outlined">lock</mat-icon>
+                <span>{{ getLabel("deleteButton") | uppercase }}</span>
+            </button>
+            <button (click)="onSave()" [disabled]="!isAdmin() || !form.valid || getApiStatus()" class="primary" mat-flat-button>
+                <mat-icon *ngIf="!isAdmin() || !form.valid || getApiStatus()" class=" material-icons-outlined">lock</mat-icon>
                 <span>{{ getLabel("saveButton") | uppercase }}</span>
             </button>
         </div>

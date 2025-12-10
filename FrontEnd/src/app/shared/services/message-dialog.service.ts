@@ -48,14 +48,15 @@ export class MessageDialogService {
     }
 
     public authenticationFailed(): string { return this.getDescription(this.feature, 'authenticationFailed') }
-    public emailSent(): string { return this.getDescription(this.feature, 'emailSent') }
-    public formIsDirty(): string { return this.getDescription(this.feature, 'formIsDirty') }
-    public unableToResetPassword(): string { return this.getDescription(this.feature, 'unableToResetPassword') }
-    public passwordCanBeChangedOnlyByAccountOwner(): string { return this.getDescription(this.feature, 'passwordCanBeChangedOnlyByAccountOwner') }
-    public noContactWithServer(): string { return this.getDescription(this.feature, 'noContactWithServer') }
-    public success(): string { return this.getDescription(this.feature, 'success') }
+    public confirmDelete(): string { return this.getDescription(this.feature, 'warning') }
     public confirmDeleteDexieDB(): string { return this.getDescription(this.feature, 'confirmDeleteDexieDB') }
     public confirmLogout(): string { return this.getDescription(this.feature, 'confirmLogout') }
+    public emailSent(): string { return this.getDescription(this.feature, 'emailSent') }
+    public formIsDirty(): string { return this.getDescription(this.feature, 'formIsDirty') }
+    public noContactWithServer(): string { return this.getDescription(this.feature, 'noContactWithServer') }
+    public passwordCanBeChangedOnlyByAccountOwner(): string { return this.getDescription(this.feature, 'passwordCanBeChangedOnlyByAccountOwner') }
+    public success(): string { return this.getDescription(this.feature, 'success') }
+    public unableToResetPassword(): string { return this.getDescription(this.feature, 'unableToResetPassword') }
 
     public filterResponse(error: any, feature = 'snackbarMessages'): string {
         let returnValue = ''

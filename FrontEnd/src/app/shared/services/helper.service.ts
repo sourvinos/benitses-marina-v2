@@ -51,7 +51,7 @@ export class HelperService {
                     }
                 }
             )
-        }, 500)
+        }, 1000)
     }
 
     public clearInvisibleFieldsAndRestoreVisibility(form: FormGroup<any>, fields: string[]): void {
@@ -61,11 +61,8 @@ export class HelperService {
         }, 1000)
     }
 
-    public clearTableTextFilters(table: Table, inputs: string[]): void {
+    public clearTableTextFilters(table: Table): void {
         table.clear()
-        inputs.forEach(input => {
-            table.filter('', input, 'contains')
-        })
         document.querySelectorAll<HTMLInputElement>('.p-inputtext, .mat-input-element').forEach(box => {
             box.value = ''
         })

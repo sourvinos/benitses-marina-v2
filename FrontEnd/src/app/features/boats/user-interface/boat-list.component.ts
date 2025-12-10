@@ -1,5 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router'
 import { Component, ViewChild } from '@angular/core'
+import { MatDialog } from '@angular/material/dialog'
 import { Table } from 'primeng/table'
 // Custom
 import { BoatFormDialogComponent } from './boat-form-dialog.component'
@@ -9,7 +10,6 @@ import { DexieService } from 'src/app/shared/services/dexie.service'
 import { DialogService } from 'src/app/shared/services/modal-dialog.service'
 import { HelperService } from 'src/app/shared/services/helper.service'
 import { ListResolved } from 'src/app/shared/classes/list-resolved'
-import { MatDialog } from '@angular/material/dialog'
 import { MessageDialogService } from 'src/app/shared/services/message-dialog.service'
 import { MessageLabelService } from 'src/app/shared/services/message-label.service'
 import { SessionStorageService } from 'src/app/shared/services/session-storage.service'
@@ -27,7 +27,6 @@ export class BoatListComponent {
 
     @ViewChild('table') table: Table
 
-    private url = 'boats'
     private virtualElement: any
     public feature = 'boatList'
     public featureIcon = 'boat'
@@ -72,10 +71,10 @@ export class BoatListComponent {
         return this.cryptoService.decrypt(this.sessionStorageService.getItem('isAdmin')) == 'true' ? true : false
     }
 
-    public onEditRecord(boatId: string): void {
+    public onEditRecord(id: string): void {
         this.storeScrollTop()
-        this.storeSelectedId(boatId)
-        this.navigateToRecord(boatId)
+        this.storeSelectedId(id)
+        this.navigateToRecord(id)
     }
 
     public onFilter(event: any, column: string, matchMode: string): void {
@@ -110,7 +109,7 @@ export class BoatListComponent {
     }
 
     public onResetTableFilters(): void {
-        this.helperService.clearTableTextFilters(this.table, ['description', 'email', 'phones'])
+        this.helperService.clearTableTextFilters(this.table)
     }
 
     //#endregion
@@ -167,7 +166,7 @@ export class BoatListComponent {
         const dialogRef = this.dialog.open(BoatFormDialogComponent, {
             data: id,
             panelClass: 'dialog',
-            height: '700px',
+            height: '587px',
             width: '900px'
         })
         dialogRef.afterClosed().subscribe((response) => {

@@ -1,4 +1,4 @@
-<div *ngIf=isAdmin() id="button-wrapper">
+<div *ngIf=isLoggedIn() id="button-wrapper">
     <button [matMenuTriggerFor]="menu" [matTooltip]="getLabel('reservations-menu-tooltip')" class="fab fab-with-no-background" mat-icon-button matTooltipPosition="left">
         <mat-icon class="material-icons-outlined">anchor</mat-icon>
     </button>

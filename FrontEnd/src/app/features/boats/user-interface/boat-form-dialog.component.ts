@@ -1,3 +1,4 @@
+import moment from 'moment'
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms'
 import { Component, ElementRef, Inject, Renderer2 } from '@angular/core'
 import { DateAdapter } from '@angular/material/core'
@@ -7,6 +8,7 @@ import { Observable, map, startWith } from 'rxjs'
 // Custom
 import { BoatHttpService } from '../classes/services/boat-http.service'
 import { BoatWriteDto } from '../classes/dtos/boat-write-dto'
+import { CryptoService } from 'src/app/shared/services/crypto.service'
 import { DateHelperService } from 'src/app/shared/services/date-helper.service'
 import { DexieService } from 'src/app/shared/services/dexie.service'
 import { DialogService } from 'src/app/shared/services/modal-dialog.service'
@@ -16,9 +18,10 @@ import { LocalStorageService } from 'src/app/shared/services/local-storage.servi
 import { MessageDialogService } from 'src/app/shared/services/message-dialog.service'
 import { MessageInputHintService } from 'src/app/shared/services/message-input-hint.service'
 import { MessageLabelService } from 'src/app/shared/services/message-label.service'
+import { SessionStorageService } from 'src/app/shared/services/session-storage.service'
 import { SimpleEntity } from 'src/app/shared/classes/simple-entity'
 import { ValidationService } from 'src/app/shared/services/validation.service'
-import moment from 'moment'
+import { MatTabChangeEvent } from '@angular/material/tabs'
 
 @Component({
     selector: 'boat-form-dialog.component',
@@ -69,11 +72,11 @@ export class BoatFormDialogComponent {
 
     //#region variables
 
+    private isApiBusy = false
     public feature = 'boatForm'
     public featureIcon = 'boat'
     public icon = 'arrow_back'
     public input: InputTabStopDirective
-    public isFormSaving = false
 
     //#endregion
 
@@ -85,7 +88,7 @@ export class BoatFormDialogComponent {
 
     //#endregion
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: any, private boatHttpService: BoatHttpService, private dateAdapter: DateAdapter<any>, private dateHelperService: DateHelperService, private dexieService: DexieService, private dialogRef: MatDialogRef<BoatFormDialogComponent>, private dialogService: DialogService, private elementRef: ElementRef, private formBuilder: FormBuilder, private helperService: HelperService, private localStorageService: LocalStorageService, private messageDialogService: MessageDialogService, private messageHintService: MessageInputHintService, private messageLabelService: MessageLabelService, private renderer: Renderer2) { }
+    constructor(@Inject(MAT_DIALOG_DATA) public data: any, private boatHttpService: BoatHttpService, private cryptoService: CryptoService, private dateAdapter: DateAdapter<any>, private dateHelperService: DateHelperService, private dexieService: DexieService, private dialogRef: MatDialogRef<BoatFormDialogComponent>, private dialogService: DialogService, private elementRef: ElementRef, private formBuilder: FormBuilder, private helperService: HelperService, private localStorageService: LocalStorageService, private messageDialogService: MessageDialogService, private messageHintService: MessageInputHintService, private messageLabelService: MessageLabelService, private renderer: Renderer2, private sessionStorageService: SessionStorageService) { }
 
     //#region lifecycle hooks
 
@@ -98,6 +101,7 @@ export class BoatFormDialogComponent {
     ngAfterViewInit(): void {
         this.focusOnField()
         this.addTabIndexToInput()
+        this.focusOnField()
     }
 
     //#endregion
@@ -116,12 +120,20 @@ export class BoatFormDialogComponent {
         this.isAutoCompleteDisabled = this.helperService.enableOrDisableAutoComplete(event)
     }
 
+    public getApiStatus(): boolean {
+        return this.isApiBusy
+    }
+
     public getLabel(id: string): string {
         return this.messageLabelService.getDescription(this.feature, id)
     }
 
     public getHint(id: string, minmax = 0): string {
         return this.messageHintService.getDescription(id, minmax)
+    }
+
+    public isAdmin(): boolean {
+        return this.cryptoService.decrypt(this.sessionStorageService.getItem('isAdmin')) == 'true' ? true : false
     }
 
     public isFishingBoat(): boolean {
@@ -132,23 +144,43 @@ export class BoatFormDialogComponent {
         this.dialogRef.close()
     }
 
+    public onDelete(): void {
+        this.dialogService.open(this.messageDialogService.confirmDelete(), 'question', ['abort', 'ok']).subscribe(response => {
+            if (response) {
+                this.setApiBusyStatus(true)
+                this.boatHttpService.delete(this.form.value.id).subscribe({
+                    complete: () => {
+                        this.deleteFromBrowserStorage()
+                        this.closeForm()
+                        this.setApiBusyStatus(false)
+                    },
+                    error: (errorFromInterceptor) => {
+                        this.showErrorFromApi(errorFromInterceptor)
+                        this.setApiBusyStatus(false)
+                    }
+                })
+            }
+        })
+    }
+
     public onSave(): void {
-        this.isFormSaving = true
+        this.setApiBusyStatus(true)
         this.saveRecord(this.flattenForm()).then((response) => {
-            if (this.form.value.id != 0) {
-                this.form.patchValue({ putAt: response.id })
-            }
-            if (this.form.value.id == 0) {
-                this.form.patchValue({ id: response.body.id })
-            }
+            this.patchFormWithDateFields()
+            this.patchFormWithResponse(response)
             this.updateBrowserStorage()
-            this.dialogRef.close(this.form.value)
-            this.isFormSaving = false
+            this.closeForm()
+            this.setApiBusyStatus(false)
         })
     }
 
     public openOrCloseAutoComplete(trigger: MatAutocompleteTrigger, element: any): void {
         this.helperService.openOrCloseAutocomplete(this.form, element, trigger)
+    }
+
+    public tabFocusChange(): void {
+        this.addTabIndexToInput()
+        this.focusOnField()
     }
 
     //#endregion
@@ -157,6 +189,14 @@ export class BoatFormDialogComponent {
 
     private addTabIndexToInput(): void {
         this.helperService.addTabIndexToInput(this.elementRef, this.renderer)
+    }
+
+    private closeForm() {
+        this.dialogRef.close(this.form.value)
+    }
+
+    private deleteFromBrowserStorage() {
+        this.dexieService.remove('boats', this.form.value.id)
     }
 
     private flattenForm(): BoatWriteDto {
@@ -201,6 +241,20 @@ export class BoatFormDialogComponent {
             const filtervalue = value.toLowerCase()
             return this[array].filter((element: { [x: string]: string; }) =>
                 element[field].toLowerCase().startsWith(filtervalue))
+        }
+    }
+
+    private patchFormWithDateFields() {
+        this.form.value.insurance.expireDate = this.dateHelperService.momentToIso(this.form.value.insurance.expireDate)
+        this.form.value.fishingLicence.expireDate = this.dateHelperService.momentToIso(this.form.value.fishingLicence.expireDate)
+    }
+
+    private patchFormWithResponse(response: any) {
+        if (this.form.value.id != 0) {
+            this.form.patchValue({ putAt: response.id })
+        }
+        if (this.form.value.id == 0) {
+            this.form.patchValue({ id: response.body.id })
         }
     }
 
@@ -260,25 +314,32 @@ export class BoatFormDialogComponent {
             this.boatHttpService.save(x).subscribe({
                 next: (response) => {
                     if (response.code == 200) {
-                        this.dialogRef.close()
+                        this.closeForm()
                         resolve(response)
                     }
                 },
                 error: (errorFromInterceptor) => {
-                    this.dialogService.open(this.messageDialogService.filterResponse(errorFromInterceptor), 'error', ['ok'])
-                    return false
+                    this.showErrorFromApi(errorFromInterceptor)
                 }
             })
         })
+    }
+
+    private setApiBusyStatus(status: boolean): void {
+        this.isApiBusy = status
     }
 
     private setLocale(): void {
         this.dateAdapter.setLocale(this.localStorageService.getLanguage())
     }
 
+    private showErrorFromApi(errorFromInterceptor: any) {
+        this.dialogService.open(this.messageDialogService.filterResponse(errorFromInterceptor), 'error', ['ok'])
+    }
+
     private updateBrowserStorage(): void {
-        this.form.value.insurance.expireDate = moment(this.form.value.insurance.expireDate).format('YYYY-MM-DD')
-        this.form.value.fishingLicence.expireDate = moment(this.form.value.fishingLicence.expireDate).format('YYYY-MM-DD')
+        // this.form.value.insurance.expireDate = moment(this.form.value.insurance.expireDate).format('YYYY-MM-DD')
+        // this.form.value.fishingLicence.expireDate = moment(this.form.value.fishingLicence.expireDate).format('YYYY-MM-DD')
         this.dexieService.update('boats', this.form.value)
     }
 

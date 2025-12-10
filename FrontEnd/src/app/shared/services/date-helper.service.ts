@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core'
+import moment from 'moment'
 
 @Injectable({ providedIn: 'root' })
 
@@ -21,6 +22,10 @@ export class DateHelperService {
         if (day.length < 2) day = '0' + day
         const formattedDate = [year, month, day].join('-')
         return includeWeekday ? weekday + ' ' + formattedDate : formattedDate
+    }
+
+    public momentToIso(date: moment.MomentInput): string {
+        return moment(date).format('YYYY-MM-DD')
     }
 
     //#endregion
