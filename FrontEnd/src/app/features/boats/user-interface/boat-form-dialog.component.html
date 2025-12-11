@@ -4,7 +4,7 @@
     </div>
     <div id="dialog-content">
         <form [formGroup]="form" id="form">
-            <mat-tab-group (focusChange)="tabFocusChange()" mat-stretch-tabs="false">
+            <mat-tab-group (focusChange)="tabFocusChange()" mat-stretch-tabs="false" [selectedIndex]="selectedIndex">
                 <mat-tab label="{{ getLabel('tab1') }}">
                     <div class="group-input-field">
                         <mat-form-field>
@@ -129,11 +129,11 @@
     </div>
     <div id="dialog-footer">
         <div id="align-right">
-            <button *ngIf="form.value.id !== 0" (click)="onDelete()" [disabled]="!isAdmin() || getApiStatus()" class="delete" mat-flat-button>
+            <button *ngIf="form.value.id !== 0" (click)="onDelete()" [disabled]="!isAdmin() || getApiStatus()" class="delete" id="delete" mat-flat-button>
                 <mat-icon *ngIf="!isAdmin() || getApiStatus()" class=" material-icons-outlined">lock</mat-icon>
                 <span>{{ getLabel("deleteButton") | uppercase }}</span>
             </button>
-            <button (click)="onSave()" [disabled]="!isAdmin() || !form.valid || getApiStatus()" class="primary" mat-flat-button>
+            <button (click)="onSave()" [disabled]="!isAdmin() || !form.valid || getApiStatus()" class="primary" id="save" mat-flat-button>
                 <mat-icon *ngIf="!isAdmin() || !form.valid || getApiStatus()" class=" material-icons-outlined">lock</mat-icon>
                 <span>{{ getLabel("saveButton") | uppercase }}</span>
             </button>

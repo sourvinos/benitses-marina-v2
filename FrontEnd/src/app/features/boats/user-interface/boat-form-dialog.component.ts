@@ -1,6 +1,5 @@
-import moment from 'moment'
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms'
-import { Component, ElementRef, Inject, Renderer2 } from '@angular/core'
+import { Component, ElementRef, Inject, Renderer2, ViewChild } from '@angular/core'
 import { DateAdapter } from '@angular/material/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete'
@@ -8,12 +7,14 @@ import { Observable, map, startWith } from 'rxjs'
 // Custom
 import { BoatHttpService } from '../classes/services/boat-http.service'
 import { BoatWriteDto } from '../classes/dtos/boat-write-dto'
+import { ButtonClickService } from 'src/app/shared/services/button-click.service'
 import { CryptoService } from 'src/app/shared/services/crypto.service'
 import { DateHelperService } from 'src/app/shared/services/date-helper.service'
 import { DexieService } from 'src/app/shared/services/dexie.service'
 import { DialogService } from 'src/app/shared/services/modal-dialog.service'
 import { HelperService } from 'src/app/shared/services/helper.service'
 import { InputTabStopDirective } from 'src/app/shared/directives/input-tabstop.directive'
+import { KeyboardShortcuts, Unlisten } from 'src/app/shared/services/keyboard-shortcuts.service'
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service'
 import { MessageDialogService } from 'src/app/shared/services/message-dialog.service'
 import { MessageInputHintService } from 'src/app/shared/services/message-input-hint.service'
@@ -21,7 +22,6 @@ import { MessageLabelService } from 'src/app/shared/services/message-label.servi
 import { SessionStorageService } from 'src/app/shared/services/session-storage.service'
 import { SimpleEntity } from 'src/app/shared/classes/simple-entity'
 import { ValidationService } from 'src/app/shared/services/validation.service'
-import { MatTabChangeEvent } from '@angular/material/tabs'
 
 @Component({
     selector: 'boat-form-dialog.component',
@@ -73,10 +73,12 @@ export class BoatFormDialogComponent {
     //#region variables
 
     private isApiBusy = false
+    private unlisten: Unlisten
     public feature = 'boatForm'
     public featureIcon = 'boat'
     public icon = 'arrow_back'
     public input: InputTabStopDirective
+    public selectedIndex = 0
 
     //#endregion
 
@@ -88,7 +90,7 @@ export class BoatFormDialogComponent {
 
     //#endregion
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: any, private boatHttpService: BoatHttpService, private cryptoService: CryptoService, private dateAdapter: DateAdapter<any>, private dateHelperService: DateHelperService, private dexieService: DexieService, private dialogRef: MatDialogRef<BoatFormDialogComponent>, private dialogService: DialogService, private elementRef: ElementRef, private formBuilder: FormBuilder, private helperService: HelperService, private localStorageService: LocalStorageService, private messageDialogService: MessageDialogService, private messageHintService: MessageInputHintService, private messageLabelService: MessageLabelService, private renderer: Renderer2, private sessionStorageService: SessionStorageService) { }
+    constructor(@Inject(MAT_DIALOG_DATA) public data: any, private boatHttpService: BoatHttpService, private buttonClickService: ButtonClickService, private cryptoService: CryptoService, private dateAdapter: DateAdapter<any>, private dateHelperService: DateHelperService, private dexieService: DexieService, private dialogRef: MatDialogRef<BoatFormDialogComponent>, private dialogService: DialogService, private elementRef: ElementRef, private formBuilder: FormBuilder, private helperService: HelperService, private keyboardShortcutsService: KeyboardShortcuts, private localStorageService: LocalStorageService, private messageDialogService: MessageDialogService, private messageHintService: MessageInputHintService, private messageLabelService: MessageLabelService, private renderer: Renderer2, private sessionStorageService: SessionStorageService) { }
 
     //#region lifecycle hooks
 
@@ -96,12 +98,16 @@ export class BoatFormDialogComponent {
         this.setLocale()
         this.populateDropdowns()
         this.populateFields()
+        this.addShortcuts()
     }
 
     ngAfterViewInit(): void {
-        this.focusOnField()
         this.addTabIndexToInput()
         this.focusOnField()
+    }
+
+    ngOnDestroy(): void {
+        this.unlisten()
     }
 
     //#endregion
@@ -186,6 +192,36 @@ export class BoatFormDialogComponent {
     //#endregion
 
     //#region private methods
+
+    private addShortcuts(): void {
+        this.unlisten = this.keyboardShortcutsService.listen({
+            'pageUp': (event: KeyboardEvent) => {
+                event.preventDefault()
+                if (document.getElementsByClassName('cdk-overlay-pane').length === 1) {
+                    this.selectedIndex > 0 ? this.selectedIndex -= 1 : this.selectedIndex = 1
+                    this.addTabIndexToInput()
+                    this.focusOnField()
+                }
+            },
+            'pageDown': (event: KeyboardEvent) => {
+                event.preventDefault()
+                if (document.getElementsByClassName('cdk-overlay-pane').length === 1) {
+                    this.selectedIndex < 1 ? this.selectedIndex += 1 : this.selectedIndex = 0
+                    this.addTabIndexToInput()
+                    this.focusOnField()
+                }
+            },
+            'ctrl.s': (event: KeyboardEvent) => {
+                event.preventDefault()
+                if (document.getElementsByClassName('cdk-overlay-pane').length === 1) {
+                    this.buttonClickService.clickOnButton(event, 'save')
+                }
+            },
+        }, {
+            priority: 1,
+            inputs: true
+        })
+    }
 
     private addTabIndexToInput(): void {
         this.helperService.addTabIndexToInput(this.elementRef, this.renderer)
