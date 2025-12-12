@@ -1,0 +1,8 @@
+[{
+    "feature": "snackbarMessages",
+    "labels": [
+        { "id": "recordCreated", "message": "Η εγγραφή δημιουργήθηκε." },
+        { "id": "recordDeleted", "message": "Η εγγραφή διαγράφηκε." },
+        { "id": "recordUpdated", "message": "Η εγγραφή ενημερώθηκε." }
+    ]
+}]

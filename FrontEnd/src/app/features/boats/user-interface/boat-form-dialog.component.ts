@@ -3,6 +3,7 @@ import { Component, ElementRef, Inject, Renderer2, ViewChild } from '@angular/co
 import { DateAdapter } from '@angular/material/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete'
+import { MatTabGroup } from '@angular/material/tabs'
 import { Observable, map, startWith } from 'rxjs'
 // Custom
 import { BoatHttpService } from '../classes/services/boat-http.service'
@@ -72,6 +73,8 @@ export class BoatFormDialogComponent {
 
     //#region variables
 
+    @ViewChild('tabGroup') private tabGroup: MatTabGroup;
+
     private isApiBusy = false
     private unlisten: Unlisten
     public feature = 'boatForm'
@@ -97,7 +100,7 @@ export class BoatFormDialogComponent {
     ngOnInit(): void {
         this.setLocale()
         this.populateDropdowns()
-        this.populateFields()
+        this.populateFieldsFromApi()
         this.addShortcuts()
     }
 
@@ -171,8 +174,7 @@ export class BoatFormDialogComponent {
 
     public onSave(): void {
         this.setApiBusyStatus(true)
-        this.saveRecord(this.flattenForm()).then((response) => {
-            this.patchFormWithDateFields()
+        this.saveRecordToApi(this.flattenForm()).then((response) => {
             this.patchFormWithResponse(response)
             this.updateBrowserStorage()
             this.closeForm()
@@ -198,7 +200,7 @@ export class BoatFormDialogComponent {
             'pageUp': (event: KeyboardEvent) => {
                 event.preventDefault()
                 if (document.getElementsByClassName('cdk-overlay-pane').length === 1) {
-                    this.selectedIndex > 0 ? this.selectedIndex -= 1 : this.selectedIndex = 1
+                    this.selectedIndex > 0 ? this.selectedIndex -= 1 : this.selectedIndex = this.tabGroup._tabs.length - 1
                     this.addTabIndexToInput()
                     this.focusOnField()
                 }
@@ -206,7 +208,7 @@ export class BoatFormDialogComponent {
             'pageDown': (event: KeyboardEvent) => {
                 event.preventDefault()
                 if (document.getElementsByClassName('cdk-overlay-pane').length === 1) {
-                    this.selectedIndex < 1 ? this.selectedIndex += 1 : this.selectedIndex = 0
+                    this.selectedIndex < this.tabGroup._tabs.length - 1 ? this.selectedIndex += 1 : this.selectedIndex = 0
                     this.addTabIndexToInput()
                     this.focusOnField()
                 }
@@ -216,7 +218,13 @@ export class BoatFormDialogComponent {
                 if (document.getElementsByClassName('cdk-overlay-pane').length === 1) {
                     this.buttonClickService.clickOnButton(event, 'save')
                 }
-            },
+            }, 
+            'ctrl.σ': (event: KeyboardEvent) => {
+                event.preventDefault()
+                if (document.getElementsByClassName('cdk-overlay-pane').length === 1) {
+                    this.buttonClickService.clickOnButton(event, 'save')
+                }
+            }
         }, {
             priority: 1,
             inputs: true
@@ -246,14 +254,14 @@ export class BoatFormDialogComponent {
                 boatId: this.form.value.insurance.boatId,
                 company: this.form.value.insurance.company,
                 contractNo: this.form.value.insurance.contractNo,
-                expireDate: this.dateHelperService.formatDateToIso(new Date(this.form.value.insurance.expireDate))
+                expireDate: this.form.value.insurance.expireDate ? this.dateHelperService.formatDateToIso(new Date(this.form.value.insurance.expireDate)) : null
             },
             fishingLicence: {
                 id: this.form.value.fishingLicence.id,
                 boatId: this.form.value.fishingLicence.boatId,
                 issuingAuthority: this.form.value.fishingLicence.issuingAuthority,
                 licenceNo: this.form.value.fishingLicence.licenceNo,
-                expireDate: this.dateHelperService.formatDateToIso(new Date(this.form.value.fishingLicence.expireDate))
+                expireDate: this.form.value.fishingLicence.expireDate ? this.dateHelperService.formatDateToIso(new Date(this.form.value.fishingLicence.expireDate)) : null
             },
             flag: this.form.value.flag,
             loa: this.form.value.loa,
@@ -280,22 +288,16 @@ export class BoatFormDialogComponent {
         }
     }
 
-    private patchFormWithDateFields() {
-        this.form.value.insurance.expireDate = this.dateHelperService.momentToIso(this.form.value.insurance.expireDate)
-        this.form.value.fishingLicence.expireDate = this.dateHelperService.momentToIso(this.form.value.fishingLicence.expireDate)
-    }
-
     private patchFormWithResponse(response: any) {
-        if (this.form.value.id != 0) {
-            this.form.patchValue({ putAt: response.id })
-        }
         if (this.form.value.id == 0) {
             this.form.patchValue({ id: response.body.id })
+        }
+        if (this.form.value.id != 0) {
+            this.form.patchValue({ putAt: response.id })
         }
     }
 
     private populateDropdowns(): void {
-        console.log('2')
         this.populateDropdownFromDexieDB('hullTypes', 'dropdownHullTypes', 'hullType', 'description', 'description')
         this.populateDropdownFromDexieDB('boatUsages', 'dropdownBoatUsages', 'boatUsage', 'description', 'description')
     }
@@ -307,7 +309,7 @@ export class BoatFormDialogComponent {
         })
     }
 
-    private populateFields(): void {
+    private populateFieldsFromApi(): void {
         this.boatHttpService.getSingle(this.data).subscribe(response => {
             this.form.setValue({
                 id: response.body.id,
@@ -325,14 +327,14 @@ export class BoatFormDialogComponent {
                     boatId: response.body.insurance.boatId,
                     company: response.body.insurance.company,
                     contractNo: response.body.insurance.contractNo,
-                    expireDate: response.body.insurance.expireDate ? this.dateHelperService.formatDateToIso(new Date(response.body.insurance.expireDate)) : '',
+                    expireDate: response.body.insurance.expireDate ? this.dateHelperService.formatDateToIso(new Date(response.body.insurance.expireDate)) : null,
                 },
                 fishingLicence: {
                     id: response.body.fishingLicence.id,
                     boatId: response.body.fishingLicence.boatId,
                     issuingAuthority: response.body.fishingLicence.issuingAuthority,
                     licenceNo: response.body.fishingLicence.licenceNo,
-                    expireDate: response.body.fishingLicence.expireDate ? this.dateHelperService.formatDateToIso(new Date(response.body.fishingLicence.expireDate)) : '',
+                    expireDate: response.body.fishingLicence.expireDate ? this.dateHelperService.formatDateToIso(new Date(response.body.fishingLicence.expireDate)) : null,
                 },
                 isAthenian: response.body.isAthenian,
                 isFishingBoat: response.body.isFishingBoat,
@@ -345,7 +347,7 @@ export class BoatFormDialogComponent {
         })
     }
 
-    private saveRecord(x: BoatWriteDto): Promise<any> {
+    private saveRecordToApi(x: BoatWriteDto): Promise<any> {
         return new Promise((resolve) => {
             this.boatHttpService.save(x).subscribe({
                 next: (response) => {
@@ -374,8 +376,6 @@ export class BoatFormDialogComponent {
     }
 
     private updateBrowserStorage(): void {
-        // this.form.value.insurance.expireDate = moment(this.form.value.insurance.expireDate).format('YYYY-MM-DD')
-        // this.form.value.fishingLicence.expireDate = moment(this.form.value.fishingLicence.expireDate).format('YYYY-MM-DD')
         this.dexieService.update('boats', this.form.value)
     }
 

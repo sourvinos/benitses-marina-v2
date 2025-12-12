@@ -4,7 +4,7 @@
     </div>
     <div id="dialog-content">
         <form [formGroup]="form" id="form">
-            <mat-tab-group (focusChange)="tabFocusChange()" mat-stretch-tabs="false" [selectedIndex]="selectedIndex">
+            <mat-tab-group (focusChange)="tabFocusChange()" mat-stretch-tabs="false" #tabGroup [selectedIndex]="selectedIndex">
                 <mat-tab label="{{ getLabel('tab1') }}">
                     <div class="group-input-field">
                         <mat-form-field>
@@ -108,15 +108,15 @@
                         <div formGroupName="fishingLicence" class="group-input-field">
                             <mat-form-field>
                                 <mat-label>{{ getLabel('issuingAuthority') }}</mat-label>
-                                <input [inputTabStop]="input" dataTabIndex="1" formControlName="issuingAuthority" matInput>
+                                <input [inputTabStop]="input" formControlName="issuingAuthority" matInput>
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>{{ getLabel('licenceNo') }}</mat-label>
-                                <input [inputTabStop]="input" dataTabIndex="2" formControlName="licenceNo" matInput>
+                                <input [inputTabStop]="input" formControlName="licenceNo" matInput>
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>{{ getLabel('expireDate') }}</mat-label>
-                                <input [inputTabStop]="input" [matDatepicker]="expireDateDatePicker" dataTabIndex="3" formControlName="expireDate" matInput>
+                                <input [inputTabStop]="input" [matDatepicker]="expireDateDatePicker" formControlName="expireDate" matInput>
                                 <mat-datepicker-toggle matIconSuffix [for]="expireDateDatePicker"></mat-datepicker-toggle>
                                 <mat-datepicker #expireDateDatePicker></mat-datepicker>
                                 <mat-error *ngIf="fishingLicenceExpireDate.hasError('required')">{{ getHint("required") }}</mat-error>

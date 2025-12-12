@@ -19,6 +19,7 @@ import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatSliderModule } from '@angular/material/slider'
 import { MatTabsModule } from '@angular/material/tabs'
 import { MatTooltipModule } from '@angular/material/tooltip'
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar'
 
 @NgModule({
     exports: [
@@ -48,7 +49,8 @@ import { MatTooltipModule } from '@angular/material/tooltip'
         { provide: MAT_DATE_LOCALE, useValue: '' },
         { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } },
         { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
-        { provide: MAT_RIPPLE_GLOBAL_OPTIONS, useValue: { disabled: true } }
+        { provide: MAT_RIPPLE_GLOBAL_OPTIONS, useValue: { disabled: true } },
+        { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 1500 } }
     ]
 })
 

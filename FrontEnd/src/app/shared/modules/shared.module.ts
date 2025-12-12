@@ -17,6 +17,7 @@ import { PrimeNgModule } from './primeng.module'
 import { SafeStylePipe } from '../pipes/safe-style.pipe'
 import { TableTotalFilteredRecordsComponent } from '../components/table-total-filtered-records/table-total-filtered-records.component'
 import { ThemeSelectorComponent } from '../components/theme-selector/theme-selector.component'
+import { SnackbarComponent } from '../components/snackbar/snackbar.component'
 
 @NgModule({
     declarations: [
@@ -30,8 +31,9 @@ import { ThemeSelectorComponent } from '../components/theme-selector/theme-selec
         MetadataPanelComponent,
         ModalDialogComponent,
         SafeStylePipe,
+        SnackbarComponent,
         TableTotalFilteredRecordsComponent,
-        ThemeSelectorComponent,
+        ThemeSelectorComponent
     ],
     imports: [
         CommonModule,
@@ -56,6 +58,7 @@ import { ThemeSelectorComponent } from '../components/theme-selector/theme-selec
         PrimeNgModule,
         ReactiveFormsModule,
         RouterModule,
+        SnackbarComponent,
         TableTotalFilteredRecordsComponent,
         ThemeSelectorComponent
     ]

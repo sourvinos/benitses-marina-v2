@@ -12,7 +12,9 @@ import { HelperService } from 'src/app/shared/services/helper.service'
 import { ListResolved } from 'src/app/shared/classes/list-resolved'
 import { MessageDialogService } from 'src/app/shared/services/message-dialog.service'
 import { MessageLabelService } from 'src/app/shared/services/message-label.service'
+import { MessageSnackbarService } from 'src/app/shared/services/message.snackbar.service'
 import { SessionStorageService } from 'src/app/shared/services/session-storage.service'
+import { SnackbarService } from 'src/app/shared/services/snackbar.service'
 
 @Component({
     selector: 'boat-list',
@@ -38,7 +40,7 @@ export class BoatListComponent {
 
     //#endregion
 
-    constructor(private activatedRoute: ActivatedRoute, private cryptoService: CryptoService, private dexieService: DexieService, private dialogService: DialogService, private helperService: HelperService, private messageDialogService: MessageDialogService, private messageLabelService: MessageLabelService, private router: Router, private sessionStorageService: SessionStorageService, public dialog: MatDialog) { }
+    constructor(private activatedRoute: ActivatedRoute, private cryptoService: CryptoService, private dexieService: DexieService, private dialogService: DialogService, private helperService: HelperService, private messageDialogService: MessageDialogService, private messageLabelService: MessageLabelService, private messageSnackbarService: MessageSnackbarService, private router: Router, private sessionStorageService: SessionStorageService, private snackbarService: SnackbarService, public dialog: MatDialog) { }
 
     //#region lifecycle hooks
 
@@ -102,6 +104,10 @@ export class BoatListComponent {
                     this.records = response
                     this.scrollToSavedPosition()
                     this.hightlightSavedRow()
+                    // this.populateList(response)
+                    // this.scrollToSavedPosition()
+                    // this.hightlightSavedRow()
+                    this.showSnackbar(this.messageSnackbarService.recordCreated(), 'snackbar-info')
                 })
             }
         })
@@ -172,16 +178,25 @@ export class BoatListComponent {
         dialogRef.afterClosed().subscribe((response) => {
             if (response) {
                 this.dexieService.getAll('boats').then((response) => {
-                    this.records = response
+                    this.populateList(response)
                     this.scrollToSavedPosition()
                     this.hightlightSavedRow()
+                    this.showSnackbar(this.messageSnackbarService.recordUpdated(), 'snackbar-info')
                 })
             }
         })
     }
 
+    private populateList(response: any) {
+        this.records = response
+    }
+
     private scrollToSavedPosition(): void {
         this.helperService.scrollToSavedPosition(this.virtualElement, this.feature)
+    }
+
+    private showSnackbar(message: string, type: string): void {
+        this.snackbarService.open(message, type)
     }
 
     private storeSelectedId(boatId: string): void {

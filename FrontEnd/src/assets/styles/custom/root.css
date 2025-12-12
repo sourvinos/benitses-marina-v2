@@ -154,6 +154,10 @@ p {
     width: 0 !important;
 }
 
+.mdc-snackbar__surface {
+    padding: 0 !important;
+}
+
 .color-blue {
     color: #a3c6f4;
 }
@@ -168,4 +172,12 @@ p {
 
 .color-red {
     color: #dd678e;
+}
+
+.snackbar-info * {
+    background-color: #8fbc8f;
+}
+
+.snackbar-delete * {
+    background-color: #dd678e;
 }
