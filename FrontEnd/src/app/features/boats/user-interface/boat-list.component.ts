@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router'
-import { Component, ViewChild } from '@angular/core'
+import { Component, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { Table } from 'primeng/table'
 // Custom
@@ -26,7 +26,6 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service'
 export class BoatListComponent {
 
     //#region variables
-
     @ViewChild('table') table: Table
 
     private virtualElement: any
@@ -46,7 +45,20 @@ export class BoatListComponent {
 
     ngOnInit(): void {
         this.loadRecords()
-        this.doVirtualTableTasks()
+        setTimeout(() => {
+            this.onResetTableFilters()
+            this.dexieService.getLast('boats').then(response => {
+                const x = document.getElementById(response.id);
+                this.table.scrollTo({
+                    top: x.getAttribute('data'),
+                    left: 0,
+                    behavior: 'smooth'
+                })
+                if (x != null) {
+                    x.classList.add('p-highlight')
+                }
+            })
+        }, 2000);
     }
 
     ngOnDestroy(): void {
@@ -101,11 +113,8 @@ export class BoatListComponent {
         dialogRef.afterClosed().subscribe((response) => {
             if (response) {
                 this.dexieService.getAll('boats').then((response) => {
-                    this.records = response
-                    this.scrollToSavedPosition()
-                    this.hightlightSavedRow()
-                    // this.populateList(response)
-                    // this.scrollToSavedPosition()
+                    this.populateList(response)
+                    this.scrollToNewRow()
                     // this.hightlightSavedRow()
                     this.showSnackbar(this.messageSnackbarService.recordCreated(), 'snackbar-info')
                 })
@@ -191,6 +200,16 @@ export class BoatListComponent {
         this.records = response
     }
 
+    private scrollToNewRow(): void {
+        this.dexieService.getLast('boats').then(response => {
+            console.log(response)
+            let rows = document.getElementsByTagName('table')[0].rows;
+            let elementToScrollTo = rows[100];
+            elementToScrollTo?.scrollIntoView({ behavior: 'smooth' });
+        })
+        // this.helperService.scrollToSavedPosition(this.virtualElement, this.feature)
+    }
+
     private scrollToSavedPosition(): void {
         this.helperService.scrollToSavedPosition(this.virtualElement, this.feature)
     }
@@ -208,5 +227,9 @@ export class BoatListComponent {
     }
 
     //#endregion
+
+    public calculateRowIndex(rowIndex: number): number {
+        return rowIndex += 32
+    }
 
 }

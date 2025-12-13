@@ -41,6 +41,10 @@ export class DexieService extends Dexie {
         return await this.table(table).toArray()
     }
 
+    public async getLast(table: string): Promise<any> {
+        return await this.table(table).orderBy('id').last()
+    }
+
     public async getById(table: string, id: number): Promise<any> {
         return await this.table(table).get({ id: id })
     }

@@ -100,7 +100,7 @@ export class BoatFormDialogComponent {
     ngOnInit(): void {
         this.setLocale()
         this.populateDropdowns()
-        this.populateFieldsFromApi()
+        if (this.data) { this.populateFieldsFromApi() }
         this.addShortcuts()
     }
 
@@ -175,9 +175,7 @@ export class BoatFormDialogComponent {
     public onSave(): void {
         this.setApiBusyStatus(true)
         this.saveRecordToApi(this.flattenForm()).then((response) => {
-            this.patchFormWithResponse(response)
-            this.updateBrowserStorage()
-            this.closeForm()
+            this.updateBrowserRecordFromApi(response.body)
             this.setApiBusyStatus(false)
         })
     }
@@ -218,7 +216,7 @@ export class BoatFormDialogComponent {
                 if (document.getElementsByClassName('cdk-overlay-pane').length === 1) {
                     this.buttonClickService.clickOnButton(event, 'save')
                 }
-            }, 
+            },
             'ctrl.σ': (event: KeyboardEvent) => {
                 event.preventDefault()
                 if (document.getElementsByClassName('cdk-overlay-pane').length === 1) {
@@ -285,15 +283,6 @@ export class BoatFormDialogComponent {
             const filtervalue = value.toLowerCase()
             return this[array].filter((element: { [x: string]: string; }) =>
                 element[field].toLowerCase().startsWith(filtervalue))
-        }
-    }
-
-    private patchFormWithResponse(response: any) {
-        if (this.form.value.id == 0) {
-            this.form.patchValue({ id: response.body.id })
-        }
-        if (this.form.value.id != 0) {
-            this.form.patchValue({ putAt: response.id })
         }
     }
 
@@ -375,8 +364,8 @@ export class BoatFormDialogComponent {
         this.dialogService.open(this.messageDialogService.filterResponse(errorFromInterceptor), 'error', ['ok'])
     }
 
-    private updateBrowserStorage(): void {
-        this.dexieService.update('boats', this.form.value)
+    private updateBrowserRecordFromApi(response: any): void {
+        this.dexieService.update('boats', response)
     }
 
     //#endregion
