@@ -48,17 +48,27 @@ export class BoatListComponent {
         setTimeout(() => {
             this.onResetTableFilters()
             this.dexieService.getLast('boats').then(response => {
-                const x = document.getElementById(response.id);
-                this.table.scrollTo({
-                    top: x.getAttribute('data'),
-                    left: 0,
-                    behavior: 'smooth'
-                })
-                if (x != null) {
-                    x.classList.add('p-highlight')
-                }
+                const x = document.getElementById(response.id)
+                // const z = x.getAttribute('data')
+                // this.table.scrollToVirtualIndex(100)
+                // this.table.scrollTo({
+                //     top: x.getAttribute('data'),
+                //     left: 0,
+                //     behavior: 'smooth'
+                // })
+                // if (x != null) {
+                //     x.classList.add('p-highlight')
+                // }
             })
-        }, 2000);
+        }, 2000)
+    }
+
+    ngAfterViewInit(): void {
+        setTimeout(() => {
+            this.getVirtualElement()
+            this.scrollToSavedPosition()
+            this.hightlightSavedRow()
+        }, 500)
     }
 
     ngOnDestroy(): void {
@@ -139,17 +149,6 @@ export class BoatListComponent {
         ])
     }
 
-    private doInitTableSort(): void {
-        this.table.multiSortMeta = [{ field: 'description', order: 1 }]
-    }
-
-    private doVirtualTableTasks(): void {
-        setTimeout(() => {
-            this.getVirtualElement()
-            this.doInitTableSort()
-        }, 1000)
-    }
-
     private getVirtualElement(): void {
         this.virtualElement = document.getElementsByClassName('p-scroller-inline')[0]
     }
@@ -186,12 +185,11 @@ export class BoatListComponent {
         })
         dialogRef.afterClosed().subscribe((response) => {
             if (response) {
-                this.dexieService.getAll('boats').then((response) => {
-                    this.populateList(response)
-                    this.scrollToSavedPosition()
-                    this.hightlightSavedRow()
-                    this.showSnackbar(this.messageSnackbarService.recordUpdated(), 'snackbar-info')
-                })
+                // const x = this.records.findIndex(response.id)
+                // this.records[response.id] = { ...response };
+                // this.scrollToSavedPosition()
+                // this.hightlightSavedRow()
+                this.showSnackbar(this.messageSnackbarService.recordUpdated(), 'snackbar-info')
             }
         })
     }
@@ -203,9 +201,9 @@ export class BoatListComponent {
     private scrollToNewRow(): void {
         this.dexieService.getLast('boats').then(response => {
             console.log(response)
-            let rows = document.getElementsByTagName('table')[0].rows;
+            let rows = document.getElementsByTagName('table')[0].rows
             let elementToScrollTo = rows[100];
-            elementToScrollTo?.scrollIntoView({ behavior: 'smooth' });
+            elementToScrollTo?.scrollIntoView({ behavior: 'smooth' })
         })
         // this.helperService.scrollToSavedPosition(this.virtualElement, this.feature)
     }
@@ -227,9 +225,5 @@ export class BoatListComponent {
     }
 
     //#endregion
-
-    public calculateRowIndex(rowIndex: number): number {
-        return rowIndex += 32
-    }
 
 }

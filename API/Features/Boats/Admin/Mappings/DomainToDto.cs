@@ -25,7 +25,7 @@ namespace API.Features.Boats.Admin {
                 },
                 FishingLicence = new BoatFishingLicenceReadDto {
                     Id = boat.FishingLicence.Id,
-                    BoatId = 1,
+                    BoatId = boat.FishingLicence.BoatId,
                     IssuingAuthority = boat.FishingLicence.IssuingAuthority,
                     LicenceNo = boat.FishingLicence.LicenceNo,
                     ExpireDate = boat.FishingLicence.ExpireDate != null ? DateHelpers.DateToISOString((System.DateTime)boat.FishingLicence.ExpireDate) : ""
