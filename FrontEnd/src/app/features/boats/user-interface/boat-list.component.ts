@@ -5,6 +5,8 @@ import { Table } from 'primeng/table'
 // Custom
 import { BoatFormDialogComponent } from './boat-form-dialog.component'
 import { BoatListVM } from '../classes/view-models/boat-list-vm'
+import { BoatReadDto } from '../classes/dtos/boat-read-dto'
+import { BoatWriteDto } from '../classes/dtos/boat-write-dto';
 import { CryptoService } from 'src/app/shared/services/crypto.service'
 import { DexieService } from 'src/app/shared/services/dexie.service'
 import { DialogService } from 'src/app/shared/services/modal-dialog.service'
@@ -15,8 +17,6 @@ import { MessageLabelService } from 'src/app/shared/services/message-label.servi
 import { MessageSnackbarService } from 'src/app/shared/services/message.snackbar.service'
 import { SessionStorageService } from 'src/app/shared/services/session-storage.service'
 import { SnackbarService } from 'src/app/shared/services/snackbar.service'
-import { BoatReadDto } from '../classes/dtos/boat-read-dto'
-import { BoatWriteDto } from '../classes/dtos/boat-write-dto';
 
 @Component({
     selector: 'boat-list',
@@ -97,41 +97,21 @@ export class BoatListComponent {
         const dialogRef = this.dialog.open(BoatFormDialogComponent, {
             data: null,
             panelClass: 'dialog',
-            height: '700px',
+            height: '587px',
             width: '900px'
         })
         dialogRef.afterClosed().subscribe((response) => {
             if (response) {
                 this.addRecord(response).then(() => {
-                    this.gotoTop()
-                    this.clearHighlightedRows()
-                    this.highlightFirstRow()
-                    this.showSnackbar(this.messageSnackbarService.recordCreated(), 'snackbar-info')
+                    this.helperService.clearTableTextFilters(this.table)
+                    this.recordsFilteredCount = this.records.length
+                    this.table.scrollToVirtualIndex(0);
+                    this.helperService.clearHighlightedRows()
+                    this.helperService.highlightFirstRow()
+                    this.showSnackbar(this.messageSnackbarService.recordCreated(), 'snackbar-success')
                 })
             }
         })
-    }
-
-    private addRecord(response: any): Promise<any> {
-        const promise = new Promise((resolve) => {
-            this.records.unshift(this.mapResponse(response))
-            resolve(this.records)
-        })
-        return promise
-    }
-
-    private mapResponse(response: BoatWriteDto): BoatListVM {
-        const x: BoatListVM = {
-            id: response.id,
-            description: response.description,
-            registryNo: response.registryNo,
-            loa: response.loa,
-            beam: response.beam,
-            isAthenian: response.isAthenian,
-            isFishingBoat: response.isFishingBoat,
-            isActive: response.isActive
-        }
-        return x
     }
 
     public onResetTableFilters(): void {
@@ -141,6 +121,17 @@ export class BoatListComponent {
     //#endregion
 
     //#region private methods
+
+    private addRecord(response: any): Promise<any> {
+        const promise = new Promise((resolve) => {
+            this.records.unshift(this.mapResponse(response))
+            this.dexieService.getLast('boats').then(response => {
+                this.records[0].id = response.id
+            })
+            resolve(this.records)
+        })
+        return promise
+    }
 
     private clearSessionStorage() {
         this.sessionStorageService.deleteItems([
@@ -179,6 +170,20 @@ export class BoatListComponent {
         })
     }
 
+    private mapResponse(response: BoatWriteDto): BoatListVM {
+        const x: BoatListVM = {
+            id: response.id,
+            description: response.description,
+            registryNo: response.registryNo,
+            loa: response.loa,
+            beam: response.beam,
+            isAthenian: response.isAthenian,
+            isFishingBoat: response.isFishingBoat,
+            isActive: response.isActive
+        }
+        return x
+    }
+
     private navigateToRecord(id: any): void {
         const dialogRef = this.dialog.open(BoatFormDialogComponent, {
             data: id,
@@ -200,6 +205,10 @@ export class BoatListComponent {
         })
     }
 
+    private removeFromArray(id: number): void {
+        this.records = this.records.filter(record => record.id != id);
+    }
+
     private showSnackbar(message: string, type: string): void {
         this.snackbarService.open(message, type)
     }
@@ -215,6 +224,7 @@ export class BoatListComponent {
     private updateList(response: BoatReadDto) {
         const x = this.records.findIndex(({ id }) => id == response.id)
         if (x != null) {
+            this.records[x].id = response.id
             this.records[x].isActive = response.isActive
             this.records[x].description = response.description
             this.records[x].registryNo = response.registryNo
@@ -225,44 +235,6 @@ export class BoatListComponent {
         }
     }
 
-    private removeFromArray(id: number): void {
-        this.records = this.records.filter(record => record.id != id);
-    }
-
     //#endregion
-
-    public gotoTop(): void {
-        setTimeout(() => {
-            this.table.scrollToVirtualIndex(0);
-            const allRows = document.querySelectorAll('.p-highlight')
-            allRows.forEach(row => {
-                row.classList.remove('p-highlight')
-            })
-            setTimeout(() => {
-                const x = document.getElementsByTagName('tr')[2]
-                if (x != null) {
-                    x.classList.add('p-highlight')
-                }
-            }, 100)
-        }, 100)
-    }
-
-    private clearHighlightedRows(): void {
-        setTimeout(() => {
-            const allRows = document.querySelectorAll('.p-highlight')
-            allRows.forEach(row => {
-                row.classList.remove('p-highlight')
-            })
-        }, 100)
-    }
-
-    private highlightFirstRow(): void {
-        setTimeout(() => {
-            const x = document.getElementsByTagName('tr')[2]
-            if (x != null) {
-                x.classList.add('p-highlight')
-            }
-        }, 100)
-    }
 
 }

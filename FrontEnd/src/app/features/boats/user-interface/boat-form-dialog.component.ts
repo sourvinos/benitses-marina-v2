@@ -222,7 +222,13 @@ export class BoatFormDialogComponent {
                 if (document.getElementsByClassName('cdk-overlay-pane').length === 1) {
                     this.buttonClickService.clickOnButton(event, 'save')
                 }
-            }
+            },
+            'ctrl.d': (event: KeyboardEvent) => {
+                event.preventDefault()
+                if (document.getElementsByClassName('cdk-overlay-pane').length === 1) {
+                    this.buttonClickService.clickOnButton(event, 'delete')
+                }
+            },
         }, {
             priority: 1,
             inputs: true

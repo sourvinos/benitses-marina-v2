@@ -133,7 +133,7 @@
                 <mat-icon *ngIf="!isAdmin() || getApiStatus()" class=" material-icons-outlined">lock</mat-icon>
                 <span>{{ getLabel("deleteButton") | uppercase }}</span>
             </button>
-            <button (click)="onSave()" [disabled]="!isAdmin() || !form.valid || getApiStatus()" class="primary" id="save" mat-flat-button>
+            <button (click)="onSave()" [disabled]="!isAdmin() || !form.valid || getApiStatus()" [mat-dialog-close]="form.value" class="primary" id="save" mat-flat-button>
                 <mat-icon *ngIf="!isAdmin() || !form.valid || getApiStatus()" class=" material-icons-outlined">lock</mat-icon>
                 <span>{{ getLabel("saveButton") | uppercase }}</span>
             </button>

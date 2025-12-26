@@ -54,6 +54,15 @@ export class HelperService {
         }, 1000)
     }
 
+    public clearHighlightedRows(): void {
+        setTimeout(() => {
+            const allRows = document.querySelectorAll('.p-highlight')
+            allRows.forEach(row => {
+                row.classList.remove('p-highlight')
+            })
+        }, 100)
+    }
+
     public clearInvisibleFieldsAndRestoreVisibility(form: FormGroup<any>, fields: string[]): void {
         setTimeout(() => {
             this.clearInvisibleField(form, fields)
@@ -189,6 +198,15 @@ export class HelperService {
         }, {})))
         distinctRecords.sort((a, b) => (a[orderField] > b[orderField]) ? 1 : -1)
         return distinctRecords
+    }
+
+    public highlightFirstRow(): void {
+        setTimeout(() => {
+            const x = document.getElementsByTagName('tr')[2]
+            if (x != null) {
+                x.classList.add('p-highlight')
+            }
+        }, 100)
     }
 
     public highlightRow(id: any): void {

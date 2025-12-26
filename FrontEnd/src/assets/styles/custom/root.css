@@ -178,10 +178,17 @@ p {
     color: #dd678e;
 }
 
+.snackbar-success * {
+    color: #ffffff !important;
+    background-color: #41bf64;
+}
+
 .snackbar-info * {
-    background-color: #8fbc8f;
+    color: #ffffff !important;
+    background-color: #117cd8;
 }
 
 .snackbar-delete * {
-    background-color: #dd678e;
+    color: #ffffff !important;
+    background-color: #e23151;
 }

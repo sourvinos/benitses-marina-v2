@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 // Material
 import { DateAdapter, MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MAT_RIPPLE_GLOBAL_OPTIONS } from '@angular/material/core'
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar'
 import { MatAutocompleteModule } from '@angular/material/autocomplete'
 import { MatButtonModule } from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card'
@@ -19,7 +20,6 @@ import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatSliderModule } from '@angular/material/slider'
 import { MatTabsModule } from '@angular/material/tabs'
 import { MatTooltipModule } from '@angular/material/tooltip'
-import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar'
 
 @NgModule({
     exports: [

@@ -15,9 +15,9 @@ import { MetadataPanelComponent } from '../components/metadata-panel/metadata-pa
 import { ModalDialogComponent } from '../components/modal-dialog/modal-dialog.component'
 import { PrimeNgModule } from './primeng.module'
 import { SafeStylePipe } from '../pipes/safe-style.pipe'
+import { SnackbarComponent } from '../components/snackbar/snackbar.component'
 import { TableTotalFilteredRecordsComponent } from '../components/table-total-filtered-records/table-total-filtered-records.component'
 import { ThemeSelectorComponent } from '../components/theme-selector/theme-selector.component'
-import { SnackbarComponent } from '../components/snackbar/snackbar.component'
 
 @NgModule({
     declarations: [
