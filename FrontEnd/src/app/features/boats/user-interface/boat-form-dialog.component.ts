@@ -73,7 +73,7 @@ export class BoatFormDialogComponent {
 
     //#region variables
 
-    @ViewChild('tabGroup') private tabGroup: MatTabGroup;
+    @ViewChild('tabGroup') private tabGroup: MatTabGroup
 
     private isApiBusy = false
     private unlisten: Unlisten
@@ -160,7 +160,7 @@ export class BoatFormDialogComponent {
                 this.boatHttpService.delete(this.form.value.id).subscribe({
                     complete: () => {
                         this.deleteFromBrowserStorage()
-                        this.closeForm()
+                        this.closeForm(true)
                         this.setApiBusyStatus(false)
                     },
                     error: (errorFromInterceptor) => {
@@ -233,8 +233,12 @@ export class BoatFormDialogComponent {
         this.helperService.addTabIndexToInput(this.elementRef, this.renderer)
     }
 
-    private closeForm() {
-        this.dialogRef.close(this.form.value)
+    private closeForm(isDeleted: boolean) {
+        if (isDeleted) {
+            this.dialogRef.close(this.form.value.id)
+        } else {
+            this.dialogRef.close(this.form.value)
+        }
     }
 
     private deleteFromBrowserStorage() {
@@ -341,7 +345,7 @@ export class BoatFormDialogComponent {
             this.boatHttpService.save(x).subscribe({
                 next: (response) => {
                     if (response.code == 200) {
-                        this.closeForm()
+                        this.closeForm(false)
                         resolve(response)
                     }
                 },

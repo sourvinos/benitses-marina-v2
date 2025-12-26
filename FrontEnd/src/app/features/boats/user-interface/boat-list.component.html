@@ -1,10 +1,12 @@
 <div id="list-wrapper">
+
+    <button (click)="gotoTop()">Los!</button>
     <div id="content">
         <div id="header">
             <home-button-and-title [featureIcon]="featureIcon" [feature]="feature" [icon]="icon" [parentUrl]="parentUrl"></home-button-and-title>
         </div>
         <div id="table-wrapper">
-            <p-table #table (onFilter)="onFilterRecords($event)" [(selection)]="selectedRecords" [scrollable]="true" [value]="records" [virtualScrollItemSize]="32" [virtualScroll]="true" dataKey="id" scrollHeight="flex" selectionMode="multiple" sortMode="multiple" stateKey="boatList-filters" stateStorage="session">
+            <p-table #table (onFilter)="onFilterRecords($event)" [(selection)]="selectedRecords" [scrollable]="true" [value]="records" [virtualScrollItemSize]="32" [virtualScroll]="true" dataKey="id" scrollHeight="flex" selectionMode="multiple" sortMode="multiple" stateKey="boatList-filters" stateStorage="session" id="myTable">
                 <ng-template pTemplate="header">
                     <tr>
                         <th class="no-border-bottom width-3" pSortableColumn="isActive">{{ getLabel("headerIsActive") }}</th>

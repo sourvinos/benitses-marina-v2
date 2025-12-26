@@ -1,5 +1,5 @@
-import { FormGroup } from '@angular/forms'
 import { ElementRef, Injectable, Renderer2 } from '@angular/core'
+import { FormGroup } from '@angular/forms'
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete'
 import { Observable, Subject, defer, finalize } from 'rxjs'
 import { Router } from '@angular/router'
@@ -208,7 +208,7 @@ export class HelperService {
             if (x != null) {
                 x.classList.add('p-highlight')
             }
-        }, 1000)
+        }, 500)
     }
 
     public isNumberNegative(number: number): string {

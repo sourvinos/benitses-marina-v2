@@ -5,5 +5,8 @@ export interface BoatListVM {
     loa: string
     beam: string
     registryNo: string
+    isAthenian: boolean
+    isFishingBoat: boolean
+    isActive: boolean
 
 }

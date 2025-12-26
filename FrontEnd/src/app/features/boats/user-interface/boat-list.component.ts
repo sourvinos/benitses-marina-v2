@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router'
-import { Component, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core'
+import { Component, ViewChild } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
 import { Table } from 'primeng/table'
 // Custom
@@ -15,6 +15,8 @@ import { MessageLabelService } from 'src/app/shared/services/message-label.servi
 import { MessageSnackbarService } from 'src/app/shared/services/message.snackbar.service'
 import { SessionStorageService } from 'src/app/shared/services/session-storage.service'
 import { SnackbarService } from 'src/app/shared/services/snackbar.service'
+import { BoatReadDto } from '../classes/dtos/boat-read-dto'
+import { BoatWriteDto } from '../classes/dtos/boat-write-dto';
 
 @Component({
     selector: 'boat-list',
@@ -26,6 +28,7 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service'
 export class BoatListComponent {
 
     //#region variables
+
     @ViewChild('table') table: Table
 
     private virtualElement: any
@@ -45,30 +48,7 @@ export class BoatListComponent {
 
     ngOnInit(): void {
         this.loadRecords()
-        setTimeout(() => {
-            this.onResetTableFilters()
-            this.dexieService.getLast('boats').then(response => {
-                const x = document.getElementById(response.id)
-                // const z = x.getAttribute('data')
-                // this.table.scrollToVirtualIndex(100)
-                // this.table.scrollTo({
-                //     top: x.getAttribute('data'),
-                //     left: 0,
-                //     behavior: 'smooth'
-                // })
-                // if (x != null) {
-                //     x.classList.add('p-highlight')
-                // }
-            })
-        }, 2000)
-    }
-
-    ngAfterViewInit(): void {
-        setTimeout(() => {
-            this.getVirtualElement()
-            this.scrollToSavedPosition()
-            this.hightlightSavedRow()
-        }, 500)
+        this.getVirtualElement()
     }
 
     ngOnDestroy(): void {
@@ -122,15 +102,36 @@ export class BoatListComponent {
         })
         dialogRef.afterClosed().subscribe((response) => {
             if (response) {
-                this.dexieService.getAll('boats').then((response) => {
-                    this.populateList(response)
-                    this.scrollToNewRow()
-                    // this.hightlightSavedRow()
+                this.addRecord(response).then(() => {
+                    this.gotoTop()
+                    this.clearHighlightedRows()
+                    this.highlightFirstRow()
                     this.showSnackbar(this.messageSnackbarService.recordCreated(), 'snackbar-info')
                 })
             }
         })
+    }
 
+    private addRecord(response: any): Promise<any> {
+        const promise = new Promise((resolve) => {
+            this.records.unshift(this.mapResponse(response))
+            resolve(this.records)
+        })
+        return promise
+    }
+
+    private mapResponse(response: BoatWriteDto): BoatListVM {
+        const x: BoatListVM = {
+            id: response.id,
+            description: response.description,
+            registryNo: response.registryNo,
+            loa: response.loa,
+            beam: response.beam,
+            isAthenian: response.isAthenian,
+            isFishingBoat: response.isFishingBoat,
+            isActive: response.isActive
+        }
+        return x
     }
 
     public onResetTableFilters(): void {
@@ -150,7 +151,9 @@ export class BoatListComponent {
     }
 
     private getVirtualElement(): void {
-        this.virtualElement = document.getElementsByClassName('p-scroller-inline')[0]
+        setTimeout(() => {
+            this.virtualElement = document.getElementsByClassName('p-scroller-inline')[0]
+        }, 1000)
     }
 
     private goBack(): void {
@@ -183,33 +186,18 @@ export class BoatListComponent {
             height: '587px',
             width: '900px'
         })
-        dialogRef.afterClosed().subscribe((response) => {
-            if (response) {
-                // const x = this.records.findIndex(response.id)
-                // this.records[response.id] = { ...response };
-                // this.scrollToSavedPosition()
-                // this.hightlightSavedRow()
-                this.showSnackbar(this.messageSnackbarService.recordUpdated(), 'snackbar-info')
+        dialogRef.afterClosed().subscribe((response: BoatReadDto) => {
+            if (response != undefined) {
+                if (typeof response == 'object') {
+                    this.updateList(response)
+                    this.hightlightSavedRow()
+                    this.showSnackbar(this.messageSnackbarService.recordUpdated(), 'snackbar-info')
+                } else {
+                    this.removeFromArray(response)
+                    this.showSnackbar(this.messageSnackbarService.recordDeleted(), 'snackbar-delete')
+                }
             }
         })
-    }
-
-    private populateList(response: any) {
-        this.records = response
-    }
-
-    private scrollToNewRow(): void {
-        this.dexieService.getLast('boats').then(response => {
-            console.log(response)
-            let rows = document.getElementsByTagName('table')[0].rows
-            let elementToScrollTo = rows[100];
-            elementToScrollTo?.scrollIntoView({ behavior: 'smooth' })
-        })
-        // this.helperService.scrollToSavedPosition(this.virtualElement, this.feature)
-    }
-
-    private scrollToSavedPosition(): void {
-        this.helperService.scrollToSavedPosition(this.virtualElement, this.feature)
     }
 
     private showSnackbar(message: string, type: string): void {
@@ -224,6 +212,57 @@ export class BoatListComponent {
         this.sessionStorageService.saveItem(this.feature + '-scrollTop', this.virtualElement.scrollTop)
     }
 
+    private updateList(response: BoatReadDto) {
+        const x = this.records.findIndex(({ id }) => id == response.id)
+        if (x != null) {
+            this.records[x].isActive = response.isActive
+            this.records[x].description = response.description
+            this.records[x].registryNo = response.registryNo
+            this.records[x].loa = response.loa
+            this.records[x].beam = response.beam
+            this.records[x].isAthenian = response.isAthenian
+            this.records[x].isFishingBoat = response.isFishingBoat
+        }
+    }
+
+    private removeFromArray(id: number): void {
+        this.records = this.records.filter(record => record.id != id);
+    }
+
     //#endregion
+
+    public gotoTop(): void {
+        setTimeout(() => {
+            this.table.scrollToVirtualIndex(0);
+            const allRows = document.querySelectorAll('.p-highlight')
+            allRows.forEach(row => {
+                row.classList.remove('p-highlight')
+            })
+            setTimeout(() => {
+                const x = document.getElementsByTagName('tr')[2]
+                if (x != null) {
+                    x.classList.add('p-highlight')
+                }
+            }, 100)
+        }, 100)
+    }
+
+    private clearHighlightedRows(): void {
+        setTimeout(() => {
+            const allRows = document.querySelectorAll('.p-highlight')
+            allRows.forEach(row => {
+                row.classList.remove('p-highlight')
+            })
+        }, 100)
+    }
+
+    private highlightFirstRow(): void {
+        setTimeout(() => {
+            const x = document.getElementsByTagName('tr')[2]
+            if (x != null) {
+                x.classList.add('p-highlight')
+            }
+        }, 100)
+    }
 
 }

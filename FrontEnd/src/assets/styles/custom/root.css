@@ -142,6 +142,10 @@ p {
     margin: 0;
 }
 
+.mat-mdc-dialog-container {
+    --mdc-dialog-container-shape: 0;
+}
+
 .mat-drawer-inner-container {
     align-items: center !important;
     display: flex !important;
