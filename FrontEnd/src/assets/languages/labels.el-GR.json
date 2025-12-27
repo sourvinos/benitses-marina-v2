@@ -329,6 +329,10 @@
                 "description": "Τύπος"
             },
             {
+                "id": "nationality",
+                "description": "Εθνικότητα"
+            },
+            {
                 "id": "boatUsage",
                 "description": "Χρήση"
             },
@@ -343,10 +347,6 @@
             {
                 "id": "draft",
                 "description": "Βύθισμα"
-            },
-            {
-                "id": "flag",
-                "description": "Σημαία"
             },
             {
                 "id": "registryPort",

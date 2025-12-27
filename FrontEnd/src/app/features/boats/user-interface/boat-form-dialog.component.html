@@ -4,13 +4,14 @@
     </div>
     <div id="dialog-content">
         <form [formGroup]="form" id="form">
-            <mat-tab-group (focusChange)="tabFocusChange()" mat-stretch-tabs="false" #tabGroup [selectedIndex]="selectedIndex">
+            <mat-tab-group (focusChange)="tabFocusChange()" mat-stretch-tabs="false" #tabGroup [selectedIndex]="selectedTabIndex">
                 <mat-tab label="{{ getLabel('tab1') }}">
                     <div class="group-input-field">
                         <mat-form-field>
                             <mat-label>{{ getLabel('description') }}</mat-label>
                             <input [inputTabStop]="input" class="tabable" formControlName="description" matInput>
                             <mat-error *ngIf="description.hasError('required')">{{ getHint("required") }}</mat-error>
+                            <mat-error *ngIf="description.hasError('maxlength')">{{ getHint("maxLength", description.errors.maxlength.requiredLength) }}</mat-error>
                         </mat-form-field>
                         <mat-form-field>
                             <mat-label>{{ getLabel('hullType') }}</mat-label>
@@ -27,7 +28,7 @@
                             <mat-label>{{ getLabel('boatUsage') }}</mat-label>
                             <input #inputAutoComplete #triggerBoatUsage="matAutocompleteTrigger" (keydown)="enableOrDisableAutoComplete($event)" (keyup)="checkForEmptyAutoComplete($event)" [inputTabStop]="input" [matAutocompleteDisabled]="isAutoCompleteDisabled" [matAutocomplete]="boatUsages" class="tabable" formControlName="boatUsage" matInput>
                             <div matSuffix style="display:flex">
-                                <button (click)="openOrCloseAutoComplete(triggerHullType, 'boatUsage')" mat-icon-button type="button">
+                                <button (click)="openOrCloseAutoComplete(triggerBoatUsage, 'boatUsage')" mat-icon-button type="button">
                                     <mat-icon class="input-suffix material-icons-outlined">expand_more</mat-icon>
                                 </button>
                             </div>
@@ -38,36 +39,49 @@
                     <div class="group-input-field">
                         <mat-form-field>
                             <mat-label>{{ getLabel('loa') }}</mat-label>
-                            <input [inputTabStop]="input" class="tabable" formControlName="loa" matInput>
+                            <input [inputTabStop]="input" class="tabable" formControlName="loa" matInput type="number">
                             <mat-error *ngIf="loa.hasError('required')">{{ getHint("required") }}</mat-error>
+                            <mat-error *ngIf="loa.hasError('min') || loa.hasError('max')">{{ getHint("outOfBounds") }}</mat-error>
                             <mat-error *ngIf="loa.hasError('maxlength')">{{ getHint("maxLength", loa.errors.maxlength.requiredLength) }}</mat-error>
                         </mat-form-field>
                         <mat-form-field>
                             <mat-label>{{ getLabel('beam') }}</mat-label>
-                            <input [inputTabStop]="input" class="tabable" formControlName="beam" matInput>
+                            <input [inputTabStop]="input" class="tabable" formControlName="beam" matInput type="number">
                             <mat-error *ngIf="beam.hasError('required')">{{ getHint("required") }}</mat-error>
+                            <mat-error *ngIf="beam.hasError('min') || beam.hasError('max')">{{ getHint("outOfBounds") }}</mat-error>
+                            <mat-error *ngIf="beam.hasError('maxlength')">{{ getHint("maxLength", beam.errors.maxlength.requiredLength) }}</mat-error>
                         </mat-form-field>
                         <mat-form-field>
                             <mat-label>{{ getLabel('draft') }}</mat-label>
-                            <input [inputTabStop]="input" class="tabable" formControlName="draft" matInput>
+                            <input [inputTabStop]="input" class="tabable" formControlName="draft" matInput type="number">
                             <mat-error *ngIf="draft.hasError('required')">{{ getHint("required") }}</mat-error>
+                            <mat-error *ngIf="draft.hasError('min') || draft.hasError('max')">{{ getHint("outOfBounds") }}</mat-error>
+                            <mat-error *ngIf="draft.hasError('maxlength')">{{ getHint("maxLength", draft.errors.maxlength.requiredLength) }}</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="group-input-field">
                         <mat-form-field>
-                            <mat-label>{{ getLabel('flag') }}</mat-label>
-                            <input [inputTabStop]="input" class="tabable" formControlName="flag" matInput>
-                            <mat-error *ngIf="flag.hasError('required')">{{ getHint("required") }}</mat-error>
+                            <mat-label>{{ getLabel('nationality') }}</mat-label>
+                            <input #inputAutoComplete #triggerNationality="matAutocompleteTrigger" (keydown)="enableOrDisableAutoComplete($event)" (keyup)="checkForEmptyAutoComplete($event)" [inputTabStop]="input" [matAutocompleteDisabled]="isAutoCompleteDisabled" [matAutocomplete]="nationalities" class="tabable" formControlName="nationality" matInput>
+                            <div matSuffix style="display:flex">
+                                <button (click)="openOrCloseAutoComplete(triggerNationality, 'nationality')" mat-icon-button type="button">
+                                    <mat-icon class="input-suffix material-icons-outlined">expand_more</mat-icon>
+                                </button>
+                            </div>
+                            <mat-error *ngIf="nationality.hasError('required')">{{ getHint("required") }}</mat-error>
+                            <mat-error *ngIf="!nationality.hasError('required') && nationality.hasError('incorrect')">{{ getHint("invalid") }}</mat-error>
                         </mat-form-field>
                         <mat-form-field>
                             <mat-label>{{ getLabel('registryPort') }}</mat-label>
                             <input [inputTabStop]="input" class="tabable" formControlName="registryPort" matInput>
                             <mat-error *ngIf="registryPort.hasError('required')">{{ getHint("required") }}</mat-error>
+                            <mat-error *ngIf="registryPort.hasError('maxlength')">{{ getHint("maxLength", registryPort.errors.maxlength.requiredLength) }}</mat-error>
                         </mat-form-field>
                         <mat-form-field>
                             <mat-label>{{ getLabel('registryNo') }}</mat-label>
                             <input [inputTabStop]="input" class="tabable" formControlName="registryNo" matInput>
                             <mat-error *ngIf="registryNo.hasError('required')">{{ getHint("required") }}</mat-error>
+                            <mat-error *ngIf="registryNo.hasError('maxlength')">{{ getHint("maxLength", registryNo.errors.maxlength.requiredLength) }}</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
@@ -89,10 +103,12 @@
                         <mat-form-field>
                             <mat-label>{{ getLabel('insuranceCompany') }}</mat-label>
                             <input [inputTabStop]="input" class="tabable" formControlName="company" matInput>
+                            <mat-error *ngIf="insuranceCompany.hasError('maxlength')">{{ getHint("maxLength", insuranceCompany.errors.maxlength.requiredLength) }}</mat-error>
                         </mat-form-field>
                         <mat-form-field>
                             <mat-label>{{ getLabel('insuranceContractNo') }}</mat-label>
                             <input [inputTabStop]="input" class="tabable" formControlName="contractNo" matInput>
+                            <mat-error *ngIf="contractNo.hasError('maxlength')">{{ getHint("maxLength", contractNo.errors.maxlength.requiredLength) }}</mat-error>
                         </mat-form-field>
                         <mat-form-field>
                             <mat-label>{{ getLabel('expireDate') }}</mat-label>
@@ -109,10 +125,12 @@
                             <mat-form-field>
                                 <mat-label>{{ getLabel('issuingAuthority') }}</mat-label>
                                 <input [inputTabStop]="input" class="tabable" formControlName="issuingAuthority" matInput>
+                                <mat-error *ngIf="issuingAuthority.hasError('maxlength')">{{ getHint("maxLength", issuingAuthority.errors.maxlength.requiredLength) }}</mat-error>
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>{{ getLabel('licenceNo') }}</mat-label>
                                 <input [inputTabStop]="input" class="tabable" formControlName="licenceNo" matInput>
+                                <mat-error *ngIf="licenceNo.hasError('maxlength')">{{ getHint("maxLength", licenceNo.errors.maxlength.requiredLength) }}</mat-error>
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>{{ getLabel('expireDate') }}</mat-label>
@@ -129,12 +147,12 @@
     </div>
     <div id="dialog-footer">
         <div id="align-right">
-            <button *ngIf="form.value.id !== 0" (click)="onDelete()" [disabled]="!isAdmin() || getApiStatus()" class="delete" id="delete" mat-flat-button>
-                <mat-icon *ngIf="!isAdmin() || getApiStatus()" class=" material-icons-outlined">lock</mat-icon>
+            <button *ngIf="form.value.id !== 0" (click)="onDelete()" [disabled]="!isAdmin() || getApiBusyStatus()" class="delete" id="delete" mat-flat-button>
+                <mat-icon *ngIf="!isAdmin() || getApiBusyStatus()" class=" material-icons-outlined">lock</mat-icon>
                 <span>{{ getLabel("deleteButton") | uppercase }}</span>
             </button>
-            <button (click)="onSave()" [disabled]="!isAdmin() || !form.valid || getApiStatus()" [mat-dialog-close]="form.value" class="primary" id="save" mat-flat-button>
-                <mat-icon *ngIf="!isAdmin() || !form.valid || getApiStatus()" class=" material-icons-outlined">lock</mat-icon>
+            <button (click)="onSave()" [disabled]="!isAdmin() || !form.valid || getApiBusyStatus()" class="primary" id="save" mat-flat-button>
+                <mat-icon *ngIf="!isAdmin() || !form.valid || getApiBusyStatus()" class=" material-icons-outlined">lock</mat-icon>
                 <span>{{ getLabel("saveButton") | uppercase }}</span>
             </button>
         </div>
@@ -149,6 +167,12 @@
 
 <mat-autocomplete #boatUsages="matAutocomplete" autoActiveFirstOption [displayWith]="autocompleteFields.bind(this, 'description')">
     <mat-option *ngFor="let option of dropdownBoatUsages | async" [value]="option">
+        {{ option.description }}
+    </mat-option>
+</mat-autocomplete>
+
+<mat-autocomplete #nationalities="matAutocomplete" autoActiveFirstOption [displayWith]="autocompleteFields.bind(this, 'description')">
+    <mat-option *ngFor="let option of dropdownNationalities | async" [value]="option">
         {{ option.description }}
     </mat-option>
 </mat-autocomplete>

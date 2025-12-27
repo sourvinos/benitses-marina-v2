@@ -12,6 +12,7 @@ import { DexieService } from './dexie.service'
 import { DotNetVersion } from '../classes/dotnet-version'
 import { HttpDataService } from './http-data.service'
 import { HullTypeHttpService } from 'src/app/features/hullTypes/classes/services/hullType-http.service'
+import { NationalityHttpService } from 'src/app/features/nationalities/classes/services/nationality-http.service'
 import { ResetPasswordViewModel } from 'src/app/features/users/classes/view-models/reset-password-view-model'
 import { SessionStorageService } from './session-storage.service'
 import { TokenRequest } from '../classes/token-request'
@@ -30,7 +31,7 @@ export class AccountService extends HttpDataService {
 
     //#endregion
 
-    constructor(httpClient: HttpClient, private boatHttpService: BoatHttpService, private boatUsageHttpService: BoatUsageHttpService, private cryptoService: CryptoService, private dexieService: DexieService, private hullTypeHttpService: HullTypeHttpService, private ngZone: NgZone, private router: Router, private sessionStorageService: SessionStorageService) {
+    constructor(httpClient: HttpClient, private boatHttpService: BoatHttpService, private boatUsageHttpService: BoatUsageHttpService, private cryptoService: CryptoService, private dexieService: DexieService, private hullTypeHttpService: HullTypeHttpService, private nationalityHttpService: NationalityHttpService, private ngZone: NgZone, private router: Router, private sessionStorageService: SessionStorageService) {
         super(httpClient, environment.apiUrl)
     }
 
@@ -119,6 +120,7 @@ export class AccountService extends HttpDataService {
         this.dexieService.populateTable('boatUsages', this.boatUsageHttpService)
         this.dexieService.populateTable('boats', this.boatHttpService)
         this.dexieService.populateTable('hullTypes', this.hullTypeHttpService)
+        this.dexieService.populateTable('nationalities', this.nationalityHttpService)
     }
 
     private setDotNetVersion(response: any): void {

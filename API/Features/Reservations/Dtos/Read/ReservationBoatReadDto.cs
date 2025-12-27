@@ -8,8 +8,8 @@ namespace API.Features.Reservations {
         public string Description { get; set; }
         public SimpleEntity HullType { get; set; }
         public SimpleEntity Usage { get; set; }
+        public SimpleEntity Nationality { get; set; }
         public ReservationBoatInsuranceReadDto Insurance { get; set; }
-        public string Flag { get; set; }
         public decimal Loa { get; set; }
         public decimal Beam { get; set; }
         public decimal Draft { get; set; }

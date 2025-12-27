@@ -7,10 +7,10 @@ namespace API.Features.Boats.Admin {
         public int Id { get; set; }
         public int BoatUsageId { get; set; }
         public int HullTypeId { get; set; }
+        public int NationalityId { get; set; }
         public BoatFishingLicenceWriteDto FishingLicence { get; set; }
         public BoatInsuranceWriteDto Insurance { get; set; }
         public string Description { get; set; }
-        public string Flag { get; set; }
         public decimal Loa { get; set; }
         public decimal Beam { get; set; }
         public decimal Draft { get; set; }

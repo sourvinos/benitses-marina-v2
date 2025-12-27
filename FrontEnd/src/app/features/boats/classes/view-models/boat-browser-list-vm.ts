@@ -6,11 +6,11 @@ export interface BoatBrowserListVM {
 
     beam: string
     boatUsage: SimpleEntity
+    hullType: SimpleEntity
+    nationality: SimpleEntity
     description: string
     draft: string
     fishingLicence: BoatReadFishingLicenceDto
-    flag: string
-    hullType: SimpleEntity
     id: number
     insurance: BoatReadInsuranceDto
     isActive: boolean

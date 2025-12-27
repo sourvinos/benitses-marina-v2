@@ -37,27 +37,27 @@ export class BoatFormDialogComponent {
 
     form = this.formBuilder.group({
         id: 0,
-        description: ['', [Validators.required]],
+        description: ['', [Validators.required, Validators.maxLength(100)]],
         boatUsage: ['', [Validators.required, ValidationService.RequireAutocomplete]],
         hullType: ['', [Validators.required, ValidationService.RequireAutocomplete]],
-        loa: ['', [Validators.required, Validators.maxLength(2)]],
-        beam: ['', [Validators.required, Validators.maxLength(2)]],
-        draft: ['', [Validators.required, Validators.maxLength(2)]],
-        flag: ['', [Validators.required]],
-        registryPort: ['', [Validators.required]],
-        registryNo: ['', [Validators.required]],
+        nationality: ['', [Validators.required, ValidationService.RequireAutocomplete]],
+        loa: ['', [Validators.required, Validators.min(0), Validators.max(99.99)]],
+        beam: ['', [Validators.required, Validators.min(0), Validators.max(9.99)]],
+        draft: ['', [Validators.required, Validators.min(0), Validators.max(9.99)]],
+        registryPort: ['', [Validators.maxLength(50)]],
+        registryNo: ['', [Validators.maxLength(20)]],
         insurance: this.formBuilder.group({
             id: 0,
             boatId: 0,
-            company: '',
-            contractNo: '',
+            company: ['', [Validators.maxLength(100)]],
+            contractNo: ['', [Validators.maxLength(50)]],
             expireDate: ''
         }),
         fishingLicence: this.formBuilder.group({
             id: 0,
             boatId: 0,
-            issuingAuthority: '',
-            licenceNo: '',
+            issuingAuthority: ['', [Validators.maxLength(100)]],
+            licenceNo: ['', [Validators.maxLength(50)]],
             expireDate: ''
         }),
         isAthenian: false,
@@ -81,15 +81,16 @@ export class BoatFormDialogComponent {
     public featureIcon = 'boat'
     public icon = 'arrow_back'
     public input: InputTabStopDirective
-    public selectedIndex = 0
+    public selectedTabIndex = 0
 
     //#endregion
 
     //#region autocompletes
 
     public isAutoCompleteDisabled = true
-    public dropdownHullTypes: Observable<SimpleEntity[]>
     public dropdownBoatUsages: Observable<SimpleEntity[]>
+    public dropdownHullTypes: Observable<SimpleEntity[]>
+    public dropdownNationalities: Observable<SimpleEntity[]>
 
     //#endregion
 
@@ -129,7 +130,7 @@ export class BoatFormDialogComponent {
         this.isAutoCompleteDisabled = this.helperService.enableOrDisableAutoComplete(event)
     }
 
-    public getApiStatus(): boolean {
+    public getApiBusyStatus(): boolean {
         return this.isApiBusy
     }
 
@@ -160,7 +161,7 @@ export class BoatFormDialogComponent {
                 this.boatHttpService.delete(this.form.value.id).subscribe({
                     complete: () => {
                         this.deleteFromBrowserStorage()
-                        this.closeForm(true)
+                        this.closeForm(null, true)
                         this.setApiBusyStatus(false)
                     },
                     error: (errorFromInterceptor) => {
@@ -176,6 +177,9 @@ export class BoatFormDialogComponent {
         this.setApiBusyStatus(true)
         this.saveRecordToApi(this.flattenForm()).then((response) => {
             this.updateBrowserRecordFromApi(response.body)
+            this.form.patchValue({
+                'id': response.body.id
+            })
             this.setApiBusyStatus(false)
         })
     }
@@ -198,7 +202,7 @@ export class BoatFormDialogComponent {
             'pageUp': (event: KeyboardEvent) => {
                 event.preventDefault()
                 if (document.getElementsByClassName('cdk-overlay-pane').length === 1) {
-                    this.selectedIndex > 0 ? this.selectedIndex -= 1 : this.selectedIndex = this.tabGroup._tabs.length - 1
+                    this.selectedTabIndex > 0 ? this.selectedTabIndex -= 1 : this.selectedTabIndex = this.tabGroup._tabs.length - 1
                     this.addTabIndexToInput()
                     this.focusOnField()
                 }
@@ -206,31 +210,37 @@ export class BoatFormDialogComponent {
             'pageDown': (event: KeyboardEvent) => {
                 event.preventDefault()
                 if (document.getElementsByClassName('cdk-overlay-pane').length === 1) {
-                    this.selectedIndex < this.tabGroup._tabs.length - 1 ? this.selectedIndex += 1 : this.selectedIndex = 0
+                    this.selectedTabIndex < this.tabGroup._tabs.length - 1 ? this.selectedTabIndex += 1 : this.selectedTabIndex = 0
                     this.addTabIndexToInput()
                     this.focusOnField()
                 }
             },
             'ctrl.s': (event: KeyboardEvent) => {
                 event.preventDefault()
-                if (document.getElementsByClassName('cdk-overlay-pane').length === 1) {
+                if (document.getElementsByClassName('cdk-overlay-pane').length == 1) {
                     this.buttonClickService.clickOnButton(event, 'save')
                 }
             },
             'ctrl.σ': (event: KeyboardEvent) => {
                 event.preventDefault()
-                if (document.getElementsByClassName('cdk-overlay-pane').length === 1) {
+                if (document.getElementsByClassName('cdk-overlay-pane').length == 1) {
                     this.buttonClickService.clickOnButton(event, 'save')
                 }
             },
             'ctrl.d': (event: KeyboardEvent) => {
                 event.preventDefault()
-                if (document.getElementsByClassName('cdk-overlay-pane').length === 1) {
+                if (document.getElementsByClassName('cdk-overlay-pane').length == 1) {
                     this.buttonClickService.clickOnButton(event, 'delete')
                 }
             },
+            'ctrl.δ': (event: KeyboardEvent) => {
+                event.preventDefault()
+                if (document.getElementsByClassName('cdk-overlay-pane').length == 1) {
+                    this.buttonClickService.clickOnButton(event, 'delete')
+                }
+            }
         }, {
-            priority: 1,
+            priority: 2,
             inputs: true
         })
     }
@@ -239,10 +249,11 @@ export class BoatFormDialogComponent {
         this.helperService.addTabIndexToInput(this.elementRef, this.renderer)
     }
 
-    private closeForm(isDeleted: boolean) {
+    private closeForm(id: number, isDeleted: boolean) {
         if (isDeleted) {
             this.dialogRef.close(this.form.value.id)
         } else {
+            this.form.patchValue({ 'id': id })
             this.dialogRef.close(this.form.value)
         }
     }
@@ -257,6 +268,7 @@ export class BoatFormDialogComponent {
             description: this.form.value.description,
             boatUsageId: this.form.controls['boatUsage'].value['id'],
             hullTypeId: this.form.controls['hullType'].value['id'],
+            nationalityId: this.form.controls['nationality'].value['id'],
             insurance: {
                 id: this.form.value.insurance.id,
                 boatId: this.form.value.insurance.boatId,
@@ -271,7 +283,6 @@ export class BoatFormDialogComponent {
                 licenceNo: this.form.value.fishingLicence.licenceNo,
                 expireDate: this.form.value.fishingLicence.expireDate ? this.dateHelperService.formatDateToIso(new Date(this.form.value.fishingLicence.expireDate)) : null
             },
-            flag: this.form.value.flag,
             loa: this.form.value.loa,
             beam: this.form.value.beam,
             draft: this.form.value.draft,
@@ -299,6 +310,7 @@ export class BoatFormDialogComponent {
     private populateDropdowns(): void {
         this.populateDropdownFromDexieDB('hullTypes', 'dropdownHullTypes', 'hullType', 'description', 'description')
         this.populateDropdownFromDexieDB('boatUsages', 'dropdownBoatUsages', 'boatUsage', 'description', 'description')
+        this.populateDropdownFromDexieDB('nationalities', 'dropdownNationalities', 'nationality', 'description', 'description')
     }
 
     private populateDropdownFromDexieDB(dexieTable: string, filteredTable: string, formField: string, modelProperty: string, orderBy: string): void {
@@ -315,7 +327,7 @@ export class BoatFormDialogComponent {
                 description: response.body.description,
                 boatUsage: response.body.boatUsage,
                 hullType: response.body.hullType,
-                flag: response.body.flag,
+                nationality: response.body.nationality,
                 loa: response.body.loa,
                 beam: response.body.beam,
                 draft: response.body.draft,
@@ -351,7 +363,7 @@ export class BoatFormDialogComponent {
             this.boatHttpService.save(x).subscribe({
                 next: (response) => {
                     if (response.code == 200) {
-                        this.closeForm(false)
+                        this.closeForm(response.body.id, false)
                         resolve(response)
                     }
                 },
@@ -394,6 +406,10 @@ export class BoatFormDialogComponent {
         return this.form.get('hullType')
     }
 
+    get nationality(): AbstractControl {
+        return this.form.get('nationality')
+    }
+
     get loa(): AbstractControl {
         return this.form.get('loa')
     }
@@ -404,10 +420,6 @@ export class BoatFormDialogComponent {
 
     get draft(): AbstractControl {
         return this.form.get('draft')
-    }
-
-    get flag(): AbstractControl {
-        return this.form.get('flag')
     }
 
     get registryPort(): AbstractControl {

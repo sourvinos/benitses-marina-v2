@@ -16,6 +16,10 @@ namespace API.Features.Boats.Admin {
                     Id = boat.HullType.Id,
                     Description = boat.HullType.Description,
                 },
+                Nationality = new SimpleEntity {
+                    Id = boat.Nationality.Id,
+                    Description = boat.Nationality.Description,
+                },
                 Insurance = new BoatInsuranceReadDto {
                     Id = boat.Insurance.Id,
                     BoatId = boat.Insurance.BoatId,
@@ -31,7 +35,6 @@ namespace API.Features.Boats.Admin {
                     ExpireDate = boat.FishingLicence.ExpireDate != null ? DateHelpers.DateToISOString((System.DateTime)boat.FishingLicence.ExpireDate) : ""
                 },
                 Description = boat.Description,
-                Flag = boat.Flag,
                 Loa = boat.Loa,
                 Beam = boat.Beam,
                 Draft = boat.Draft,

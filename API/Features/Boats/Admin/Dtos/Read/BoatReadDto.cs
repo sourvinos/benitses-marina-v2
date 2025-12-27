@@ -8,8 +8,8 @@ namespace API.Features.Boats.Admin {
         public int Id { get; set; }
         public SimpleEntity BoatUsage { get; set; }
         public SimpleEntity HullType { get; set; }
+        public SimpleEntity Nationality { get; set; }
         public string Description { get; set; }
-        public string Flag { get; set; }
         public decimal Loa { get; set; }
         public decimal Beam { get; set; }
         public decimal Draft { get; set; }

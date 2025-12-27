@@ -11,6 +11,7 @@ export class DexieService extends Dexie {
             boatUsages: 'id, description',
             boats: 'id, description',
             hullTypes: 'id, description',
+            nationalities: 'id, description'
         })
         this.open()
     }

@@ -9,9 +9,9 @@ export interface BoatReadDto extends Metadata {
     description: string
     boatUsage: SimpleEntity
     hullType: SimpleEntity
+    nationality: SimpleEntity
     insurance: BoatReadInsuranceDto
     fishingLicence: BoatReadFishingLicenceDto
-    flag: string
     loa: string
     beam: string
     draft: string

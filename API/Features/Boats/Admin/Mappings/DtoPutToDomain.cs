@@ -9,6 +9,7 @@ namespace API.Features.Boats.Admin {
                 Id = boat.Id,
                 BoatUsageId = boat.BoatUsageId,
                 HullTypeId = boat.HullTypeId,
+                NationalityId = boat.NationalityId,
                 Description = boat.Description,
                 Insurance = new BoatInsurance {
                     Id = x.Insurance.Id,
@@ -24,7 +25,6 @@ namespace API.Features.Boats.Admin {
                     LicenceNo = boat.FishingLicence != null ? boat.FishingLicence.LicenceNo : "",
                     ExpireDate = boat.FishingLicence != null ? (boat.FishingLicence.ExpireDate != null ? DateHelpers.StringToDate(boat.FishingLicence.ExpireDate) : null) : null
                 },
-                Flag = boat.Flag,
                 Loa = boat.Loa,
                 Beam = boat.Beam,
                 Draft = boat.Draft,

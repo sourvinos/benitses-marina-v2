@@ -7,10 +7,11 @@ import { BoatFormDialogComponent } from './boat-form-dialog.component'
 import { BoatListVM } from '../classes/view-models/boat-list-vm'
 import { BoatReadDto } from '../classes/dtos/boat-read-dto'
 import { BoatWriteDto } from '../classes/dtos/boat-write-dto';
+import { ButtonClickService } from 'src/app/shared/services/button-click.service'
 import { CryptoService } from 'src/app/shared/services/crypto.service'
-import { DexieService } from 'src/app/shared/services/dexie.service'
 import { DialogService } from 'src/app/shared/services/modal-dialog.service'
 import { HelperService } from 'src/app/shared/services/helper.service'
+import { KeyboardShortcuts, Unlisten } from 'src/app/shared/services/keyboard-shortcuts.service'
 import { ListResolved } from 'src/app/shared/classes/list-resolved'
 import { MessageDialogService } from 'src/app/shared/services/message-dialog.service'
 import { MessageLabelService } from 'src/app/shared/services/message-label.service'
@@ -31,6 +32,7 @@ export class BoatListComponent {
 
     @ViewChild('table') table: Table
 
+    private unlisten: Unlisten
     private virtualElement: any
     public feature = 'boatList'
     public featureIcon = 'boat'
@@ -42,13 +44,15 @@ export class BoatListComponent {
 
     //#endregion
 
-    constructor(private activatedRoute: ActivatedRoute, private cryptoService: CryptoService, private dexieService: DexieService, private dialogService: DialogService, private helperService: HelperService, private messageDialogService: MessageDialogService, private messageLabelService: MessageLabelService, private messageSnackbarService: MessageSnackbarService, private router: Router, private sessionStorageService: SessionStorageService, private snackbarService: SnackbarService, public dialog: MatDialog) { }
+    constructor(private activatedRoute: ActivatedRoute, private buttonClickService: ButtonClickService, private cryptoService: CryptoService, private dialogService: DialogService, private helperService: HelperService, private keyboardShortcutsService: KeyboardShortcuts, private messageDialogService: MessageDialogService, private messageLabelService: MessageLabelService, private messageSnackbarService: MessageSnackbarService, private router: Router, private sessionStorageService: SessionStorageService, private snackbarService: SnackbarService, public dialog: MatDialog) { }
+
 
     //#region lifecycle hooks
 
     ngOnInit(): void {
         this.loadRecords()
         this.getVirtualElement()
+        this.addShortcuts()
     }
 
     ngOnDestroy(): void {
@@ -125,12 +129,21 @@ export class BoatListComponent {
     private addRecord(response: any): Promise<any> {
         const promise = new Promise((resolve) => {
             this.records.unshift(this.mapResponse(response))
-            this.dexieService.getLast('boats').then(response => {
-                this.records[0].id = response.id
-            })
             resolve(this.records)
         })
         return promise
+    }
+
+    private addShortcuts(): void {
+        this.unlisten = this.keyboardShortcutsService.listen({
+            'insert': (event: KeyboardEvent) => {
+                event.preventDefault()
+                this.buttonClickService.clickOnButton(event, 'new-record')
+            }
+        }, {
+            priority: 1,
+            inputs: true
+        })
     }
 
     private clearSessionStorage() {
@@ -194,7 +207,7 @@ export class BoatListComponent {
         dialogRef.afterClosed().subscribe((response: BoatReadDto) => {
             if (response != undefined) {
                 if (typeof response == 'object') {
-                    this.updateList(response)
+                    this.updateListAfterEdit(response)
                     this.hightlightSavedRow()
                     this.showSnackbar(this.messageSnackbarService.recordUpdated(), 'snackbar-info')
                 } else {
@@ -221,10 +234,9 @@ export class BoatListComponent {
         this.sessionStorageService.saveItem(this.feature + '-scrollTop', this.virtualElement.scrollTop)
     }
 
-    private updateList(response: BoatReadDto) {
+    private updateListAfterEdit(response: BoatReadDto) {
         const x = this.records.findIndex(({ id }) => id == response.id)
         if (x != null) {
-            this.records[x].id = response.id
             this.records[x].isActive = response.isActive
             this.records[x].description = response.description
             this.records[x].registryNo = response.registryNo

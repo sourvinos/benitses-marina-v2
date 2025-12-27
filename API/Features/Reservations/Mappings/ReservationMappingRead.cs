@@ -13,13 +13,17 @@ namespace API.Features.Reservations {
                 Boat = new ReservationBoatReadDto {
                     Id = reservation.Boat.Id,
                     Description = reservation.Boat.Description,
+                    HullType = new SimpleEntity {
+                        Id = reservation.Boat.HullType.Id,
+                        Description = reservation.Boat.HullType.Description
+                    },
                     Usage = new SimpleEntity {
                         Id = reservation.Boat.Usage.Id,
                         Description = reservation.Boat.Usage.Description
                     },
-                    HullType = new SimpleEntity {
-                        Id = reservation.Boat.HullType.Id,
-                        Description = reservation.Boat.HullType.Description
+                    Nationality = new SimpleEntity {
+                        Id = reservation.Boat.Usage.Id,
+                        Description = reservation.Boat.Usage.Description
                     },
                     Insurance = new ReservationBoatInsuranceReadDto {
                         Id = reservation.Boat.Insurance.Id,
@@ -29,7 +33,7 @@ namespace API.Features.Reservations {
                         ExpireDate = reservation.Boat.Insurance.ExpireDate != null ? DateHelpers.DateToISOString((DateTime)reservation.Boat.Insurance.ExpireDate) : "",
                         IsExpired = IsInsuranceExpired(reservation.Boat.Insurance.ExpireDate)
                     },
-                    Flag = reservation.Boat.Flag,
+                    
                     Loa = reservation.Boat.Loa,
                     Beam = reservation.Boat.Beam,
                     Draft = reservation.Boat.Draft,

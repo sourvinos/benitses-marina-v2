@@ -7,9 +7,9 @@ export interface BoatWriteDto {
     description: string
     boatUsageId: number,
     hullTypeId: number
+    nationalityId: number
     insurance: BoatWriteInsuranceDto
     fishingLicence: BoatWriteFishingLicenceDto
-    flag: string
     loa: string
     beam: string
     draft: string

@@ -18,6 +18,7 @@ namespace API.Features.Boats.Admin {
                 .AsNoTracking()
                 .Include(x => x.HullType)
                 .Include(x => x.Usage)
+                .Include(x => x.Nationality)
                 .OrderBy(x => x.Description);
             return BoatMappingDomainToListVM.DomainToListVM(boats);
         }
@@ -35,6 +36,7 @@ namespace API.Features.Boats.Admin {
                     .AsNoTracking()
                     .Include(x => x.HullType)
                     .Include(x => x.Usage)
+                    .Include(x => x.Nationality)
                     .Include(x => x.FishingLicence)
                     .Include(x => x.Insurance)
                     .SingleOrDefaultAsync(x => x.Id == id)

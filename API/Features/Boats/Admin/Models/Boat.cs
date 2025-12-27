@@ -3,6 +3,7 @@ using API.Features.BoatUsages;
 using API.Infrastructure.Interfaces;
 using API.Features.Reservations;
 using System.Collections.Generic;
+using API.Features.Nationalities;
 
 namespace API.Features.Boats.Admin {
 
@@ -11,8 +12,8 @@ namespace API.Features.Boats.Admin {
         public int Id { get; set; }
         public int BoatUsageId { get; set; }
         public int HullTypeId { get; set; }
+        public int NationalityId { get; set; }
         public string Description { get; set; }
-        public string Flag { get; set; }
         public decimal Loa { get; set; }
         public decimal Beam { get; set; }
         public decimal Draft { get; set; }
@@ -21,8 +22,9 @@ namespace API.Features.Boats.Admin {
         public bool IsAthenian { get; set; }
         public bool IsFishingBoat { get; set; }
         public bool IsActive { get; set; }
-        public BoatUsage Usage { get; set; }
         public HullType HullType { get; set; }
+        public BoatUsage Usage { get; set; }
+        public Nationality Nationality { get; set; }
         public BoatFishingLicence FishingLicence { get; set; }
         public BoatInsurance Insurance { get; set; }
         public IEnumerable<Reservation> Reservations { get; set; }
