@@ -12,6 +12,8 @@ namespace Boats {
             yield return BoatUsage_Must_Be_Active();
             yield return HullType_Must_Exist();
             yield return HullType_Must_Be_Active();
+            yield return Nationality_Must_Exist();
+            yield return Nationality_Must_Be_Active();
         }
 
         private static object[] BoatUsage_Must_Exist() {
@@ -20,8 +22,8 @@ namespace Boats {
                     StatusCode = 450,
                     BoatUsageId = 99,
                     HullTypeId = 1,
+                    NationalityId = 1,
                     Description = "DESCRIPTION",
-                    Flag = "",
                     Loa = 12.5M,
                     Beam = 3.5M,
                     Draft = 0.5M,
@@ -50,8 +52,8 @@ namespace Boats {
                     StatusCode = 450,
                     BoatUsageId = 3,
                     HullTypeId = 1,
+                    NationalityId = 1,
                     Description =   "DESCRIPTION",
-                    Flag = "",
                     Loa = 12.5M,
                     Beam = 3.5M,
                     Draft = 0.5M,
@@ -80,8 +82,8 @@ namespace Boats {
                     StatusCode = 451,
                     BoatUsageId = 1,
                     HullTypeId = 99,
+                    NationalityId = 1,
                     Description = "DESCRIPTION",
-                    Flag = "",
                     Loa = 12.5M,
                     Beam = 3.5M,
                     Draft = 0.5M,
@@ -105,8 +107,8 @@ namespace Boats {
                     StatusCode = 451,
                     BoatUsageId = 1,
                     HullTypeId = 3,
+                    NationalityId = 1,
                     Description =   "DESCRIPTION",
-                    Flag = "",
                     Loa = 12.5M,
                     Beam = 3.5M,
                     Draft = 0.5M,
@@ -119,6 +121,66 @@ namespace Boats {
                         Company = "AXA",
                         ContractNo  ="3100-16363",
                         ExpireDate = "2050-12-31"
+                    }
+                }
+            ];
+        }
+
+        private static object[] Nationality_Must_Exist() {
+            return [
+                new TestBoat {
+                    StatusCode = 457,
+                    BoatUsageId = 1,
+                    HullTypeId = 1,
+                    NationalityId = 999,
+                    Description = "DESCRIPTION",
+                    Loa = 12.5M,
+                    Beam = 3.5M,
+                    Draft = 0.5M,
+                    RegistryPort = "",
+                    RegistryNo = "",
+                    IsAthenian = true,
+                    IsFishingBoat = false,
+                    IsActive = true,
+                    Insurance = new TestBoatInsurance {
+                        Company = "AXA",
+                        ContractNo  ="3100-16363",
+                        ExpireDate = "2050-12-31"
+                    },
+                    FishingLicence = new TestBoatFishingLicence{
+                        IssuingAuthority = "CORFU",
+                        LicenceNo = "123/7456",
+                        ExpireDate = "2026-12-31"
+                    }
+                }
+            ];
+        }
+
+        private static object[] Nationality_Must_Be_Active() {
+            return [
+                new TestBoat {
+                    StatusCode = 457,
+                    BoatUsageId = 1,
+                    HullTypeId = 1,
+                    NationalityId = 212,
+                    Description = "DESCRIPTION",
+                    Loa = 12.5M,
+                    Beam = 3.5M,
+                    Draft = 0.5M,
+                    RegistryPort = "",
+                    RegistryNo = "",
+                    IsAthenian = true,
+                    IsFishingBoat = false,
+                    IsActive = true,
+                    Insurance = new TestBoatInsurance {
+                        Company = "AXA",
+                        ContractNo  ="3100-16363",
+                        ExpireDate = "2050-12-31"
+                    },
+                    FishingLicence = new TestBoatFishingLicence{
+                        IssuingAuthority = "CORFU",
+                        LicenceNo = "123/7456",
+                        ExpireDate = "2026-12-31"
                     }
                 }
             ];

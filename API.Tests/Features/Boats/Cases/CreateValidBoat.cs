@@ -17,8 +17,8 @@ namespace Boats {
                 new TestBoat {
                     BoatUsageId = 1,
                     HullTypeId = 1,
+                    NationalityId = 1,
                     Description = "DESCRIPTION",
-                    Flag = "FLAG",
                     Loa = 12.5M,
                     Beam = 3.5M,
                     Draft = 0.5M,
@@ -46,8 +46,8 @@ namespace Boats {
                 new TestBoat {
                     BoatUsageId = 1,
                     HullTypeId = 1,
+                    NationalityId = 1,
                     Description = "DESCRIPTION",
-                    Flag = "FLAG",
                     Loa = 12.5M,
                     Beam = 3.5M,
                     Draft = 0.5M,

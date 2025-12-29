@@ -15,6 +15,7 @@ namespace API.Features.Boats.Admin {
             return true switch {
                 var x when x == !await IsValidBoatUsageId(boat) => 450,
                 var x when x == !await IsValidHullTypeId(boat) => 451,
+                var x when x == !await IsValidNationalityId(boat) => 457,
                 var x when x == IsAlreadyUpdated(z, boat) => 415,
                 _ => 200,
             };
@@ -30,6 +31,12 @@ namespace API.Features.Boats.Admin {
             return boat.Id == 0
                 ? await context.HullTypes.AsNoTracking().FirstOrDefaultAsync(x => x.Id == boat.HullTypeId && x.IsActive) != null
                 : await context.HullTypes.AsNoTracking().FirstOrDefaultAsync(x => x.Id == boat.HullTypeId) != null;
+        }
+
+        private async Task<bool> IsValidNationalityId(BoatWriteDto boat) {
+            return boat.Id == 0
+                ? await context.Nationalities.AsNoTracking().FirstOrDefaultAsync(x => x.Id == boat.NationalityId && x.IsActive) != null
+                : await context.Nationalities.AsNoTracking().FirstOrDefaultAsync(x => x.Id == boat.NationalityId) != null;
         }
 
         private static bool IsAlreadyUpdated(Boat z, BoatWriteDto Boat) {
