@@ -5,7 +5,7 @@ namespace API.Features.DryDocks {
 
     public class DryDockWriteDto : IMetadata {
 
-        public Guid Id { get; set; }
+        public Guid DryDockId { get; set; }
         public int BoatId { get; set; }
         public int StatusId { get; set; }
         public decimal NetAmount { get; set; }

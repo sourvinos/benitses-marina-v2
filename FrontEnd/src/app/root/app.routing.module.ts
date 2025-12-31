@@ -22,6 +22,7 @@ const appRoutes: Routes = [
     { path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
     // Reservations
     { path: 'boats', loadChildren: () => import('../features/boats/classes/modules/boat.module').then(m => m.BoatModule) },
+    { path: 'reservations', loadChildren: () => import('../features/reservations/classes/modules/reservation.module').then(m => m.ReservationModule) },
     // Common
     { path: 'users', loadChildren: () => import('../features/users/classes/modules/user.module').then(m => m.UserModule) },
     // Empty

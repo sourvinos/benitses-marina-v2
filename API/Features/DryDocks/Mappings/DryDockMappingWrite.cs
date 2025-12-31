@@ -4,7 +4,7 @@ namespace API.Features.DryDocks {
 
         public static DryDock DtoToDomain(DryDockWriteDto writeDto) {
             return new DryDock {
-                Id = writeDto.Id,
+                DryDockId = writeDto.DryDockId,
                 BoatId = writeDto.BoatId,
                 StatusId = writeDto.StatusId,
                 NetAmount = writeDto.NetAmount,

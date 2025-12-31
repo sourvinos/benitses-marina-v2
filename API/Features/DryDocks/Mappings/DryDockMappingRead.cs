@@ -6,7 +6,7 @@ namespace API.Features.DryDocks {
 
         public static DryDockReadDto Get(DryDock domainObject) {
             return new DryDockReadDto {
-                Id = domainObject.Id.ToString(),
+                DryDockId = domainObject.DryDockId.ToString(),
                 Boat = new DryDockReadBoatDto {
                     Id = domainObject.Boat.Id,
                     Description = domainObject.Boat.Description,

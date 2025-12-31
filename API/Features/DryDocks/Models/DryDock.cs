@@ -6,9 +6,11 @@ namespace API.Features.DryDocks {
 
     public class DryDock : IMetadata {
 
-        public Guid Id { get; set; }
+        public Guid DryDockId { get; set; }
         public int BoatId { get; set; }
         public int StatusId { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
         public Boat Boat { get; set; }
         public DryDockStatus Status { get; set; }
         public decimal NetAmount { get; set; }

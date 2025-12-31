@@ -35,7 +35,7 @@ export class BoatListComponent {
     private unlisten: Unlisten
     private virtualElement: any
     public feature = 'boatList'
-    public featureIcon = 'boat'
+    public featureIcon = 'boats'
     public icon = 'boat'
     public parentUrl = '/home'
     public records: BoatListVM[] = []

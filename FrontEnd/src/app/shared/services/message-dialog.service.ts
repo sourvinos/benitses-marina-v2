@@ -57,7 +57,7 @@ export class MessageDialogService {
     public passwordCanBeChangedOnlyByAccountOwner(): string { return this.getDescription(this.feature, 'passwordCanBeChangedOnlyByAccountOwner') }
     public success(): string { return this.getDescription(this.feature, 'success') }
     public unableToResetPassword(): string { return this.getDescription(this.feature, 'unableToResetPassword') }
-
+    public noRecordsSelected(): string { return this.getDescription(this.feature, 'noRecordsSelected') }
     public filterResponse(error: any, feature = 'snackbarMessages'): string {
         let returnValue = ''
         this.messages.filter((f: { feature: string; labels: any[] }) => {

@@ -66,7 +66,7 @@ namespace API.Features.DryDocks {
         [Authorize(Roles = "admin")]
         [ServiceFilter(typeof(ModelValidationAttribute))]
         public async Task<ResponseWithBody> Put([FromBody] DryDockWriteDto writeDto) {
-            var x = await repo.GetByIdAsync(writeDto.Id.ToString(), true);
+            var x = await repo.GetByIdAsync(writeDto.DryDockId.ToString(), true);
             if (x != null) {
                 var z = validation.IsValidAsync(x, writeDto);
                 if (await z == 200) {

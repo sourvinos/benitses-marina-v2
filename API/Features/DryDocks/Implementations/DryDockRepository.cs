@@ -28,11 +28,11 @@ namespace API.Features.DryDocks {
                     .AsNoTracking()
                     .Include(x => x.Boat).ThenInclude(x => x.HullType)
                     .Include(x => x.Status)
-                    .Where(x => x.Id.ToString() == id)
+                    .Where(x => x.DryDockId.ToString() == id)
                     .SingleOrDefaultAsync()
                : await context.DryDocks
                   .AsNoTracking()
-                  .Where(x => x.Id.ToString() == id)
+                  .Where(x => x.DryDockId.ToString() == id)
                   .SingleOrDefaultAsync();
         }
 

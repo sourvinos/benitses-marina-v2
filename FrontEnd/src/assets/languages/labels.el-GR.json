@@ -397,5 +397,99 @@
                 "description": "Διαγραφη"
             }
         ]
+    },
+    {
+        "feature": "cardsMenu",
+        "labels": [
+            {
+                "id": "boatsTitle",
+                "description": "Σκάφη"
+            },
+            {
+                "id": "boatsSubTitle",
+                "description": "Διαχείρηση αρχείου σκαφών"
+            },
+            {
+                "id": "reservationsTitle",
+                "description": "Ελλιμενισμοί"
+            },
+            {
+                "id": "reservationsSubTitle",
+                "description": "Διαχειριστείτε τις κρατήσεις σας"
+            }
+        ]
+    },
+    {
+        "feature": "reservationList",
+        "labels": [
+            {
+                "id": "header",
+                "description": "Ελλιμενισμοί"
+            },
+            {
+                "id": "headerBoatName",
+                "description": "Σκάφος"
+            },
+            {
+                "id": "headerBoatLoa",
+                "description": "Μήκος"
+            },
+            {
+                "id": "headerBoatBeam",
+                "description": "Πλάτος"
+            },
+            {
+                "id": "headerCustomer",
+                "description": "Πελάτης"
+            },
+            {
+                "id": "headerLength",
+                "description": "Μήκος"
+            },
+            {
+                "id": "headerFromDate",
+                "description": "Από"
+            },
+            {
+                "id": "headerToDate",
+                "description": "Εως"
+            },
+            {
+                "id": "headerBerths",
+                "description": "Θέση"
+            },
+            {
+                "id": "headerPaymentStatus",
+                "description": "Πληρωμή"
+            },
+            {
+                "id": "headerIsAthenian",
+                "description": "Athenian"
+            },
+            {
+                "id": "headerIsOverdue",
+                "description": "Εκπρόθεσμο"
+            },
+            {
+                "id": "headerIsDocked",
+                "description": "Ελλιμενισμένο"
+            },
+            {
+                "id": "headerIsDryDock",
+                "description": "Dry dock"
+            },
+            {
+                "id": "headerIsFishingBoat",
+                "description": "Αλιευτικό"
+            },
+            {
+                "id": "headerIsRequest",
+                "description": "Αίτηση"
+            },
+            {
+                "id": "newRecord",
+                "description": "Νεα εγγραφη"
+            }
+        ]
     }
 ]

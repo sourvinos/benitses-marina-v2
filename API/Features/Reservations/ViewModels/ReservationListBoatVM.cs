@@ -6,6 +6,7 @@ namespace API.Features.Reservations {
 
         public int Id { get; set; }
         public SimpleEntity Type { get; set; }
+        public SimpleEntity Nationality { get; set; }
         public string Description { get; set; }
         public decimal Loa { get; set; }
         public decimal Beam { get; set; }

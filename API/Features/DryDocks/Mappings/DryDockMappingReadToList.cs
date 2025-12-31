@@ -8,7 +8,7 @@ namespace API.Features.DryDocks {
 
         public static IEnumerable<DryDockListVM> Get(IQueryable<DryDock> domainObjects) {
             return [.. domainObjects.Select(x => new DryDockListVM {
-                Id = x.Id.ToString(),
+                DryDockId = x.DryDockId.ToString(),
                 Boat = new DryDockListBoatVM {
                         Id = x.Boat.Id,
                         Description = x.Boat.Description,

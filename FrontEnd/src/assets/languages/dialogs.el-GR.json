@@ -73,6 +73,10 @@
             {
                 "id": "passwordCanBeChangedOnlyByAccountOwner",
                 "message": "Ο κωδικός μπορεί να αλλάξει μόνο από τον κάτοχο του λογαριασμού."
+            },
+            {
+                "id": "noRecordsSelected",
+                "message": "Δεν έχετε επιλέξει εγγραφές."
             }
         ]
     }

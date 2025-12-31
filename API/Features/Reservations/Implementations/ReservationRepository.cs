@@ -21,8 +21,8 @@ namespace API.Features.Reservations {
             var reservations = context.Reservations
                 .AsNoTracking()
                 .Include(x => x.Boat).ThenInclude(x => x.HullType)
-                .Include(x => x.Captain)
                 .Include(x => x.Berths).ThenInclude(x => x.Berth)
+                .OrderBy(x => x.Boat.Description)
                 .Where(x => !x.IsDeleted);
             return ReservationMappingReadToList.Read(reservations);
         }

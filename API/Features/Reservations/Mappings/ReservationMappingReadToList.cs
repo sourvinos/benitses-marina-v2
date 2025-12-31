@@ -27,13 +27,16 @@ namespace API.Features.Reservations {
                         Id = x.Berth.Id,
                         Description = x.Berth.Description
                     }
-                }),
+                }).OrderBy(x => x.Berth.Description).ToList(),
                 FromDate = DateHelpers.DateToISOString(x.FromDate),
                 ToDate = DateHelpers.DateToISOString(x.ToDate),
                 Days = x.ToDate.Subtract(x.FromDate).Days,
-                IsPassingBy = x.IsPassingBy,
+                IsAthenian = x.Boat.IsAthenian,
+                IsFishingBoat = x.Boat.IsFishingBoat,
                 IsDocked = x.IsDocked,
-                IsDryDock = x.IsDryDock
+                IsDryDock = x.IsDryDock,
+                IsPassingBy = x.IsPassingBy,
+                IsOverdue = ReservationHelpers.IsOverdue(x.IsDocked,x.ToDate)
             })];
         }
 

@@ -1,0 +1,70 @@
+<div id="list-wrapper">
+
+    <div id="content">
+        <div id="header">
+            <home-button-and-title [featureIcon]="featureIcon" [feature]="feature" [icon]="icon" [parentUrl]="parentUrl"></home-button-and-title>
+        </div>
+        <div id="table-wrapper">
+            <p-table #table (onFilter)="onFilterRecords($event)" [(selection)]="selectedRecords" [scrollable]="true" [value]="records" [virtualScrollItemSize]="32" [virtualScroll]="true" dataKey="reservationId" scrollHeight="flex" selectionMode="multiple" sortMode="multiple" stateKey="reservationList-filters" stateStorage="session">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="no-border-bottom width-3"></th>
+                        <th class="no-border-bottom width-10" pSortableColumn="boat.description">{{ getLabel("headerBoatName") }}</th>
+                        <th class="no-border-bottom width-3" pSortableColumn="boat.loa">{{ getLabel("headerBoatLoa") }}</th>
+                        <th class="no-border-bottom width-3" pSortableColumn="boat.beam">{{ getLabel("headerBoatBeam") }}</th>
+                        <th class="no-border-bottom width-5" pSortableColumn="fromDate">{{ getLabel("headerFromDate") }}</th>
+                        <th class="no-border-bottom width-5" pSortableColumn="toDate">{{ getLabel("headerToDate") }}</th>
+                        <th class="no-border-bottom width-5" pSortableColumn="joinedBerths">{{ getLabel("headerBerths") }}</th>
+                        <th class="no-border-bottom width-5" pSortableColumn="isAthenian">{{ getLabel("headerIsAthenian") }}</th>
+                        <th class="no-border-bottom width-5" pSortableColumn="isDocked">{{ getLabel("headerIsDocked") }}</th>
+                        <th class="no-border-bottom width-5" pSortableColumn="isDryDock">{{ getLabel("headerIsDryDock") }}</th>
+                        <th class="no-border-bottom width-5" pSortableColumn="isFishingBoat">{{ getLabel("headerIsFishingBoat") }}</th>
+                        <th class="no-border-bottom width-5" pSortableColumn="isOverdue">{{ getLabel("headerIsOverdue") }}</th>
+                    </tr>
+                    <tr>
+                        <th class="no-border-top width-3"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
+                        <th class="no-border-top width-10"><p-columnFilter (input)="onFilter($event.target.value,'boat.description','contains')" field="boat.description"></p-columnFilter></th>
+                        <th class="no-border-top width-3"><p-columnFilter (input)="onFilter($event.target.value,'boat.loa','contains')" field="boat.loa"></p-columnFilter></th>
+                        <th class="no-border-top width-3"><p-columnFilter (input)="onFilter($event.target.value,'boat.beam','contains')" field="boat.beam"></p-columnFilter></th>
+                        <th class="no-border-top width-5"><p-columnFilter (input)="onFilter($event.target.value,'fromDate','contains')" field="fromDate"></p-columnFilter></th>
+                        <th class="no-border-top width-5"><p-columnFilter (input)="onFilter($event.target.value,'toDate','contains')" field="toDate"></p-columnFilter></th>
+                        <th class="no-border-top width-5"><p-columnFilter (input)="onFilter($event.target.value,'joinedBerths','contains')" field="joinedBerths"></p-columnFilter></th>
+                        <th class="no-border-top width-5"><p-columnFilter field="isAthenian" type="boolean"></p-columnFilter></th>
+                        <th class="no-border-top width-5"><p-columnFilter field="isDocked" type="boolean"></p-columnFilter></th>
+                        <th class="no-border-top width-5"><p-columnFilter field="isDryDock" type="boolean"></p-columnFilter></th>
+                        <th class="no-border-top width-5"><p-columnFilter field="isFishingBoat" type="boolean"></p-columnFilter></th>
+                        <th class="no-border-top width-5"><p-columnFilter field="isOverdue" type="boolean"></p-columnFilter></th>
+                    </tr>
+                </ng-template>
+                <ng-template let-record pTemplate="body">
+                    <tr (click)="onHighlightRow(record.reservationId)" (dblclick)="onEditRecord(record.reservationId)" [attr.id]=record.reservationId style="height: 32px;">
+                        <td class="width-3"><span class="center no-overflow" style="padding-right: 0 !important; padding-top: 0.25rem !important;"><p-tableCheckbox [value]="record"></p-tableCheckbox></span></td>
+                        <td class="width-10"><span>{{ record.boat.description }}</span></td>
+                        <td class="width-3"><span class="center no-overflow">{{ record.boat.loa }}</span></td>
+                        <td class="width-3"><span class="center no-overflow">{{ record.boat.beam }}</span></td>
+                        <td class="width-5"><span class="center no-overflow">{{ formatDateToLocale(record.fromDate,false,true) }}</span></td>
+                        <td class="width-5"><span class="center no-overflow">{{ formatDateToLocale(record.toDate,false,true) }}</span></td>
+                        <td class="width-5"><span class="center">{{ record.joinedBerths }}</span></td>
+                        <td class="width-5"><span [ngClass]="colorizeIcon(record.isAthenian)" class="center material-symbols-outlined no-left-padding no-overflow" style="padding-top: 0 !important;">{{ getIcon(record.isAthenian,true) }}</span></td>
+                        <td class="width-5"><span [ngClass]="colorizeIcon(record.isDocked)" class="center material-symbols-outlined no-left-padding no-overflow" style="padding-top: 0 !important;">{{ getIcon(record.isDocked,true) }}</span></td>
+                        <td class="width-5"><span [ngClass]="colorizeIcon(record.isDryDock)" class="center material-symbols-outlined no-left-padding no-overflow" style="padding-top: 0 !important;">{{ getIcon(record.isDryDock,true) }}</span></td>
+                        <td class="width-5"><span [ngClass]="colorizeIcon(record.isFishingBoat)" class="center material-symbols-outlined no-left-padding no-overflow" style="padding-top: 0 !important;">{{ getIcon(record.isFishingBoat,true) }}</span></td>
+                        <td class="width-5"><span [ngClass]="colorizeIcon(record.isOverdue)" class="center material-symbols-outlined no-left-padding no-overflow" style="padding-top: 0 !important;">{{ getIcon(record.isOverdue,true) }}</span></td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+
+    <div id="footer">
+        <table-total-filtered-records (resetTableFilters)="onResetTableFilters()" [filteredRecordCount]="recordsFilteredCount" [mustShowSelectedFilteredCount]="true" [recordCount]="records.length" [selectedRecordCount]="selectedRecords.length"></table-total-filtered-records>
+        <div id="align-right">
+            <button (click)="onNewRecord()" [disabled]="!isAdmin()" class="primary" id="new-record" mat-flat-button>
+                <mat-icon *ngIf="!isAdmin()" class=" material-icons-outlined">lock</mat-icon>
+                <span>{{ getLabel("newRecord") | uppercase }}</span>
+            </button>
+        </div>
+
+    </div>
+
+</div>
