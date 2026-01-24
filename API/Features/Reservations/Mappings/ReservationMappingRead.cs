@@ -8,7 +8,7 @@ namespace API.Features.Reservations {
     public static class ReservationMappingRead {
 
         public static ReservationReadDto Read(Reservation reservation) {
-            return new ReservationReadDto {
+            var x = new ReservationReadDto {
                 ReservationId = reservation.ReservationId.ToString(),
                 Boat = new ReservationBoatReadDto {
                     Id = reservation.Boat.Id,
@@ -22,8 +22,8 @@ namespace API.Features.Reservations {
                         Description = reservation.Boat.Usage.Description
                     },
                     Nationality = new SimpleEntity {
-                        Id = reservation.Boat.Usage.Id,
-                        Description = reservation.Boat.Usage.Description
+                        Id = reservation.Boat.Nationality.Id,
+                        Description = reservation.Boat.Nationality.Description
                     },
                     Insurance = new ReservationBoatInsuranceReadDto {
                         Id = reservation.Boat.Insurance.Id,
@@ -33,7 +33,6 @@ namespace API.Features.Reservations {
                         ExpireDate = reservation.Boat.Insurance.ExpireDate != null ? DateHelpers.DateToISOString((DateTime)reservation.Boat.Insurance.ExpireDate) : "",
                         IsExpired = IsInsuranceExpired(reservation.Boat.Insurance.ExpireDate)
                     },
-                    
                     Loa = reservation.Boat.Loa,
                     Beam = reservation.Boat.Beam,
                     Draft = reservation.Boat.Draft,
@@ -69,6 +68,7 @@ namespace API.Features.Reservations {
                 PutAt = reservation.PutAt,
                 PutUser = reservation.PutUser
             };
+            return x;
         }
 
         private static bool IsInsuranceExpired(DateTime? date) {

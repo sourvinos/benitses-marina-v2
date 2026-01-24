@@ -1,0 +1,112 @@
+<div id="form-wrapper">
+
+    {{ form.value | json }}
+
+    <div id="content">
+
+        <div id="header">
+
+            <home-button-and-title [feature]="feature" [featureIcon]="featureIcon" [header]="getNewOrEditHeader()" [icon]="icon" [parentUrl]="parentUrl"></home-button-and-title>
+            <div *ngIf="isNotNewRecord()" id="boat-name">
+                <span>{{ this.form.value.boatName }}</span>
+            </div>
+        </div>
+
+        <form [formGroup]="form" id="form">
+            <div>
+                <mat-form-field>
+                    <mat-label>{{ getLabel('boatDescription') }}</mat-label>
+                    <input #inputAutoComplete #triggerBoats="matAutocompleteTrigger" (blur)="onPopulateBoatFields($event)" (keydown)="enableOrDisableAutoComplete($event)" (keyup)="checkForEmptyAutoComplete($event)" [inputTabStop]="input" [matAutocompleteDisabled]="isAutoCompleteDisabled" [matAutocomplete]="boats" formControlName="boatDescription" matInput>
+                    <div matSuffix style="display:flex">
+                        <button (click)="openOrCloseAutoComplete(triggerBoats, 'boats')" mat-icon-button type="button">
+                            <mat-icon class="input-suffix material-icons-outlined">expand_more</mat-icon>
+                        </button>
+                    </div>
+                    <mat-error *ngIf="boatDescription.hasError('required')">{{ getHint("required") }}</mat-error>
+                    <mat-error *ngIf="!boatDescription.hasError('required') && boatDescription.hasError('incorrect')">{{ getHint("invalid") }}</mat-error>
+                </mat-form-field>
+                <div><span>{{ form.value.boat.hullType.description }}</span></div>
+                <div><span>{{ form.value.boat.usage.description }}</span></div>
+                <div><span>{{ form.value.boat.nationality.description }}</span></div>
+                <div><span>{{ form.value.boat.insurance.company }}</span></div>
+                <div><span>{{ form.value.boat.insurance.contractNo }}</span></div>
+                <div><span>{{ form.value.boat.insurance.expireDate }}</span></div>
+                <div><span>{{ form.value.boat.insurance.isValid }}</span></div>
+            </div>
+            <div class="group-input-field">
+                <mat-form-field>
+                    <mat-label>{{ getLabel('fromDate') }}</mat-label>
+                    <input [inputTabStop]="input" [matDatepicker]="fromDatePicker" class="tabable" formControlName="fromDate" matInput>
+                    <mat-datepicker-toggle matIconSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #fromDatePicker></mat-datepicker>
+                    <mat-error *ngIf="fromDate.hasError('required')">{{ getHint("required") }}</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>{{ getLabel('toDate') }}</mat-label>
+                    <input [inputTabStop]="input" [matDatepicker]="toDatePicker" class="tabable" formControlName="toDate" matInput>
+                    <mat-datepicker-toggle matIconSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #toDatePicker></mat-datepicker>
+                    <mat-error *ngIf="toDate.hasError('required')">{{ getHint("required") }}</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>{{ getLabel('days') }}</mat-label>
+                    <input [inputTabStop]="input" class="tabable" formControlName="days" matInput>
+                    <mat-error *ngIf="days.hasError('required')">{{ getHint("required") }}</mat-error>
+                </mat-form-field>
+            </div>
+            <div formArrayName="berths">
+                <div class="group-input-field">
+                    <div *ngFor="let berth of berthsArray; let i = index" [formGroupName]="i">
+                        <mat-form-field>
+                            <mat-label>{{ getLabel("berth") }}</mat-label>
+                            <input (blur)="onValidateBerth($event,i)" [inputTabStop]="input" class="tabable" formControlName="description" matInput required>
+                            <mat-error *ngIf="form.value.berths[i]">{{ getHint("required") }}</mat-error>
+                            <div *ngIf="form.value.berths.length> 1" matSuffix style="display:flex">
+                                <button (click)="onRemoveBerth(i)" mat-icon-button type="button">
+                                    <mat-icon class="input-suffix material-icons-outlined">close</mat-icon>
+                                </button>
+                            </div>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <span (click)="onAddBerthTextBox()" id="add-berth-button">
+                    <mat-icon class="material-icons-outlined">add</mat-icon>
+                </span>
+            </div>
+            <div>
+                <div class="stacked-checkboxes">
+                    <mat-checkbox formControlName="isPassingBy">
+                        <span>{{ getLabel("isPassingBy") }}</span>
+                    </mat-checkbox>
+                    <mat-checkbox formControlName="isDocked">
+                        <span>{{ getLabel("isDocked") }}</span>
+                    </mat-checkbox>
+                    <mat-checkbox formControlName="isDryDock">
+                        <span>{{ getLabel("isDryDock") }}</span>
+                    </mat-checkbox>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+    <div id="footer">
+        <div id="align-right">
+            <button *ngIf="form.value.reservationId != ''" (click)="onDelete()" [disabled]="!isAdmin()" class="delete" mat-flat-button>
+                <span>{{ getLabel('deleteButton') | uppercase }}</span>
+            </button>
+            <button (click)="onSave(true)" [disabled]="!form.valid " class="no-right-border-radius primary" mat-flat-button>
+                <mat-icon *ngIf="!form.valid" class="material-icons-outlined">lock</mat-icon>
+                <span>{{ getLabel("saveButton") | uppercase }}</span>
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<mat-autocomplete #boats="matAutocomplete" [displayWith]="autocompleteFields.bind(this, 'description')" autoActiveFirstOption>
+    <mat-option *ngFor="let option of dropdownBoats | async" [value]="option">
+        {{ option.description }}
+    </mat-option>
+</mat-autocomplete>

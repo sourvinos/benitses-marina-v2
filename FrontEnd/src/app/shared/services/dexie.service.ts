@@ -8,6 +8,7 @@ export class DexieService extends Dexie {
     constructor() {
         super('Benitses-Marina-v2')
         this.version(1).stores({
+            berths: 'id, description',
             boatUsages: 'id, description',
             boats: 'id, description',
             hullTypes: 'id, description',

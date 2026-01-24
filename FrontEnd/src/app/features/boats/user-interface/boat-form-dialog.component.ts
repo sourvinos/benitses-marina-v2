@@ -78,7 +78,7 @@ export class BoatFormDialogComponent {
     private isApiBusy = false
     private unlisten: Unlisten
     public feature = 'boatForm'
-    public featureIcon = 'boat'
+    public featureIcon = 'boats'
     public icon = 'arrow_back'
     public input: InputTabStopDirective
     public selectedTabIndex = 0

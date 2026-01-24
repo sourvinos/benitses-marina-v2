@@ -17,6 +17,7 @@ import { ResetPasswordViewModel } from 'src/app/features/users/classes/view-mode
 import { SessionStorageService } from './session-storage.service'
 import { TokenRequest } from '../classes/token-request'
 import { environment } from '../../../environments/environment'
+import { BerthHttpService } from 'src/app/features/berths/classes/berth-http.service'
 
 @Injectable({ providedIn: 'root' })
 
@@ -31,7 +32,19 @@ export class AccountService extends HttpDataService {
 
     //#endregion
 
-    constructor(httpClient: HttpClient, private boatHttpService: BoatHttpService, private boatUsageHttpService: BoatUsageHttpService, private cryptoService: CryptoService, private dexieService: DexieService, private hullTypeHttpService: HullTypeHttpService, private nationalityHttpService: NationalityHttpService, private ngZone: NgZone, private router: Router, private sessionStorageService: SessionStorageService) {
+    constructor(
+        httpClient: HttpClient, 
+        private berthHttpService: BerthHttpService, 
+        private boatHttpService: BoatHttpService, 
+        private boatUsageHttpService: BoatUsageHttpService,
+        private cryptoService: CryptoService,
+        private dexieService: DexieService,
+        private hullTypeHttpService: HullTypeHttpService,
+        private nationalityHttpService: NationalityHttpService,
+        private ngZone: NgZone,
+        private router: Router,
+        private sessionStorageService: SessionStorageService
+    ) {
         super(httpClient, environment.apiUrl)
     }
 
@@ -117,6 +130,7 @@ export class AccountService extends HttpDataService {
     }
 
     private populateDexieFromAPI(): void {
+        this.dexieService.populateTable('berths', this.berthHttpService)
         this.dexieService.populateTable('boatUsages', this.boatUsageHttpService)
         this.dexieService.populateTable('boats', this.boatHttpService)
         this.dexieService.populateTable('hullTypes', this.hullTypeHttpService)

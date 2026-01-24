@@ -9,15 +9,15 @@ namespace API.Features.Reservations {
             return new Reservation {
                 ReservationId = reservation.ReservationId,
                 BoatId = reservation.BoatId,
-                Captain = new ReservationCaptain {
-                    ReservationId = reservation.ReservationId,
-                    Name = reservation.Captain.Name,
-                    Address = reservation.Captain.Address,
-                    TaxNo = reservation.Captain.TaxNo,
-                    TaxOffice = reservation.Captain.TaxOffice,
-                    Phones = reservation.Captain.Phones,
-                    Email = reservation.Captain.Email
-                },
+                // Captain = new ReservationCaptain {
+                //     ReservationId = reservation.ReservationId,
+                //     Name = reservation.Captain.Name,
+                //     Address = reservation.Captain.Address,
+                //     TaxNo = reservation.Captain.TaxNo,
+                //     TaxOffice = reservation.Captain.TaxOffice,
+                //     Phones = reservation.Captain.Phones,
+                //     Email = reservation.Captain.Email
+                // },
                 Berths = [.. reservation.Berths.Select(x => new ReservationBerth {
                     Id = x.Id,
                     BerthId = x.BerthId,

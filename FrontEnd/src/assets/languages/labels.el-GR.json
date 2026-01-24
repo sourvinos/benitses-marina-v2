@@ -415,7 +415,7 @@
             },
             {
                 "id": "reservationsSubTitle",
-                "description": "Διαχειριστείτε τις κρατήσεις σας"
+                "description": "Διαχειριστείτε τις κρατήσεις"
             }
         ]
     },
@@ -424,7 +424,7 @@
         "labels": [
             {
                 "id": "header",
-                "description": "Ελλιμενισμοί"
+                "description": "Κρατήσεις & Ελλιμενισμοί"
             },
             {
                 "id": "headerBoatName",
@@ -489,6 +489,51 @@
             {
                 "id": "newRecord",
                 "description": "Νεα εγγραφη"
+            }
+        ]
+    },
+    {
+        "feature": "reservationForm",
+        "labels": [
+            {
+                "id": "header",
+                "description": "Κράτηση"
+            },
+            {
+                "id": "fromDate",
+                "description": "Από"
+            },
+            {
+                "id": "toDate",
+                "description": "Εως"
+            },
+            {
+                "id": "days",
+                "description": "Ημέρες"
+            },
+            {
+                "id": "berth",
+                "description": "Θέση"
+            },
+            {
+                "id": "isPassingBy",
+                "description": "Διερχόμενο"
+            },
+            {
+                "id": "isDocked",
+                "description": "Ελλιμενισμένο"
+            },
+            {
+                "id": "isDryDock",
+                "description": "Dry Dock"
+            },
+            {
+                "id": "deleteButton",
+                "description": "Διαγραφη"
+            },
+            {
+                "id": "saveButton",
+                "description": "Αποθηκευση"
             }
         ]
     }

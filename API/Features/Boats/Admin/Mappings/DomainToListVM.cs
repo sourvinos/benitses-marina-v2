@@ -9,6 +9,12 @@ namespace API.Features.Boats.Admin {
             return [.. boats.Select(x => new BoatListVM {
                 Id = x.Id,
                 Description = x.Description,
+                Nationality = new BoatListNationalityVM {
+                    Id = x.Nationality.Id,
+                    Code = x.Nationality.Code,
+                    Description = x.Nationality.Description,
+                    IsActive = x.Nationality.IsActive
+                },
                 Loa = x.Loa,
                 Beam = x.Beam,
                 Draft = x.Draft,

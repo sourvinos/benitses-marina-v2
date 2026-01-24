@@ -6,19 +6,19 @@ namespace API.Features.Reservations {
     public static class ReservationMappingPut {
 
         public static Reservation Write(Reservation x, ReservationWriteDto reservation) {
-            return new Reservation {
+            var z = new Reservation {
                 ReservationId = reservation.ReservationId,
                 BoatId = reservation.BoatId,
-                Captain = new ReservationCaptain {
-                    Id = x.Captain.Id,
-                    ReservationId = x.Captain.ReservationId,
-                    Name = reservation.Captain.Name,
-                    Address = reservation.Captain.Address,
-                    TaxNo = reservation.Captain.TaxNo,
-                    TaxOffice = reservation.Captain.TaxOffice,
-                    Phones = reservation.Captain.Phones,
-                    Email = reservation.Captain.Email
-                },
+                // Captain = new ReservationCaptain {
+                //     Id = x.Captain.Id,
+                //     ReservationId = x.Captain.ReservationId,
+                //     Name = reservation.Captain.Name,
+                //     Address = reservation.Captain.Address,
+                //     TaxNo = reservation.Captain.TaxNo,
+                //     TaxOffice = reservation.Captain.TaxOffice,
+                //     Phones = reservation.Captain.Phones,
+                //     Email = reservation.Captain.Email
+                // },
                 Berths = [.. reservation.Berths.Select(x => new ReservationBerth {
                     Id = x.Id,
                     BerthId = x.BerthId,
@@ -34,6 +34,7 @@ namespace API.Features.Reservations {
                 PutAt = reservation.PutAt,
                 PutUser = reservation.PutUser
             };
+            return z;
         }
 
     }

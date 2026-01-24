@@ -56,7 +56,7 @@ export class ReservationListComponent {
 
     ngAfterViewInit(): void {
         setTimeout(() => {
-            // this.getVirtualElement()
+            this.getVirtualElement()
             // this.scrollToSavedPosition()
             // this.hightlightSavedRow()
             // this.enableDisableFilters()

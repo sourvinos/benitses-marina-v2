@@ -7,7 +7,7 @@ export const environment = {
     clientUrl: 'https://localhost:4200',
     defaultLanguage: 'el-GR',
     featuresIconDirectory: 'assets/images/features/',
-    cssUserSelect: 'none',
+    cssUserSelect: 'auto',
     minWidth: 1280,
     login: {
         username: 'john',

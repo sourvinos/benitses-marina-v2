@@ -8,7 +8,7 @@ namespace API.Features.Reservations {
 
         public Guid ReservationId { get; set; }
         public int BoatId { get; set; }
-        public ReservationCaptainWriteDto Captain { get; set; }
+        // public ReservationCaptainWriteDto Captain { get; set; }
         public List<ReservationBerthWriteDto> Berths { get; set; } = [];
         public string FromDate { get; set; }
         public string ToDate { get; set; }

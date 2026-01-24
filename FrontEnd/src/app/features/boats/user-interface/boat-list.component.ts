@@ -18,6 +18,8 @@ import { MessageLabelService } from 'src/app/shared/services/message-label.servi
 import { MessageSnackbarService } from 'src/app/shared/services/message.snackbar.service'
 import { SessionStorageService } from 'src/app/shared/services/session-storage.service'
 import { SnackbarService } from 'src/app/shared/services/snackbar.service'
+import { DexieService } from 'src/app/shared/services/dexie.service'
+import { BoatListNationalityVM } from '../classes/view-models/boat-list-nationality-vm'
 
 @Component({
     selector: 'boat-list',
@@ -44,8 +46,7 @@ export class BoatListComponent {
 
     //#endregion
 
-    constructor(private activatedRoute: ActivatedRoute, private buttonClickService: ButtonClickService, private cryptoService: CryptoService, private dialogService: DialogService, private helperService: HelperService, private keyboardShortcutsService: KeyboardShortcuts, private messageDialogService: MessageDialogService, private messageLabelService: MessageLabelService, private messageSnackbarService: MessageSnackbarService, private router: Router, private sessionStorageService: SessionStorageService, private snackbarService: SnackbarService, public dialog: MatDialog) { }
-
+    constructor(private activatedRoute: ActivatedRoute, private buttonClickService: ButtonClickService, private cryptoService: CryptoService, private dexieService: DexieService, private dialogService: DialogService, private helperService: HelperService, private keyboardShortcutsService: KeyboardShortcuts, private messageDialogService: MessageDialogService, private messageLabelService: MessageLabelService, private messageSnackbarService: MessageSnackbarService, private router: Router, private sessionStorageService: SessionStorageService, private snackbarService: SnackbarService, public dialog: MatDialog) { }
 
     //#region lifecycle hooks
 
@@ -183,10 +184,22 @@ export class BoatListComponent {
         })
     }
 
+    private mapNationality(nationalityId: number): BoatListNationalityVM | any {
+        this.dexieService.getById('nationalities', nationalityId).then((response) => {
+            return {
+                id: response.id,
+                code: response.code,
+                description: response.description,
+                isActive: response.isActive
+            }
+        })
+    }
+
     private mapResponse(response: BoatWriteDto): BoatListVM {
-        const x: BoatListVM = {
+        return {
             id: response.id,
             description: response.description,
+            nationality: this.mapNationality(response.nationalityId),
             registryNo: response.registryNo,
             loa: response.loa,
             beam: response.beam,
@@ -194,7 +207,6 @@ export class BoatListComponent {
             isFishingBoat: response.isFishingBoat,
             isActive: response.isActive
         }
-        return x
     }
 
     private navigateToRecord(id: any): void {
