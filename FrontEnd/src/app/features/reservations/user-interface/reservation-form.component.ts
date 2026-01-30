@@ -25,6 +25,7 @@ import { SessionStorageService } from 'src/app/shared/services/session-storage.s
 import { SimpleEntity } from 'src/app/shared/classes/simple-entity'
 import { environment } from 'src/environments/environment'
 import { BoatBrowserListVM } from '../../boats/classes/view-models/boat-browser-list-vm'
+import { ValidationService } from 'src/app/shared/services/validation.service'
 
 // https://stackblitz.com/edit/angular-formarray-validation-error?file=app%2Fautocomplete-simple-example.html
 
@@ -127,46 +128,37 @@ export class ReservationFormComponent {
         return this.emojiService.getEmoji(emoji)
     }
 
-
     public getHint(id: string, minmax = 0): string {
         return this.messageHintService.getDescription(id, minmax)
     }
-
 
     public getIcon(filename: string): string {
         return environment.featuresIconDirectory + filename + '.svg'
     }
 
-
     public getLabel(id: string): string {
         return this.messageLabelService.getDescription(this.feature, id)
     }
-
 
     public getNewOrEditHeader(): string {
         return this.form.value.reservationId == '' ? 'headerNew' : 'headerEdit'
     }
 
-
     public getRemarksLength(): any {
         return this.form.value.remarks != null ? this.form.value.remarks.length : 0
     }
-
 
     public getFinancialRemarksLength(): any {
         return this.form.value.financialRemarks != null ? this.form.value.financialRemarks.length : 0
     }
 
-
     public imageIsLoading(): any {
         return this.imgIsLoaded ? '' : 'skeleton'
     }
 
-
     public isAdmin(): boolean {
         return this.cryptoService.decrypt(this.sessionStorageService.getItem('isAdmin')) == 'true' ? true : false
     }
-
 
     public isFishingBoat(): boolean {
         return this.form.value.isFishingBoat
@@ -175,7 +167,6 @@ export class ReservationFormComponent {
     public isNotNewRecord(): boolean {
         return this.form.value.reservationId == ''
     }
-
 
     public isNewRecord(): boolean {
         return this.form.value.reservationId != '' && this.form.pristine == true
@@ -239,7 +230,7 @@ export class ReservationFormComponent {
     //#region private methods
 
     private populateDropdowns(): void {
-        this.populateDropdownFromDexieDB('boats', 'dropdownBoats', 'boat.description', 'description', 'description')
+        this.populateDropdownFromDexieDB('boats', 'dropdownBoats', 'boat', 'description', 'description')
     }
 
     private populateDropdownFromDexieDB(dexieTable: string, filteredTable: string, formField: string, modelProperty: string, orderBy: string): void {
@@ -341,19 +332,8 @@ export class ReservationFormComponent {
     private initForm(): void {
         this.form = this.formBuilder.group({
             reservationId: '',
-            boatDescription: '',
             boat: this.formBuilder.group({
-                id: 0,
-                description: '',
-                hullType: '',
-                usage: '',
-                nationality: '',
-                insurance: '',
-                loa: '',
-                beam: '',
-                draft: '',
-                registryPort: '',
-                registryNo: ''
+                foo: ['', [Validators.required, ValidationService.requireAutocomplete]],
             }),
             berths: this.formBuilder.array([]),
             fromDate: '',
@@ -477,8 +457,8 @@ export class ReservationFormComponent {
 
     //#region getters
 
-    get boatDescription(): AbstractControl {
-        return this.form.get('boatDescription')
+    get foos(): AbstractControl {
+        return this.form.get('boat.foo')
     }
 
     get fromDate(): AbstractControl {
@@ -494,15 +474,15 @@ export class ReservationFormComponent {
     }
 
     //#endregion
-    public onPopulateBoatFields(event: any): void {
-        this.dexieService.getByDescription('boats', event.target.value).then((response: BoatBrowserListVM) => {
-            if (response) {
-                this.form.value.boat = {
-                    id: response.id,
-                    description: response.description,
-                }
-            }
-        })
-    }
+    // public onPopulateBoatFields(event: any): void {
+    //     this.dexieService.getByDescription('boats', event.target.value).then((response: BoatBrowserListVM) => {
+    //         if (response) {
+    //             this.form.value.boat = {
+    //                 id: response.id,
+    //                 description: response.description,
+    //             }
+    //         }
+    //     })
+    // }
 
 }

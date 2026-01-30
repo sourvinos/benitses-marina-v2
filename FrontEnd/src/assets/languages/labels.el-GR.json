@@ -500,6 +500,10 @@
                 "description": "Κράτηση"
             },
             {
+                "id": "boat",
+                "description": "Σκάφος"
+            },
+            {
                 "id": "fromDate",
                 "description": "Από"
             },

@@ -49,7 +49,7 @@ export class ValidationService {
         return pattern.test(control.value) ? null : { containsIllegalCharacters: true }
     }
 
-    static RequireAutocomplete(control: AbstractControl): any {
+    static requireAutocomplete(control: AbstractControl): any {
         const selection: any = control.value
         if (typeof selection === 'string') {
             return { incorrect: true }

@@ -38,9 +38,9 @@ export class BoatFormDialogComponent {
     form = this.formBuilder.group({
         id: 0,
         description: ['', [Validators.required, Validators.maxLength(100)]],
-        boatUsage: ['', [Validators.required, ValidationService.RequireAutocomplete]],
-        hullType: ['', [Validators.required, ValidationService.RequireAutocomplete]],
-        nationality: ['', [Validators.required, ValidationService.RequireAutocomplete]],
+        boatUsage: ['', [Validators.required, ValidationService.requireAutocomplete]],
+        hullType: ['', [Validators.required, ValidationService.requireAutocomplete]],
+        nationality: ['', [Validators.required, ValidationService.requireAutocomplete]],
         loa: ['', [Validators.required, Validators.min(0), Validators.max(99.99)]],
         beam: ['', [Validators.required, Validators.min(0), Validators.max(9.99)]],
         draft: ['', [Validators.required, Validators.min(0), Validators.max(9.99)]],
