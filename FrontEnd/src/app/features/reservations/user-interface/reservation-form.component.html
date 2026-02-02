@@ -13,17 +13,15 @@
         </div>
 
         <form [formGroup]="form" id="form">
-            <div formGroupName="boat">
-                <mat-form-field>
-                    <mat-label>{{ getLabel('boat') }}</mat-label>
-                    <input #inputAutoComplete #triggerBoats="matAutocompleteTrigger" (keydown)="enableOrDisableAutoComplete($event)" (keyup)="checkForEmptyAutoComplete($event)" [inputTabStop]="input" [matAutocompleteDisabled]="isAutoCompleteDisabled" [matAutocomplete]="boats" class="tabable" formControlName="foos" matInput>
-                    <div matSuffix style="display:flex">
-                        <button (click)="openOrCloseAutoComplete(triggerBoats, 'description')" mat-icon-button type="button">
-                            <mat-icon class="input-suffix material-icons-outlined">expand_more</mat-icon>
-                        </button>
-                    </div>
-                </mat-form-field>
-            </div>
+            <mat-form-field>
+                <mat-label>{{ getLabel('boat') }}</mat-label>
+                <input #inputAutoComplete #triggerBoats="matAutocompleteTrigger" (keydown)="enableOrDisableAutoComplete($event)" (keyup)="checkForEmptyAutoComplete($event)" [inputTabStop]="input" [matAutocompleteDisabled]="isAutoCompleteDisabled" [matAutocomplete]="boats" class="tabable" formControlName="boat" matInput>
+                <div matSuffix style="display:flex">
+                    <button (click)="openOrCloseAutoComplete(triggerBoats, 'boat')" mat-icon-button type="button">
+                        <mat-icon class="input-suffix material-icons-outlined">expand_more</mat-icon>
+                    </button>
+                </div>
+            </mat-form-field>
             <div class="group-input-field">
                 <mat-form-field>
                     <mat-label>{{ getLabel('fromDate') }}</mat-label>
@@ -77,7 +75,6 @@
                     </mat-checkbox>
                 </div>
             </div>
-
         </form>
 
     </div>
@@ -96,7 +93,7 @@
 
 </div>
 
-<mat-autocomplete #boats="matAutocomplete" [displayWith]="autocompleteFields.bind(this, 'boat.foo')" autoActiveFirstOption>
+<mat-autocomplete #boats="matAutocomplete" [displayWith]="autocompleteFields.bind(this, 'description')" autoActiveFirstOption>
     <mat-option *ngFor="let option of dropdownBoats | async" [value]="option">
         {{ option.description }}
     </mat-option>

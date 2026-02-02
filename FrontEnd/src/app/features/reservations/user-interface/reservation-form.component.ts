@@ -181,13 +181,13 @@ export class ReservationFormComponent {
     }
 
     public onAddBerthTextBox(): void {
-        const control = <FormArray>this.form.get('berths')
-        const newGroup = this.formBuilder.group({
+        const existingBerthControls = <FormArray>this.form.get('berths')
+        const newBerthControl = this.formBuilder.group({
             reservationId: this.form.value.reservationId,
             id: 0,
             description: ['', [Validators.required]]
         })
-        control.push(newGroup)
+        existingBerthControls.controls.push(newBerthControl)
         this.berthsArray.push(this.form.controls.berths.value)
         this.addTabIndexToInput()
     }
@@ -208,9 +208,11 @@ export class ReservationFormComponent {
     }
 
     public onRemoveBerth(berthIndex: number): void {
-        const berths = <FormArray>this.form.get('berths')
-        berths.removeAt(berthIndex)
-        this.berthsArray.splice(berthIndex, 1)
+        const berths = this.form.get('berths') as FormArray
+        const x = this.berthsArray[1]
+        berths.value[berthIndex] = null
+        const z = this.berthsArray[this.berthsArray.length - 1][berthIndex]
+        // this.berthsArray
     }
 
     public onSave(closeForm: boolean): void {
@@ -332,9 +334,7 @@ export class ReservationFormComponent {
     private initForm(): void {
         this.form = this.formBuilder.group({
             reservationId: '',
-            boat: this.formBuilder.group({
-                foo: ['', [Validators.required, ValidationService.requireAutocomplete]],
-            }),
+            boat: ['', [Validators.required, ValidationService.requireAutocomplete]],
             berths: this.formBuilder.array([]),
             fromDate: '',
             toDate: '',
@@ -457,8 +457,8 @@ export class ReservationFormComponent {
 
     //#region getters
 
-    get foos(): AbstractControl {
-        return this.form.get('boat.foo')
+    get boat(): AbstractControl {
+        return this.form.get('boat')
     }
 
     get fromDate(): AbstractControl {
