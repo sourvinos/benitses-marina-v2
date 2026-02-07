@@ -45,22 +45,20 @@
             </div>
             <div formArrayName="berths">
                 <div class="group-input-field">
-                    <div *ngFor="let berth of berthsArray; let i = index" [formGroupName]="i">
-                        <mat-form-field>
-                            <mat-label>{{ getLabel("berth") }}</mat-label>
-                            <input (blur)="onValidateBerth($event,i)" [inputTabStop]="input" class="tabable" formControlName="description" matInput required>
-                            <mat-error *ngIf="form.value.berths[i]">{{ getHint("required") }}</mat-error>
-                            <div *ngIf="form.value.berths.length> 1" matSuffix style="display:flex">
-                                <button (click)="onRemoveBerth(i)" mat-icon-button type="button">
-                                    <mat-icon class="input-suffix material-icons-outlined">close</mat-icon>
-                                </button>
-                            </div>
-                        </mat-form-field>
-                    </div>
+                    @for(item of berths.controls;track $index){
+                    <mat-form-field>
+                        <mat-label>{{ getLabel("berth") }}</mat-label>
+                        <input [inputTabStop]="input" class="tabable" [formControlName]="$index" matInput required>
+                        <mat-error *ngIf="form.value.berths[$index]">{{ getHint("required") }}</mat-error>
+                        <button (click)="onRemoveBerth($index)" mat-icon-button type="button">
+                            <mat-icon class="input-suffix material-icons-outlined">close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <span (click)="onAddBerthTextBox()" id="add-berth-button">
+                        <mat-icon class="material-icons-outlined">add</mat-icon>
+                    </span>
+                    }
                 </div>
-                <span (click)="onAddBerthTextBox()" id="add-berth-button">
-                    <mat-icon class="material-icons-outlined">add</mat-icon>
-                </span>
             </div>
             <div>
                 <div class="stacked-checkboxes">

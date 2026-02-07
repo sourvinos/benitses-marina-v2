@@ -26,6 +26,7 @@ import { SimpleEntity } from 'src/app/shared/classes/simple-entity'
 import { environment } from 'src/environments/environment'
 import { BoatBrowserListVM } from '../../boats/classes/view-models/boat-browser-list-vm'
 import { ValidationService } from 'src/app/shared/services/validation.service'
+import { ReservationListBerthVM } from '../classes/view-models/reservation-list-berth-vm'
 
 // https://stackblitz.com/edit/angular-formarray-validation-error?file=app%2Fautocomplete-simple-example.html
 
@@ -64,7 +65,7 @@ export class ReservationFormComponent {
 
     //#region berths
 
-    public berthsArray: string[] = []
+    public berthsArray: ReservationListBerthVM[] = []
 
     //#endregion
 
@@ -181,15 +182,18 @@ export class ReservationFormComponent {
     }
 
     public onAddBerthTextBox(): void {
-        const existingBerthControls = <FormArray>this.form.get('berths')
-        const newBerthControl = this.formBuilder.group({
-            reservationId: this.form.value.reservationId,
-            id: 0,
-            description: ['', [Validators.required]]
-        })
-        existingBerthControls.controls.push(newBerthControl)
-        this.berthsArray.push(this.form.controls.berths.value)
-        this.addTabIndexToInput()
+        this.berths.push(this.formBuilder.control(''))
+        // setTimeout(() => {
+        //     const existingBerthControls = <FormArray>this.form.get('berths')
+        //     const newBerthControl = this.formBuilder.group({
+        //         reservationId: this.form.value.reservationId,
+        //         id: 0,
+        //         description: ['', [Validators.required]]
+        //     })
+        //     existingBerthControls.controls.push(newBerthControl)
+        //     this.berthsArray.push(this.form.controls.berths.value)
+        //     this.addTabIndexToInput()
+        // }, 1000)
     }
 
     public onDelete(): void {
@@ -208,11 +212,17 @@ export class ReservationFormComponent {
     }
 
     public onRemoveBerth(berthIndex: number): void {
-        const berths = this.form.get('berths') as FormArray
-        const x = this.berthsArray[1]
-        berths.value[berthIndex] = null
-        const z = this.berthsArray[this.berthsArray.length - 1][berthIndex]
-        // this.berthsArray
+        this.berths.removeAt(berthIndex)
+        // const berths = this.form.get('berths') as FormArray
+        // berths.removeAt(berthIndex)
+        // berths.controls.reduce.removeAt(berthIndex)
+        // berths.
+        // const x = this.berthsArray[1]
+        // berths.value[berthIndex] = null
+        // const z = this.berthsArray[this.berthsArray.length - 1][berthIndex]
+        // console.log('')
+        // this.berthsArray.l
+        // this.berthsArray[2].
     }
 
     public onSave(closeForm: boolean): void {
@@ -456,6 +466,10 @@ export class ReservationFormComponent {
     //#endregion
 
     //#region getters
+
+    get berths(): FormArray {
+        return this.form.get('berths') as FormArray
+    }
 
     get boat(): AbstractControl {
         return this.form.get('boat')
