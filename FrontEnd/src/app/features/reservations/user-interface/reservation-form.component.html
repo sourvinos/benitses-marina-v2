@@ -44,22 +44,20 @@
                 </mat-form-field>
             </div>
             <div formArrayName="berths">
-                <div class="group-input-field">
-                    @for(item of berths.controls;track $index){
+                <div *ngFor="let test of berths.controls; let index=index; let last=last;" [formGroupName]="index">
                     <mat-form-field>
                         <mat-label>{{ getLabel("berth") }}</mat-label>
-                        <input [inputTabStop]="input" class="tabable" [formControlName]="$index" matInput required>
-                        <mat-error *ngIf="form.value.berths[$index]">{{ getHint("required") }}</mat-error>
-                        <button (click)="onRemoveBerth($index)" mat-icon-button type="button">
+                        <input [inputTabStop]="input" class="tabable" formControlName="description" matInput required>
+                        <mat-error *ngIf="form.value.berths[index]">{{ getHint("required") }}</mat-error>
+                        <button (click)="onRemoveBerth(index)" mat-icon-button type="button">
                             <mat-icon class="input-suffix material-icons-outlined">close</mat-icon>
                         </button>
                     </mat-form-field>
-                    <span (click)="onAddBerthTextBox()" id="add-berth-button">
-                        <mat-icon class="material-icons-outlined">add</mat-icon>
-                    </span>
-                    }
                 </div>
             </div>
+            <span (click)="onAddBerthTextBox()" id="add-berth-button">
+                <mat-icon class="material-icons-outlined">add</mat-icon>
+            </span>
             <div>
                 <div class="stacked-checkboxes">
                     <mat-checkbox formControlName="isPassingBy">

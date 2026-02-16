@@ -59,6 +59,7 @@ export class ReservationFormComponent {
     public dropdownBoatTypes: Observable<SimpleEntity[]>
     public dropdownBoatUsages: Observable<SimpleEntity[]>
     public dropdownPaymentStatuses: Observable<SimpleEntity[]>
+    public dropdownHullTypes: Observable<SimpleEntity[]>
     public isAutoCompleteDisabled = true
 
     //#endregion
@@ -181,8 +182,43 @@ export class ReservationFormComponent {
         this.imgIsLoaded = true
     }
 
+    private initForm(): void {
+        this.form = this.formBuilder.group({
+            reservationId: '',
+            boat: ['', [Validators.required, ValidationService.requireAutocomplete]],
+            berths: this.formBuilder.array([
+                this.formBuilder.group({
+                    id: 0,
+                    berthId: 0,
+                    description: '',
+                })
+            ]),
+            // berths: this.formBuilder.array([
+            //     this.formBuilder.group({
+            //         id: 0,
+            //         berthId: 0,
+            //         description: ''
+            //     })
+            // ]),
+            fromDate: '',
+            toDate: '',
+            days: 0,
+            isPassingBy: false,
+            isDocked: false,
+            isDryDock: false,
+            postAt: '',
+            postUser: '',
+            putAt: '',
+            putUser: ''
+        })
+    }
+
     public onAddBerthTextBox(): void {
-        this.berths.push(this.formBuilder.control(''))
+        this.berthGroups.push(this.formBuilder.group({
+            id: 0,
+            berthId: 0,
+            description: ''
+        }))
         // setTimeout(() => {
         //     const existingBerthControls = <FormArray>this.form.get('berths')
         //     const newBerthControl = this.formBuilder.group({
@@ -212,17 +248,7 @@ export class ReservationFormComponent {
     }
 
     public onRemoveBerth(berthIndex: number): void {
-        this.berths.removeAt(berthIndex)
-        // const berths = this.form.get('berths') as FormArray
-        // berths.removeAt(berthIndex)
-        // berths.controls.reduce.removeAt(berthIndex)
-        // berths.
-        // const x = this.berthsArray[1]
-        // berths.value[berthIndex] = null
-        // const z = this.berthsArray[this.berthsArray.length - 1][berthIndex]
-        // console.log('')
-        // this.berthsArray.l
-        // this.berthsArray[2].
+        this.berthGroups.removeAt(berthIndex)
     }
 
     public onSave(closeForm: boolean): void {
@@ -341,24 +367,6 @@ export class ReservationFormComponent {
         this.router.navigate([this.parentUrl])
     }
 
-    private initForm(): void {
-        this.form = this.formBuilder.group({
-            reservationId: '',
-            boat: ['', [Validators.required, ValidationService.requireAutocomplete]],
-            berths: this.formBuilder.array([]),
-            fromDate: '',
-            toDate: '',
-            days: 0,
-            isPassingBy: false,
-            isDocked: false,
-            isDryDock: false,
-            postAt: '',
-            postUser: '',
-            putAt: '',
-            putUser: ''
-        })
-    }
-
     private populateFields(): void {
         if (this.reservation != undefined) {
             this.form.setValue({
@@ -421,7 +429,7 @@ export class ReservationFormComponent {
                 this.berthsArray.push(this.form.controls.berths.value)
             })
         } else {
-            this.onAddBerthTextBox()
+            // this.onAddBerthTextBox()
         }
     }
 
@@ -468,6 +476,10 @@ export class ReservationFormComponent {
     //#region getters
 
     get berths(): FormArray {
+        return this.form.get('berths') as FormArray;
+    }
+
+    get berthGroups(): FormArray {
         return this.form.get('berths') as FormArray
     }
 
